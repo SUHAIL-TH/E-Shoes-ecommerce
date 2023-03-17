@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-SHOES</title>
+    <link href="https://cdn1.vectorstock.com/i/1000x1000/32/60/shopping-cart-abstract-buy-speed-gold-logo-vector-15003260.jpg" rel="icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+</head>
+<body style="background-color:#05101e; height: 100vh;">
+    <section class=" "   >
+        <div class="container py-5">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col col-xl-10">
+              <div class="card" style="border-radius: 1rem;">
+                <div class="row g-0">
+                  <div class="col-md-6 col-lg-5 d-none d-md-block  ">
+                    <img src="/images/1.jpg"
+                      alt="login form" class="img-fluid bg-dark" style="border-radius: 1rem 0 0 1rem; height:700px; object-fit: cover; " />
+                  </div>
+                  <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                    <div class="card-body p-4 p-lg-5 text-black">
+      
+                      <form method="post" action="/signup" id="form"  class="form-group"> 
+                        <div class="d-flex align-items-center mb-3 pb-1 ">
+                          <i class="fas fa-cubes fa-2x me-3" style="color: #ffffff;"></i>
+                          <span class="h1 fw-bold mb-0"><span class="h1 text-uppercase text-white bg-dark px-2">E-</span>
+                          <span class="h1 text-uppercase text-dark bg-warning px-2 ml-n1">SHOES</span></span>
+                        </div>
+      
+                       
+      
+                        <h3 class=" mb-3 pb-3  font-weight-bold font-weight-bold " style="letter-spacing: 2px; color: #05101e ; " >SIGN UP</h3>
+                        <div class="form-outline mb-4">
+                            
+                           <input type="text" id="name" name="name" class="form-control" placeholder="Enter the full name" required>
+
+                         </div>
+                        <div class="form-outline mb-4">
+                            <input type="email" id="email" name="email" class="form-control" placeholder="Enter the email" required>   
+                         </div>
+                         
+                         <div class="form-outline mb-4">
+                            <input type="text" id="phone" name="phone" class="form-control" placeholder="Enter the Phone number" required>  
+                         </div>
+                        <div class="form-outline mb-4">
+                            
+                          <input type="password" id="password" name="password" class="form-control "  placeholder="Enter the password" required>
+                      
+                        </div>
+                        <div class="form-outline mb-4">
+                        <input type="password" id="cpassword" name="cpassword" class="form-control "  placeholder="Confrim the password" required>
+                    
+                      </div>
+                        <div class="mt-2"> 
+                            <!-- <% if(locals.error){%>
+                            <p class="text-danger font-weight-bold"><%=error%></p>
+                            <%}%> --> 
+                        </div>
+      
+                        <div class="pt-1 mb-4">
+                          
+                          <button class="btn  btn-lg btn-block font-weight-bold" style="background-color: #05101e; color: white;" type="submit">Sign Up</button>
+                        </div><hr>
+      
+                        
+                        <small class="mb-5 pb-lg-2  font-weight-bold" style="color: #121212;">Allready have an account? <a href="/login"
+                            style="color: #03109b;"><small class="text-danger font-weight-bold">Sign IN</small></a></small>
+                            <div>
+                              <a href="#!" class="small text-muted">Terms of use.</a>
+                        <a href="#!" class="small text-muted">Privacy policy</a>
+      
+                            </div>
+                        
+                      </form>
+      
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      
+      <script>
+        document.getElementById("name").addEventListener('input',function(){
+            var name=document.getElementById("name").value.trim()
+            if (name==""){
+                document.getElementById("name").setCustomValidity("Name cannot be null")
+            }
+            // else if(name.lenght<5){
+            //     document.getElementById("name").setCustomValidity("Name must be 5 letters ")
+
+            // }
+            else{
+                document.getElementById("name").setCustomValidity("")
+            }
+
+        })
+        
+        document.getElementById("email").addEventListener("input",function(){
+         
+          var email=document.getElementById("email").value.trim()
+          console.log(email);
+          if(email==""){
+            document.getElementById("email").setCustomValidity("Email cannot be null")
+          }else{
+            document.getElementById("email").setCustomValidity("")
+          }
+        })
+       
+        document.getElementById("password").addEventListener("input",function(){
+          var password=document.getElementById("password").value.trim()
+          
+          if(password.length<5){
+            document.getElementById("password").setCustomValidity("Password is less than 4")
+          }else{
+            document.getElementById("password").setCustomValidity("")
+      
+          }
+        })
+        document.getElementById("cpassword").addEventListener("input",function(){
+          var cpassword=document.getElementById("cpassword").value.trim()
+          var password=document.getElementById("password").value.trim()
+          
+          if(cpassword!=password){
+            document.getElementById("cpassword").setCustomValidity("Password doden't match")
+          }else{
+            document.getElementById("cpassword").setCustomValidity("")
+      
+          }
+        })
+   
+      
+      </script>
+     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+ <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+</body>
+</html>
