@@ -11,5 +11,6 @@ userRouter.get("/signup",userController.signup)
 userRouter.post("/signup",userController.postsignup)
 userRouter.post("/otp",userController.postotp)
 userRouter.post("/login",userController.postlogin)
+userRouter.get("/logout",userController.logout)
 
 module.exports=userRouter

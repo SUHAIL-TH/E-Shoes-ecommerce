@@ -26,7 +26,7 @@ app.use(express.urlencoded ({extended:true}))
 //session management
 app.use(session({
     secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
-    saveUninitialized:true,
+    saveUninitialized:false,
     cookie: { maxAge: 6000000 },
     resave: false 
 }))
@@ -35,7 +35,7 @@ app.use(session({
 app.use((req, res, next) => {
     res.header(
       "Cache-Control",
-      "no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0"
+      "no-cache,  no-store, must-revalidate"
     );
     next();
 });
