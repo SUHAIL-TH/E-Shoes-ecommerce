@@ -80,7 +80,7 @@
               to verify your account
             </h6>
             <div>
-              <span>A code has been sent to</span> <small>*******9897</small>
+              <span>A code has been sent to</span> <small>your email </small>
             </div>
             <form action="/otp" method="post">
                 <div
@@ -88,12 +88,12 @@
               class="inputs d-flex flex-row justify-content-center mt-2"
             >
               <input
-                class="m-2 text-center form-control rounded"
+                class="m-2 text-center form-control rounded" style="width: 100px;" name="otp"
                 type="text"
                 id="first"
-                maxlength="1" required
+                maxlength="4" required
               />
-              <input
+              <!-- <input
                 class="m-2 text-center form-control rounded"
                 type="text"
                 id="second"
@@ -110,7 +110,7 @@
                 type="text"
                 id="fourth"
                 maxlength="1" required
-              />
+              /> -->
              
               
             </div>
@@ -119,6 +119,16 @@
             </div>
 
             </form>
+            <div class="mt-2"> 
+              
+              
+          </div>
+            <div>
+              <%if(locals.error){%>
+                <p class="text-danger font-weight-bold"><%=error%></p>
+              <%}%>
+
+            </div>
             
           </div>
           <div class="card-2">

@@ -7,10 +7,11 @@ module.exports={
         service:"gmail",
         auth:{
             user:"eshoes518@gmail.com",
-            pass:"fjjsmlxgavwxvsem"
+            pass:process.env.PASS
         }
 
     }),
     OTP:`${Math.floor(1000+Math.random()*9000)}`
+    
     
 }
