@@ -1,5 +1,4 @@
 const bcrypt = require("bcrypt")
-const mongoose = require("mongoose")
 const user = require("../model/userModel")
 const mailer = require("../middleware/otpValidation")
 
@@ -31,13 +30,13 @@ const home = async (req, res) => {
 
 
 const login = (req, res) => {
-    if(req.session.user){
+    if (req.session.user) {
         res.redirect("/")
-    }else{
+    } else {
         res.render("user/login")
 
     }
-   
+
 }
 const signup = (req, res) => {
     res.render("user/signup")
@@ -56,7 +55,7 @@ const postsignup = async (req, res) => {
         from: "eshoes518@gmail.com",
         to: email,
         subject: "Otp for E-shoes varification",
-        html: `<p>YOUR OTP FOR REGISTRATION IN E-SHOES IS:  ${mailer.OTP}<P>`,
+        html: `<p>Hi ${name} ..Your OTP FOR registration on E-SHOES:  ${mailer.OTP}<P>`,
     };
 
     let users = await user.findOne({ email: email })
@@ -112,13 +111,20 @@ const postlogin = async (req, res) => {
         let userData = await user.findOne({ email: email })
         if (userData) {
             let passwordMatch = await bcrypt.compare(password, userData.password)
-            if (passwordMatch) {
-                req.session.user = email
+            if(userData.blocked===false){
+                if (passwordMatch) {
+                    req.session.user = email
+    
+                    res.redirect("/")
+                } else {
+                    res.render("user/login", { error: "Invalid username or password" })
+                }
 
-                res.redirect("/")
-            } else {
-                res.render("user/login", { error: "Invalid username or password" })
+            }else{
+                res.render("user/login", { error: "Your are blocked " })
+
             }
+           
         } else {
             res.render("user/login", { error: "Email doesn't exist" })
         }

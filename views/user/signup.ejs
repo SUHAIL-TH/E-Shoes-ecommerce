@@ -111,12 +111,24 @@
             document.getElementById("email").setCustomValidity("")
           }
         })
+        document.getElementById("phone").addEventListener("input",function(){
+          var phone=document.getElementById("phone").value.trim()
+          
+          if(phone.length<10){
+            document.getElementById("phone").setCustomValidity("phone number lesstha 10")
+         
+
+          }else{
+            document.getElementById("phone").setCustomValidity("")
+      
+          }
+        })
        
         document.getElementById("password").addEventListener("input",function(){
           var password=document.getElementById("password").value.trim()
           
           if(password.length<5){
-            document.getElementById("password").setCustomValidity("Password is less than 4")
+            document.getElementById("password").setCustomValidity("Password is less than 5")
           }else{
             document.getElementById("password").setCustomValidity("")
       
