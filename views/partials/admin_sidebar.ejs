@@ -1,7 +1,8 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-    <a class="sidebar-brand brand-logo" href="index.html"><img src="assets/images/logo.svg" alt="logo" /></a>
-    <a class="sidebar-brand brand-logo-mini" href="index.html"><img src="assets/images/logo-mini.svg" alt="logo" /></a>
+    <span class="sidebar-brand brand-logo" ><span class="h1 fw-bold mb-0"><span class="h1 text-uppercase text-white bg-dark px-2">E-</span>
+      <span class="h1 text-uppercase text-dark bg-warning px-2 ml-n1">SHOES</span></span></span>
+    <span class="sidebar-brand brand-logo-mini" ><span class="h1 text-uppercase text-white bg-dark px-2">E-</span></span>
   </div>
   <ul class="nav">
     <li class="nav-item profile">
@@ -12,8 +13,8 @@
             <span class="count bg-success"></span>
           </div>
           <div class="profile-name">
-            <h5 class="mb-0 font-weight-normal">Henry Klein</h5>
-            <span>Gold Member</span>
+            <h5 class="mb-0 font-weight-normal">Admin</h5>
+            
           </div>
         </div>
         <a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
@@ -65,22 +66,62 @@
       </a>
     </li>
     <li class="nav-item menu-items">
-      <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+      <!-- <a class="nav-link" href="pages/charts/chartjs.html">
         <span class="menu-icon">
-          <i class="mdi mdi-laptop"></i>
+          <i class="mdi mdi-chart-bar"></i>
+        </span>
+        <span class="menu-title">Charts</span>
+      </a> -->
+      <a class="nav-link" data-toggle="collapse" href="#ui-product" aria-expanded="false" aria-controls="ui-basic">
+        <span class="menu-icon">
+          <i class="mdi mdi-shopping"></i>
         </span>
         <span class="menu-title">Products</span>
         <i class="menu-arrow"></i>
       </a>
-      <div class="collapse" id="ui-basic">
+      <div class="collapse" id="ui-product">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">All products</a></li>
-          <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Edit product</a></li>
+          <li class="nav-item"> <a class="nav-link" href="/admin/product">All products</a></li>
+          <li class="nav-item"> <a class="nav-link" href="/admin/addproduct">Add product</a></li>
          
         </ul>
       </div>
     </li>
     <li class="nav-item menu-items">
+      <a class="nav-link" data-toggle="collapse" href="#all-users" aria-expanded="false" aria-controls="ui-basic">
+        <span class="menu-icon">
+          <i class="mdi mdi-account-multiple-outline"></i>
+        </span>
+        <span class="menu-title">Users</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse" id="all-users">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"> <a class="nav-link" href="/admin/viewusers">Users list</a></li>
+          <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html"></a></li>
+         
+        </ul>
+      </div>
+    </li>
+    <li class="nav-item menu-items">
+      <a class="nav-link" data-toggle="collapse" href="#category" aria-expanded="false" aria-controls="ui-basic">
+        <span class="menu-icon">
+          <i class="mdi mdi-account-multiple-outline"></i>
+        </span>
+        <span class="menu-title">Category</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse" id="category">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"> <a class="nav-link" href="/admin/viewcategory">Category list</a></li>
+          <li class="nav-item"> <a class="nav-link" href="/admin/addcategory">Add Category</a></li>
+
+         
+        </ul>
+      </div>
+    </li>
+    
+    <!-- <li class="nav-item menu-items">
       <a class="nav-link" href="pages/forms/basic_elements.html">
         <span class="menu-icon">
           <i class="mdi mdi-playlist-play"></i>
@@ -129,7 +170,7 @@
           <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
         </ul>
       </div>
-    </li>
+    </li> -->
    
   </ul>
 </nav>
