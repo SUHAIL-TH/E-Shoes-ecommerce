@@ -37,9 +37,13 @@
                       <div class="form-group">
                         <label for="exampleSelectGender">Category</label>
                         <select class="form-control" id="category" name="category">
-                            <option><%=productData.category%></option>
-                          <option>Male shoe</option>
-                          <option>Female shoe</option>
+                            <%categoryData.forEach((category)=>{%>
+                              <%if(category.status==true){%>
+                                <option><%=category.categoryName%></option>
+  
+                             <% }%>
+                           <% })%>
+                          
                         </select>
                       </div>
                       <div class="form-group">
@@ -63,7 +67,7 @@
                         <textarea class="form-control" id="exampleTextarea1" rows="4"></textarea>
                       </div> -->
                       <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                      <button class="btn btn-dark">Cancel</button>
+                      <a href="/admin/product" class="btn btn-dark">Cancel</a>
                     </form>
                     <!-- <script>
                         function viewImage(event){

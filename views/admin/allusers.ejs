@@ -2,7 +2,7 @@
     <div class="container-scroller">
       <!-- partial:../../partials/_sidebar.html -->
       <%- include('../partials/admin_sidebar')%>
-   
+      </nav>
       <!-- partial -->
       <div class="container-fluid page-body-wrapper">
         <!-- partial:../../partials/_navbar.html -->
@@ -29,40 +29,40 @@
                           <tr>
                             <th> No</th>
                             <th> Name</th>
-                            <th>Image</th>
-                            <th>Discription</th>
-                            <th>Category</th>
-                            <th>Price</th>
-                            <th>Stock</th>
+                            <th> Email</th>
+                            <th> Phone</th>
+                            
+                            <th>Block</th>
                             <th>Options</th>
-                            <th>Remove</th>
                           </tr>
                         </thead>
                         <tbody>
                           <% let count=1%>
-                          <% products.forEach((product)=>{ %>
+                          <% allusers.forEach((user)=>{ %>
 
                           <tr>
                             <td><%=count%></td>
                             <td>
-                              <%= product.productName%>
+                              <%= user.name%>
 
                             </td>
-                            <td> <img src="/product-image/<%= product.image[0]%>" alt=""></td>
+                            <td> <%= user.email%></td>
                             <td>
-                              <%=product.discription%>
-                            </td>
-                            <td>
-                              <%=product.category%>
+                              <%=user.phone%>
                             </td>
                            
                          
-                           <td><%=product.price%></td>
-                           <td><%=product.stock%></td>
-                           <td><a href="/admin/editproduct/<%=product._id%>" class="btn btn-success">Edit</a></td>
-                           <td><a href="/admin/deleteproduct/<%=product._id%>" class="fa fa-trash "  style="font-size:20px;color:rgb(235, 14, 14) ; text-decoration: none;"></a></td>
+                           <td><%=user.blocked%></td>
+                            <td>
+                              
+                             <%if(user.blocked==false){%>
+                              <a href="/admin/blockuser/<%=user._id%>" class="btn btn-danger">Block</a>
 
-                           
+                             <%}else{%>
+                              <a href="/admin/unblockuser/<%=user._id%>" class="btn btn-success">Unblock</a>
+
+                             <%}%>
+                            </td>
                           </tr>
                           <%count++%>
                          <% })%>

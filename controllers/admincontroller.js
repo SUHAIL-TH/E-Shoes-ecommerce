@@ -1,7 +1,9 @@
-const mongoose=require("mongoose")
+
 const admin=require("../model/adminModel")
 const user=require("../model/userModel")
 const product=require("../model/productModel")
+const category=require("../model/categoryModel")
+
 
 
 
@@ -96,9 +98,11 @@ const viewproduct=async(req,res)=>{
         console.log(error);     
     }
 }
-const addproduct=(req,res)=>{
+const addproduct=async(req,res)=>{
     try {
-        res.render("admin/addproduct")
+        let categoryData=await category.find()
+        
+        res.render("admin/addproduct",{categoryData})
         
     } catch (error) {
         console.log(error);
@@ -132,10 +136,10 @@ const postaddproduct=async(req,res)=>{
 const editproduct=async(req,res)=>{
     try {
         let id=req.params.id
-       
+        let categoryData=await category.find()
         let productData= await product.findOne({_id:id})
       
-        res.render("admin/editproduct",{productData})
+        res.render("admin/editproduct",{productData,categoryData})
 
         
     } catch (error) {
@@ -180,13 +184,87 @@ const posteditproduct=async(req,res)=>{
         res.render(admin/500)
     }
 }
+const deleteproduct=async(req,res)=>{
+    try {
+        let id=req.params.id
+        await product.deleteOne({_id:id})
+        res.redirect("/admin/product")
+        
+    } catch (error) {
+        res.render("admin/500")
+    }
+}
+const viewcategory=async(req,res)=>{
+    try {
+        let categoryData=await category.find()
+        
+        res.render("admin/viewcategory",{categoryData})
+        
+    } catch (error) {
+        res.render("admin/500")
+    }
+}
 const addcategory=(req,res)=>{
     try {
         res.render("admin/addcategory")
         
     } catch (error) {
         res.render("admin/500")
+        
     }
+}
+const postaddcategory=async(req,res)=>{
+    try {
+        const categorys=new category({
+            categoryName:req.body.category 
+
+        })
+      
+        await categorys.save()
+        res.render("admin/addcategory")
+
+        
+    } catch (error) {
+        res.render("admin/500")
+        console.log(error);
+        
+    }
+}
+const deletecategory=async(req,res)=>{
+    try {
+        let id=req.params.id
+        await category.deleteOne({_id:id})
+        res.redirect("/admin/viewcategory")
+
+        
+    } catch (error) {
+        res.render("admin/500")        
+    }
+}
+const truecategory=async(req,res)=>{
+    try {
+        let id =req.params.id
+        await category.updateOne({_id:id},{$set:{status:true}})
+        res.redirect("/admin/viewcategory")
+        
+    } catch (error) {
+        res.render("admin/500")
+        
+    }
+
+}
+const falsecategory=async(req,res)=>{
+    try {
+        let id =req.params.id
+        console.log(id); 
+        await category.updateOne({_id:id},{$set:{status:false}})
+        res.redirect("/admin/viewcategory")
+        
+    } catch (error) {
+        res.render("admin/500")
+        
+    }
+
 }
 
 
@@ -203,7 +281,14 @@ module.exports={
     postaddproduct,
     editproduct,
     posteditproduct,
-    addcategory
+    deleteproduct,
+    viewcategory,
+    addcategory,
+    postaddcategory,
+    deletecategory, 
+    truecategory,
+    falsecategory
+
      
 
 }

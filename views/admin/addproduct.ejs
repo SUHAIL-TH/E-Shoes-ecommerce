@@ -36,9 +36,20 @@
                       <div class="form-group">
                         <label for="exampleSelectGender">Category</label>
                         <select class="form-control" id="category" name="category">
-                          <option>Select</option>
-                          <option>Male shoe</option>
-                          <option>Female shoe</option>
+                          <%if(categoryData.length>0){ %>
+                          <%for(i=0;i<categoryData.length;i++){%>
+                            <%if(categoryData[i].status==true){%>
+                              <option><%=categoryData[i].categoryName%></option>
+
+                           <% }%>
+                            
+
+                         <% }%>
+                         <%}%>
+                         
+                          
+                        
+                         
                         </select>
                       </div>
                       <div class="form-group">
@@ -60,9 +71,9 @@
                         <label for="exampleTextarea1">Textarea</label>
                         <textarea class="form-control" id="exampleTextarea1" rows="4"></textarea>
                       </div> -->
-                      <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                      <button type="submit" class="btn btn-success mr-2">Submit</button>
                       <!-- <button class="btn btn-dark">Cancel</button> -->
-                      <!-- <a href="/admin/product" class="btn btn-dark">Cancel</a> -->
+                      <a href="/admin/product" class="btn btn-danger">Cancel</a>
                     </form>
                   </div>
                 </div>

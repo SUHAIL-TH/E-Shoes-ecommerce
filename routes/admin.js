@@ -41,11 +41,21 @@ adminRouter.get("/logout",adminController.logout)
 adminRouter.get("/viewusers",verifyAdmin.verifyLoginAdmin,adminController.viewusers)
 adminRouter.get("/blockuser/:id",adminController.blockuser)
 adminRouter.get("/unblockuser/:id",adminController.unblockuser)
+
 adminRouter.get("/product",verifyAdmin.verifyLoginAdmin,adminController.viewproduct) 
 adminRouter.get("/addproduct",verifyAdmin.verifyLoginAdmin,adminController.addproduct)
 adminRouter.post("/addproduct",verifyAdmin.verifyLoginAdmin,upload.array("image",5),adminController.postaddproduct)
 adminRouter.get("/editproduct/:id",verifyAdmin.verifyLoginAdmin,adminController.editproduct)
 adminRouter.post("/editproduct/:id",verifyAdmin.verifyLoginAdmin,upload.array("image",5),adminController.posteditproduct)
+adminRouter.get("/deleteproduct/:id",verifyAdmin.verifyLoginAdmin,adminController.deleteproduct)
+
+adminRouter.get("/addcategory",verifyAdmin.verifyLoginAdmin,adminController.addcategory)
+adminRouter.get("/viewcategory",verifyAdmin.verifyLoginAdmin,adminController.viewcategory )
+adminRouter.post("/addcategory",verifyAdmin.verifyLoginAdmin,adminController.postaddcategory)
+adminRouter.get("/deletecategory/:id",verifyAdmin.verifyLoginAdmin,adminController.deletecategory)
+adminRouter.get("/truecategory/:id",verifyAdmin.verifyLoginAdmin,adminController.truecategory)
+adminRouter.get("/falsecategory/:id",verifyAdmin.verifyLoginAdmin,adminController.falsecategory)
+
 
 
 module.exports=adminRouter;

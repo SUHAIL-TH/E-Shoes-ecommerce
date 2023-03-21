@@ -60,10 +60,10 @@
                           
                           <button class="btn btn-dark btn-lg btn-block font-weight-bold" type="submit">Login</button>
                         </div><hr>
-                          <div><a class="small text-muted" href="#!">Forgot password?</a></div>
+                          <!-- <div><a class="small text-muted" href="#!">Forgot password?</a></div> -->
                         
-                        <small class="mb-5 pb-lg-2 " style="color: #393f81;">Don't have an account? <a href="/signup"
-                            style="color: #03109b;"><small class="text-danger font-weight-bold">Register here</small></a></small>
+                        <!-- <small class="mb-5 pb-lg-2 " style="color: #393f81;">Don't have an account? <a href="/signup"
+                            style="color: #03109b;"><small class="text-danger font-weight-bold">Register here</small></a></small> -->
                             <div>
                               <a href="#!" class="small text-muted">Terms of use.</a>
                         <a href="#!" class="small text-muted">Privacy policy</a>
@@ -98,7 +98,7 @@
           var password=document.getElementById("password").value.trim()
           console.log();
           if(password.length<5){
-            document.getElementById("password").setCustomValidity("Password is less than 4")
+            document.getElementById("password").setCustomValidity("Password required 5 letters")
           }else{
             document.getElementById("password").setCustomValidity("")
       
