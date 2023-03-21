@@ -10,7 +10,7 @@
         <div class="main-panel">
           <div class="content-wrapper">
             <div class="page-header">
-              <h3 class="page-title"> Add product </h3>
+              <h3 class="page-title"> Edit product </h3>
               
             </div>
             <div class="row">
@@ -20,23 +20,24 @@
                 <div class="card">
                   <div class="card-body">
                     
-                    <form class="forms-sample" action="/admin/addproduct" method="post" enctype="multipart/form-data">
+                    <form class="forms-sample" action="/admin/editproduct/<%=productData._id%>" method="post" enctype="multipart/form-data">
+                     
                       <div class="form-group">
                         <label for="exampleInputName1">Name</label>
-                        <input type="text" class="form-control" id="name"  name="name" placeholder="Enter the product name">
+                        <input type="text" class="form-control" id="name"  name="name" value="<%=productData.productName%>" placeholder="Enter the product name">
                       </div>
                       <div class="form-group">
                         <label for="">Price</label>
-                        <input type="text" class="form-control" id="price" name="price" placeholder="Enter the price">
+                        <input type="text" class="form-control" id="price" name="price" value="<%=productData.price%>" placeholder="Enter the price">
                       </div>
                       <div class="form-group">
                         <label for="">Discription</label>
-                        <input type="text" class="form-control" id="discription" name="discription" placeholder="Enter the discription">
+                        <input type="text" class="form-control" id="discription" name="discription" value="<%=productData.discription%>" placeholder="Enter the discription">
                       </div>
                       <div class="form-group">
                         <label for="exampleSelectGender">Category</label>
                         <select class="form-control" id="category" name="category">
-                          <option>Select</option>
+                            <option><%=productData.category%></option>
                           <option>Male shoe</option>
                           <option>Female shoe</option>
                         </select>
@@ -45,7 +46,8 @@
                         <label>File upload</label>
                         
                         <div>
-                          <input type="file" id="image" name="image" class="form-control" multiple>
+                            <img src="/product-image/<%= productData.image[0]%>" alt="product image is here" style="width: 100px;height: auto;" id="imgView">
+                          <input type="file" id="image" name="image"  class="form-control" value="/product-image/<%= productData.image[0]%>" multiple>
 
                         </div>
                         
@@ -53,7 +55,7 @@
                       
                       <div class="form-group">
                         <label for="exampleInputCity1">Stock</label>
-                        <input type="text" class="form-control" id="stock" name="stock" placeholder="Enter the stock">
+                        <input type="text" class="form-control" id="stock" value="<%=productData.stock%>" name="stock" placeholder="Enter the stock">
                       </div>
                       
                       <!-- <div class="form-group">
@@ -61,9 +63,14 @@
                         <textarea class="form-control" id="exampleTextarea1" rows="4"></textarea>
                       </div> -->
                       <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                      <!-- <button class="btn btn-dark">Cancel</button> -->
-                      <!-- <a href="/admin/product" class="btn btn-dark">Cancel</a> -->
+                      <button class="btn btn-dark">Cancel</button>
                     </form>
+                    <!-- <script>
+                        function viewImage(event){
+                            document.getElementById("imgView").src=URL.createObjectURL(event.target.file[0])
+                        }
+
+                    </script> -->
                   </div>
                 </div>
               </div>

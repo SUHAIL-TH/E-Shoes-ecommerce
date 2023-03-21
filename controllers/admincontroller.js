@@ -147,7 +147,7 @@ const posteditproduct=async(req,res)=>{
         let id=req.params.id
         
         console.log(req.files);
-        if(req.files){
+        if(req.files.filename){
             const image=[]
         for(i=0;i<req.files.length;i++){
             image[i]=req.files[i].filename
@@ -180,6 +180,14 @@ const posteditproduct=async(req,res)=>{
         res.render(admin/500)
     }
 }
+const addcategory=(req,res)=>{
+    try {
+        res.render("admin/addcategory")
+        
+    } catch (error) {
+        res.render("admin/500")
+    }
+}
 
 
 module.exports={
@@ -194,7 +202,8 @@ module.exports={
     addproduct,
     postaddproduct,
     editproduct,
-    posteditproduct
+    posteditproduct,
+    addcategory
      
 
 }
