@@ -1,0 +1,43 @@
+<%- include("../partials/admin_header")%>
+    <div class="container-scroller">
+      <!-- partial:../../partials/_sidebar.html -->
+      <%- include('../partials/admin_sidebar')%>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:../../partials/_navbar.html -->
+        <%- include('../partials/admin_navbar')%>
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="page-header">
+              <h3 class="page-title"> Add Category</h3>
+              
+            </div>
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                   
+                    <form class="forms-sample" action="/admin/addcategory" method="post">
+                      <div class="form-group">
+                        <label for="exampleInputUsername1">Category Name</label>
+                        <input type="text" class="form-control" id="category" name="category" placeholder="Enter the category name" required>
+                      </div>
+                      
+                      <button type="submit" class="btn btn-success mr-2">Submit</button>
+                      <button class="btn btn-danger">Cancel</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <!-- content-wrapper ends -->
+          <!-- partial:../../partials/_footer.html -->
+          
+          <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <%- include('../partials/admin_footer')%>
+   
