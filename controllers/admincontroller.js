@@ -1,12 +1,17 @@
-const bcrypt=require("bcrypt")
+const mongoose=require("mongoose")
 const admin=require("../model/adminModel")
+const user=require("../model/userModel")
+const product=require("../model/productModel")
+
+
+
+
 
 
   
 const login=(req,res)=>{
         if(req.session.admin){
             res.redirect("/admin/home")
-
         }else{
             res.render("admin/login")
         }
@@ -16,15 +21,13 @@ const postlogin=async(req,res)=>{
         let email=req.body.email
         let password=req.body.password
         let adminData= await admin.findOne({email:email})
-        console.log(adminData);
        try {
-        if(adminData){
+         if(adminData){
             if(password==adminData.password){
                 req.session.admin=email;
                 res.redirect("/admin/home")
             }else{
                 res.render("admin/login",{error:"Invalid password"})
-
             }
 
         }else{
@@ -34,26 +37,164 @@ const postlogin=async(req,res)=>{
         
        } catch (error) {
         res.render("admin/500")
-        console.log(error);
-
-        
+        console.log(error);  
        }
     }
  const home=(req,res)=>{
         if(req.session.admin){
             res.render("admin/index")
-
         }else{
             res.redirect("/admin")
         }
         
     }
+const logout=(req,res)=>{
+    req.session.admin=false,
+    res.redirect("/admin")
+
+}    
+const viewusers=async(req,res)=>{
+   
+    try {
+        const allusers=await user.find({})   
+        res.render("admin/allusers",{allusers})    
+    } catch (error) {
+        res.render("admin/500")
+        
+    }
+    
+
+}
+const blockuser=async(req,res)=>{
+    try {
+        let id=req.params.id
+        console.log(id);
+        await user.updateOne({_id:id},{$set:{blocked:true}})
+        res.redirect("/admin/viewusers")     
+    } catch (error) {
+        res.render("admin/500")
+    }
+
+}  
+const unblockuser=async(req,res)=>{
+    try {
+        let id=req.params.id
+        await user.updateOne({_id:id},{$set:{blocked:false}})
+            res.redirect("/admin/viewusers")     
+    } catch (error) {
+        res.render("admin/500")
+        console.log(error);
+    }
+}  
+const viewproduct=async(req,res)=>{ 
+    try { 
+        let products=await product.find()
+        res.render("admin/viewproduct",{products})
+             
+    } catch (error) {
+        res.render("admin/500") 
+        console.log(error);     
+    }
+}
+const addproduct=(req,res)=>{
+    try {
+        res.render("admin/addproduct")
+        
+    } catch (error) {
+        console.log(error);
+        res.render("admin/500")        
+    }
+}
+const postaddproduct=async(req,res)=>{
+    try {
+        const image=[]
+        for(i=0;i<req.files.length;i++){
+            image[i]=req.files[i].filename;
+        }
+        const products= new product({
+            productName:req.body.name,
+            price:req.body.price,
+            image:image,
+            discription:req.body.discription,
+            category:req.body.category,
+            stock:req.body.stock
+
+        } )
+     
+        await products.save()
+        res.redirect("/admin/addproduct")
+        
+    } catch (error) {
+        res.render("admin/500")
+        console.log(error);
+    }
+}
+const editproduct=async(req,res)=>{
+    try {
+        let id=req.params.id
+       
+        let productData= await product.findOne({_id:id})
+      
+        res.render("admin/editproduct",{productData})
+
+        
+    } catch (error) {
+        res.render("admin/500")
+    }
+}
+const posteditproduct=async(req,res)=>{
+    try {
+        let id=req.params.id
+        
+        console.log(req.files);
+        if(req.files){
+            const image=[]
+        for(i=0;i<req.files.length;i++){
+            image[i]=req.files[i].filename
+        }
+        await product.findByIdAndUpdate({_id:id},{$set:
+            {productName:req.body.name,
+                price:req.body.price,
+                category:req.body.category,
+                discription:req.body.discription,
+                stock:req.body.stock,
+                image:image
+            }})
+
+        }else{
+            await product.findByIdAndUpdate({_id:id},{$set:
+                {productName:req.body.name,
+                    price:req.body.price,
+                    category:req.body.category,
+                    discription:req.body.discription,
+                    stock:req.body.stock,
+                    
+                }})
+
+        }
+        
+        res.redirect("/admin/product")
+        
+        
+    } catch (error) {
+        res.render(admin/500)
+    }
+}
 
 
 module.exports={
     login,
     postlogin,
     home,
-
+    viewusers,
+    blockuser,
+    unblockuser,
+    viewproduct,
+    logout ,
+    addproduct,
+    postaddproduct,
+    editproduct,
+    posteditproduct
+     
 
 }

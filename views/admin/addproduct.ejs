@@ -1,0 +1,90 @@
+<%- include("../partials/admin_header")%>
+    <div class="container-scroller">
+      <!-- partial:../../partials/_sidebar.html -->
+      <%- include('../partials/admin_sidebar')%>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:../../partials/_navbar.html -->
+        <%- include('../partials/admin_navbar')%>
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="page-header">
+              <h3 class="page-title"> Add product </h3>
+              
+            </div>
+            <div class="row">
+              
+              
+              <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    
+                    <form class="forms-sample" action="/admin/addproduct" method="post" enctype="multipart/form-data">
+                      <div class="form-group">
+                        <label for="exampleInputName1">Name</label>
+                        <input type="text" class="form-control" id="name"  name="name" placeholder="Enter the product name">
+                      </div>
+                      <div class="form-group">
+                        <label for="">Price</label>
+                        <input type="text" class="form-control" id="price" name="price" placeholder="Enter the price">
+                      </div>
+                      <div class="form-group">
+                        <label for="">Discription</label>
+                        <input type="text" class="form-control" id="discription" name="discription" placeholder="Enter the discription">
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleSelectGender">Category</label>
+                        <select class="form-control" id="category" name="category">
+                          <option>Select</option>
+                          <option>Male shoe</option>
+                          <option>Female shoe</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label>File upload</label>
+                        
+                        <div>
+                          <input type="file" id="image" name="image" class="form-control" multiple>
+
+                        </div>
+                        
+                      </div>
+                      
+                      <div class="form-group">
+                        <label for="exampleInputCity1">Stock</label>
+                        <input type="text" class="form-control" id="stock" name="stock" placeholder="Enter the stock">
+                      </div>
+                      
+                      <!-- <div class="form-group">
+                        <label for="exampleTextarea1">Textarea</label>
+                        <textarea class="form-control" id="exampleTextarea1" rows="4"></textarea>
+                      </div> -->
+                      <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                      <!-- <button class="btn btn-dark">Cancel</button> -->
+                      <a href="" class="btn btn-dark">Cancel</a>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              
+              
+              
+              
+              
+              
+              
+              
+            </div>
+          </div>
+          <!-- content-wrapper ends -->
+          <!-- partial:../../partials/_footer.html -->
+          
+          <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <%- include('../partials/admin_footer')%>
+   
