@@ -20912,9 +20912,9 @@ div.tagsinput {
       background: #0f1015;
       color: #ffffff; }
     .sidebar .nav .menu-items:nth-child(5n+1) .nav-link .menu-icon i {
-      color: #0090e7; }
-    .sidebar .nav .menu-items:nth-child(5n+2) .nav-link .menu-icon i {
       color: #00d25b; }
+    .sidebar .nav .menu-items:nth-child(5n+2) .nav-link .menu-icon i {
+      color: #0090e7; }
     .sidebar .nav .menu-items:nth-child(5n+3) .nav-link .menu-icon i {
       color: #8f5fe8; }
     .sidebar .nav .menu-items:nth-child(5n+4) .nav-link .menu-icon i {

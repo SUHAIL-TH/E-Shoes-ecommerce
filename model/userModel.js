@@ -18,6 +18,30 @@ const userSchema=new mongoose.Schema({
         unique:true,
 
     },
+    address:[{
+        name:{
+            type:String
+        },
+        housename:{
+            type:String
+        },
+        post:{
+            type:String
+        },
+        city:{
+            type:String
+        },
+        district:{
+            type:String
+        },
+        pin:{
+            type:String
+        },
+        phone:{
+            type:String
+        }
+
+    }],
     password:{
         type:String,
         require:true,
@@ -32,6 +56,10 @@ const userSchema=new mongoose.Schema({
         type:Boolean,
         default:false
 
+    },
+    token:{
+        type:String,
+        default:''
     }
 })
 
