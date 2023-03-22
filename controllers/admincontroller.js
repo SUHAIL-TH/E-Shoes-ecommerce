@@ -149,9 +149,7 @@ const editproduct=async(req,res)=>{
 const posteditproduct=async(req,res)=>{
     try {
         let id=req.params.id
-        
-        console.log(req.files);
-        if(req.files.filename){
+        if(req.files.length!=0){
             const image=[]
         for(i=0;i<req.files.length;i++){
             image[i]=req.files[i].filename
@@ -287,7 +285,8 @@ module.exports={
     postaddcategory,
     deletecategory, 
     truecategory,
-    falsecategory
+    falsecategory,
+    
 
      
 

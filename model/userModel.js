@@ -21,6 +21,7 @@ const userSchema=new mongoose.Schema({
     address:[{
         name:{
             type:String
+            
         },
         housename:{
             type:String

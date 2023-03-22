@@ -1,0 +1,217 @@
+<%- include('../partials/userheader')%>
+
+	<!-- breadcrumb-section -->
+	<div class="breadcrumb-section breadcrumb-bg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2 text-center">
+					<div class="breadcrumb-text">
+						<p></p>
+						<h1></h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end breadcrumb section -->
+
+	<!-- single product -->
+	<style>
+		figure.zoom {
+			background-position: 50% 50%;
+			position: relative;
+			width: 450px;
+			overflow: hidden;
+			cursor: zoom-in;
+		}
+
+		figure.zoom img:hover {
+			opacity: 0;
+		}
+
+		figure.zoom img {
+			transition: opacity .5s;
+			display: block;
+			width: 100%;
+		}
+	</style>
+
+	<div class="single-product mt-150 mb-150">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="single-product-img">
+
+
+
+
+						<figure id="zoomer" class="zoom" onmousemove="zoom(event)"
+							style="background-image: url(/product-image/<%=product.image[0]%>);width: 350px; height: 300px;">
+							<img id="main-image" style="width: 350px;height: 300px; object-fit: cover;"
+								src="/product-image/<%=product.image[0]%>"  />
+						</figure>
+
+
+
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="single-product-content">
+						<h3></h3>
+						<h3 class="font-weight-bold text-shadow text-truncate" style="color: rgb(49, 49, 49);">
+						 <%=product.productName%> 
+						</h3>
+						<h6 class="single-product-pricing text-danger font-weight-bold">
+							Price:<%=product.price%>
+						</h6>
+						
+						<p style="font-weight: 400;">
+							<span class=""  style="color: rgb(56, 55, 55); ">Category: </span> <%=product.category%>
+						</p>
+						<h6>
+							Discription:
+						</h6>
+						<p>
+							<%=product.discription%>
+						</p>
+						<div class="single-product-form" style="display: flex;width: 200px;justify-content: space-between;">
+							<a class="btn btn-outline-dark btn-square" style="border-radius: 5px;" href=""><i class="fa fa-shopping-cart"></i></a>
+                            <a class="btn btn-outline-dark btn-square" style="border-radius: 5px;" href=""><i class="far fa-heart"></i></a>
+							
+						</div>
+						
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end single product -->
+
+	<!-- more products -->
+	<!-- end more products -->
+
+	<!-- logo carousel -->
+	<!-- end logo carousel -->
+
+	<!-- footer -->
+	<div class="container-fluid bg-dark text-secondary mt-5 pt-5">
+		<div class="row px-xl-5 pt-5">
+			<div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
+				<h5 class="text-secondary text-uppercase mb-4">Get In Touch</h5>
+				<p class="mb-4">No dolore ipsum accusam no lorem. Invidunt sed clita kasd clita et et dolor sed dolor. Rebum tempor no vero est magna amet no</p>
+				<p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Street 12,Kannur,Kerala</p>
+				<p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>info@example.com</p>
+				<p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+91 7558949012</p>
+			</div>
+			<div class="col-lg-8 col-md-12">
+				<div class="row">
+					<div class="col-md-4 mb-5">
+						<h5 class="text-secondary text-uppercase mb-4">Quick Shop</h5>
+						<div class="d-flex flex-column justify-content-start">
+							<a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Home</a>
+							<a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
+							<a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Shop Detail</a>
+							<a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
+							<a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Checkout</a>
+							<a class="text-secondary" href="#"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
+						</div>
+					</div>
+					<div class="col-md-4 mb-5">
+						<h5 class="text-secondary text-uppercase mb-4">My Account</h5>
+						<div class="d-flex flex-column justify-content-start">
+							<a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Home</a>
+							<a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
+							<a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Shop Detail</a>
+							<a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
+							<a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Checkout</a>
+							<a class="text-secondary" href="#"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
+						</div>
+					</div>
+					<div class="col-md-4 mb-5">
+						<h5 class="text-secondary text-uppercase mb-4">Newsletter</h5>
+						<p>Duo stet tempor ipsum sit amet magna ipsum tempor est</p>
+						<form action="">
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="Your Email Address">
+								<div class="input-group-append">
+									<button class="btn btn-primary">Sign Up</button>
+								</div>
+							</div>
+						</form>
+						<h6 class="text-secondary text-uppercase mt-4 mb-3">Follow Us</h6>
+						<div class="d-flex">
+							<a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-twitter"></i></a>
+							<a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-facebook-f"></i></a>
+							<a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-linkedin-in"></i></a>
+							<a class="btn btn-primary btn-square" href="#"><i class="fab fa-instagram"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row border-top mx-xl-5 py-4" style="border-color: rgba(256, 256, 256, .1) !important;">
+			<div class="col-md-6 px-xl-0">
+				<p class="mb-md-0 text-center text-md-left text-secondary">
+					&copy; <a class="text-primary" href="#">Domain</a>. All Rights Reserved. Designed
+					by
+					<a class="text-primary" href="https://htmlcodex.com">E - SHOES</a>
+				</p>
+			</div>
+			<div class="col-md-6 px-xl-0 text-center text-md-right">
+				<img class="img-fluid" src="/user/img/card.jpg" alt="" style="height: 60px; width: 160px;">
+			</div>
+		</div>
+	</div>
+		<!-- end footer -->
+
+		<!-- copyright -->
+		<!-- end copyright -->
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="/user/lib/easing/easing.min.js"></script>
+<script src="/user/lib/owlcarousel/owl.carousel.min.js"></script>
+
+<!-- Contact Javascript File -->
+<script src="/user/mail/jqBootstrapValidation.min.js"></script>
+<script src="/user/mail/contact.js"></script>
+
+<!-- Template Javascript -->
+<script src="/user/js/main.js"></script>
+
+
+		<!-- <script src="/assets/js/jquery-1.11.3.min.js"></script>
+		<script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+		<script src="/assets/js/jquery.countdown.js"></script>
+		<script src="/assets/js/jquery.isotope-3.0.6.min.js"></script>
+		<script src="/assets/js/waypoints.js"></script>
+		<script src="/assets/js/owl.carousel.min.js"></script>
+		<script src="/assets/js/jquery.magnific-popup.min.js"></script>
+		<script src="/assets/js/jquery.meanmenu.min.js"></script>
+		<script src="/assets/js/sticker.js"></script>
+		<script src="/assets/js/main.js"></script> -->
+
+		<!-- ajax request -->
+		<!-- <script src="/assets/js/ajaxrequests.js"></script> -->
+		<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+		<script>
+
+			function offZoom(e) {
+				img.style.transformOrigin = `center center`;
+				img.style.transform = "scale(1)";
+			}
+			function zoom(e) {
+				var zoomer = e.currentTarget;
+				e.offsetX ? offsetX = e.offsetX : offsetX = e.touches[0].pageX
+				e.offsetY ? offsetY = e.offsetY : offsetX = e.touches[0].pageX
+				x = offsetX / zoomer.offsetWidth * 100
+				y = offsetY / zoomer.offsetHeight * 100
+				zoomer.style.backgroundPosition = x + '% ' + y + '%';
+			}
+		</script>
+
+
+		</body>
+
+		</html>
