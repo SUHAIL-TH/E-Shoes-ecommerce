@@ -283,15 +283,15 @@
                             <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
                             <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
                             
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-eye"></i></a>
+                            <a class="btn btn-outline-dark btn-square" href="/viewproduct/<%=product._id%>"><i class="fa fa-eye"></i></a>
                         </div>
                     </div>
                     <div class="text-center py-4">
-                        <h5 class="font-weight-bold"><%=product.productName%></h5>
+                        <h6 class="font-weight-bold text-shadow text-truncate"><%=product.productName%></h6>
                         <!-- <a class="h6 text-decoration-none text-truncate" href=""><%=product.productName%></a> -->
                         <div class="d-flex align-items-center justify-content-center mt-2">
                             <h5>₹ <%=product.price%></h5><h6 class="text-muted ml-2">
-                                <!-- <del>$123.00</del> -->
+                                <del>₹ 899</del>
                             </h6>
                         </div>
                         <div class="d-flex align-items-center justify-content-center mb-1">

@@ -17,6 +17,8 @@
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn1.vectorstock.com/i/1000x1000/32/60/shopping-cart-abstract-buy-speed-gold-logo-vector-15003260.jpg" rel="icon">
+
 
     <!-- Libraries Stylesheet -->
     <link href="/user/lib/animate/animate.min.css" rel="stylesheet">
@@ -114,11 +116,12 @@
                 </a>
                 <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 999;">
                     <div class="navbar-nav w-100">
-                        
-                        <a href="" class="nav-item nav-link">Men shoes</a>
-                        <a href="" class="nav-item nav-link">Women shoes</a>
-                        <a href="" class="nav-item nav-link">Kids shoes</a>
-                        
+
+                        <%categoryData.forEach((category)=>{%>
+                            <%if(category.status==true){%>
+                        <a href="" class="nav-item nav-link"><%=category.categoryName%></a>
+                                <%}%>
+                        <%})%>
                     </div>
                 </nav>
             </div>
@@ -133,13 +136,13 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
-                            <a href="index.html" class="nav-item nav-link active">Home</a>
-                            <a href="shop.html" class="nav-item nav-link">Shop</a>
+                            <a href="/" class="nav-item nav-link active">Home</a>
+                            <a href="/shop" class="nav-item nav-link">Shop</a>
                             <a href="detail.html" class="nav-item nav-link">Shop Detail</a>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages <i class="fa fa-angle-down mt-1"></i></a>
                                 <div class="dropdown-menu bg-primary rounded-0 border-0 m-0">
-                                    <a href="cart.html" class="dropdown-item">Shopping Cart</a>
+                                    <a href="/cart" class="dropdown-item">Shopping Cart</a>
                                     <a href="checkout.html" class="dropdown-item">Checkout</a>
                                 </div>
                             </div>
