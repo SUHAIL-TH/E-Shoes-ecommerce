@@ -24,7 +24,7 @@
                    
                    
                     <div class="table-responsive">
-                      <table class="table table-striped">
+                      <table class="table table-striped" id="table-setting">
                         <thead>
                           <tr>
                             <th> No</th>
@@ -61,7 +61,12 @@
                            <%}%>
                             
                           </td>
-                           <td><a href="/admin/deletecategory/<%=category._id%>" class="fa fa-trash "  style="font-size:20px;color:rgb(235, 14, 14) ; text-decoration: none;"></a></td>
+                           <td>
+                            <button class="fa fa-trash "  onclick="deletecategory('<%=category._id%>')" style="font-size:20px;color:rgb(235, 14, 14) ; text-decoration: none; background-color: rgba(240, 248, 255, 0); border: none;" >
+
+                            </button>
+                            <!-- <a href="/admin/deletecategory/<%=category._id%>" class="fa fa-trash "  style="font-size:20px;color:rgb(235, 14, 14) ; text-decoration: none;"></a> -->
+                          </td>
                            
                           </tr>
                           <%count++%>
@@ -84,5 +89,32 @@
       </div>
       
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      function deletecategory(id){
+        Swal.fire({
+  title: 'Are you sure?',
+  text: "do you want to delete this category?",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+  if (result.isConfirmed) {
+    Swal.fire(
+      
+      'Deleted!',
+      'Your file has been deleted.',
+      'success',
+      location.href=`/admin/deletecategory/${id}`
+     
+    )
+   
+  }
+})
+      }
+
+    </script>
   
     <%- include('../partials/admin_footer')%>
