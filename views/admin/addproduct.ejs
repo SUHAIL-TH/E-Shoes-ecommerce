@@ -23,19 +23,19 @@
                     <form class="forms-sample" action="/admin/addproduct" method="post" enctype="multipart/form-data">
                       <div class="form-group">
                         <label for="exampleInputName1">Name</label>
-                        <input type="text" class="form-control" id="name"  name="name" placeholder="Enter the product name">
+                        <input type="text" class="form-control" id="name"  name="name" placeholder="Enter the product name" required>
                       </div>
                       <div class="form-group">
                         <label for="">Price</label>
-                        <input type="text" class="form-control" id="price" name="price" placeholder="Enter the price">
+                        <input type="text" class="form-control" id="price" name="price" placeholder="Enter the price" required>
                       </div>
                       <div class="form-group">
                         <label for="">Discription</label>
-                        <input type="text" class="form-control" id="discription" name="discription" placeholder="Enter the discription">
+                        <input type="text" class="form-control" id="discription" name="discription" placeholder="Enter the discription" required>
                       </div>
                       <div class="form-group">
                         <label for="exampleSelectGender">Category</label>
-                        <select class="form-control" id="category" name="category">
+                        <select class="form-control" id="category" name="category" required >
                           <%if(categoryData.length>0){ %>
                           <%for(i=0;i<categoryData.length;i++){%>
                             <%if(categoryData[i].status==true){%>
@@ -56,7 +56,7 @@
                         <label>File upload</label>
                         
                         <div>
-                          <input type="file" id="image" name="image" class="form-control" multiple>
+                          <input type="file" id="image" name="image" class="form-control" multiple required>
 
                         </div>
                         
@@ -64,14 +64,14 @@
                       
                       <div class="form-group">
                         <label for="exampleInputCity1">Stock</label>
-                        <input type="text" class="form-control" id="stock" name="stock" placeholder="Enter the stock">
+                        <input type="text" class="form-control" id="stock" name="stock" placeholder="Enter the stock" required>
                       </div>
                       
                       <!-- <div class="form-group">
                         <label for="exampleTextarea1">Textarea</label>
                         <textarea class="form-control" id="exampleTextarea1" rows="4"></textarea>
                       </div> -->
-                      <button type="submit" class="btn btn-success mr-2">Submit</button>
+                      <button type="submit" onclick="addproduct()" class="btn btn-success mr-2">Submit</button>
                       <!-- <button class="btn btn-dark">Cancel</button> -->
                       <a href="/admin/product" class="btn btn-danger">Cancel</a>
                     </form>
@@ -97,5 +97,71 @@
       </div>
       <!-- page-body-wrapper ends -->
     </div>
+    
+    <script>
+     
+    
+      let name=document.getElementById("name")
+      let price=document.getElementById("price")
+      let discription=document.getElementById("discription")
+      let stock=document.getElementById("stock")
+
+      name.addEventListener("input",()=>{
+        if(name.value.trim()==''){
+          name.setCustomValidity("name cannot be null")
+        }else if(name.value.trim().length<=4){
+          name.setCustomValidity("minimum 4 letters required")
+
+        }
+        else{
+          name.setCustomValidity("")
+        }
+      })
+      price.addEventListener("input",()=>{
+        if (price.value.trim()==""){
+          price.setCustomValidity("price cannot be null")
+
+        }else{
+          price.setCustomValidity("")
+        }
+      })
+      discription.addEventListener("input",()=>{
+        if(discription.value.trim()==""){
+          discription.setCustomValidity("discription cannot be null")
+
+        }else{
+          discription.setCustomValidity("")
+        }
+      })
+      // image.addEventListener("input",()=>{
+      //   if(image.files.length===0){
+      //     image.setCustomValidity("image field cannot be empty")
+
+      //   }else{
+      //     image.setCustomValidity("")
+      //   }
+      // })
+      // if( document.getElementById("image").files.length == 0 ){
+      //     image.setCustomValidity("image field cannot be empty")
+      //  }else{
+      //   image.setCustomValidity("")
+      //  }
+      stock.addEventListener("input",()=>{
+        if(stock.value.trim()==""){
+          stock.setCustomValidity("stock field cannot be empty")
+
+        }else{
+          function addproduct(){
+          alert("product added successfully")
+ 
+      }
+          stock.setCustomValidity("")
+        
+
+        }
+      })
+     
+    </script>
+   
     <%- include('../partials/admin_footer')%>
    

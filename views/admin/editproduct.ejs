@@ -50,8 +50,12 @@
                         <label>File upload</label>
                         
                         <div>
+                          
                             <img src="/product-image/<%= productData.image[0]%>" alt="product image is here" style="width: 100px;height: auto;" id="imgView">
-                          <input type="file" id="image" name="image"  class="form-control" value="/product-image/<%= productData.image[0]%>" multiple>
+
+                         
+                            
+                          <input type="file" id="image" name="image"  class="form-control" onchange="viewImage(event)"  multiple>
 
                         </div>
                         
@@ -69,12 +73,12 @@
                       <button type="submit" class="btn btn-primary mr-2">Submit</button>
                       <a href="/admin/product" class="btn btn-dark">Cancel</a>
                     </form>
-                    <!-- <script>
+                    <script>
                         function viewImage(event){
                             document.getElementById("imgView").src=URL.createObjectURL(event.target.file[0])
                         }
 
-                    </script> -->
+                    </script>
                   </div>
                 </div>
               </div>
