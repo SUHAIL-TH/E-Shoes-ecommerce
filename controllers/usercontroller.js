@@ -4,6 +4,7 @@ const mailer = require("../middleware/otpValidation")
 const randomString=require("randomstring")
 const product=require("../model/productModel")
 const category = require("../model/categoryModel")
+const cart=require("../model/cartModel")
 const nodemailer=require("nodemailer")
 
 
@@ -24,7 +25,7 @@ const sendresetPasswordMail=async(name,email,token)=>{
             from: "eshoes518@gmail.com",
             to: email,
             subject: "Link for reset password",
-            html: '<p>Hi ..'+name+' plzee copy the link <a href="http://localhost:4000/resetpassword?token='+token+'">Reset</a> your password.</p>'
+            html: '<p>Hi ..'+name+' plzee copy the link in Browser and <a href="http://localhost:4000/resetpassword?token='+token+'">Reset</a> your password.</p>'
         }
         transporter.sendMail(mailOption,function(error,infor){
             if(error){
@@ -54,7 +55,7 @@ const home = async (req, res) => {
         if (session) {
             customer = true;
             res.render("user/home", { customer, acname ,productData,categoryData})
-        }
+        } 
         else {
             customer = false
             res.render("user/home", { customer, acname ,productData,categoryData})
@@ -230,6 +231,7 @@ const viewproduct=async(req,res)=>{
         let categoryData=await category.find()
         let acname = await user.findOne({ email: session })
         let productData=await product.findOne({_id:id})
+        
         res.render("user/viewproduct",{categoryData,acname,product:productData})
         
     } catch (error) {
@@ -281,6 +283,60 @@ const resetpassword=async(req,res)=>{
     }
 
 }
+const categoryproduct=async(req,res)=>{
+    try {
+        let id=req.query.id
+        let session=req.session.user
+        let categoryData=await category.find( )
+        let [categoryDatas]=await category.find( {_id:id})
+        let acname = await user.findOne({ email: session })
+        let products=await product.find({category:categoryDatas.categoryName})
+        res.render("user/categoryproduct",{acname,categoryData,products})
+        
+    } catch (error) {
+        res.render("user/500")
+        console.log(error);
+    }
+}
+const addtocart=async(req,res)=>{
+    try {
+        let id=req.params.id
+        let productData=await product.findOne({_id:id})
+        let userData=await user.findOne({email:req.session.user})
+        let cartData=await cart.findOne({user:userData._id})
+        console.log(cartData);
+        if(cartData){
+            
+            let proExit=await cartData.product.findIndex((product)=>product.productId==id
+            )
+            console.log(proExit);
+            if(proExit!=-1){
+                await cart.updateOne({"product.productId":productData._id},{$inc:{'product.$.quantity':1}})
+               
+            }else{
+                await cart.findOneAndUpdate({user:userData._id} ,{$push:{product:{productId:productData._id
+                    
+                }}} )
+            }
+
+        }else{
+            let carts=new cart({
+                user:userData._id,
+                product:[{productId:productData._id}]
+
+            })
+
+            await carts.save()
+            console.log("new product added successfully");
+
+        }
+
+        
+    } catch (error) {
+        res.render("user/500")
+        console.log(error);
+    }
+}
 
 
 
@@ -298,6 +354,8 @@ module.exports = {
     viewproduct,
     getcart,
     getresetpassword,
-    resetpassword
+    resetpassword,
+    categoryproduct,
+    addtocart
 
 }

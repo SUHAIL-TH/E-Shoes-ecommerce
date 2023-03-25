@@ -26,4 +26,8 @@ userRouter.get("/cart",blockeduser,verifyLogin.verifyUserLogin,userController.ge
 
 userRouter.get("/viewproduct/:id",userController.viewproduct)
 
+userRouter.get("/categoryproduct",userController.categoryproduct)
+
+userRouter.get("/addtocart/:id",verifyLogin.verifyUserLogin,userController.addtocart)
+
 module.exports=userRouter
