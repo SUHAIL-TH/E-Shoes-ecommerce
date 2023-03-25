@@ -3,7 +3,7 @@ const admin=require("../model/adminModel")
 const user=require("../model/userModel")
 const product=require("../model/productModel")
 const category=require("../model/categoryModel")
-
+const uc=require("upper-case")
 
 
 
@@ -213,13 +213,25 @@ const addcategory=(req,res)=>{
 }
 const postaddcategory=async(req,res)=>{
     try {
+        let categoryname= uc.upperCase(req.body.category) 
+        let categoryData=await category.findOne({categoryName:categoryname})
+        
         const categorys=new category({
-            categoryName:req.body.category 
+            categoryName:categoryname
 
         })
-      
-        await categorys.save()
-        res.render("admin/addcategory")
+        
+        if(categoryData){
+            res.render("admin/addcategory",{error:"Category already exsisted"})
+          
+            
+
+        }else{
+            await categorys.save()
+            res.render("admin/addcategory",{error:"Category added successfully"})
+        }
+       
+       
 
         
     } catch (error) {
