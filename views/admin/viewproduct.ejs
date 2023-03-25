@@ -20,13 +20,17 @@
             <div class="card">
               <div class="card-body">
                 <div class="table-responsive">
+                  
+                  <%if(products.length>0){%>
+                    
+                
                   <table class="table table-striped" id="table-setting">
                     <thead>
                       <tr>
                         <th>No</th>
                         <th>Name</th>
                         <th>Image</th>
-                        <!-- <th>Discription</th> -->
+                        <!-- <th>Discription</th> --> 
                         <th>Category</th>
                         <th>Price</th>
                         <th>Stock</th>
@@ -35,7 +39,9 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <% let count=1%> <% products.forEach((product)=>{ %>
+                      
+                      <% let count=1%> 
+                      <% products.forEach((product)=>{ %>
 
                       <tr>
                         <td><%=count%></td>
@@ -88,6 +94,12 @@
                       <%count++%> <% })%>
                     </tbody>
                   </table>
+                  <% }else{%>
+                      
+                    <h5 class="font-weight-bold text-center  ">Product  Table is empty</h5>
+
+                    <%}%>
+                 
                 </div>
               </div>
             </div>
@@ -131,15 +143,7 @@
   confirmButtonText: 'Yes, delete it!'
 }).then((result) => {
   if (result.isConfirmed) {
-    Swal.fire(
-      
-      'Deleted!',
-      'Your file has been deleted.',
-      'success',
-      location.href=`/admin/deleteproduct/${id}`
-     
-    )
-   
+      location.href=`/admin/deleteproduct/${id}` 
   }
 })
   }
