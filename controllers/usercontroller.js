@@ -51,18 +51,27 @@ const home = async (req, res) => {
     let productData = await product.find()
     let categoryData = await category.find()
 
+   let count=0;
+    
+    
+  
+
     try {
         if (session) {
+            let [cartcount]=await cart.aggregate([{$match:{user:acname._id}}])
+            
+             count= cartcount.product.length
             customer = true;
-            res.render("user/home", { customer, acname, productData, categoryData })
+            res.render("user/home", { customer, acname, productData, categoryData,count })
         }
         else {
             customer = false
-            res.render("user/home", { customer, acname, productData, categoryData })
+            res.render("user/home", { customer, acname, productData, categoryData,count })
         }
 
     } catch (error) {
         res.render("user/500")
+        console.log(error);
 
     }
 
@@ -224,21 +233,21 @@ const getshop = async (req, res) => {
 
     }
 }
-const viewproduct = async (req, res) => {
-    try {
-        let id = req.params.id
-        session = req.session.user
-        let categoryData = await category.find()
-        let acname = await user.findOne({ email: session })
-        let productData = await product.findOne({ _id: id })
+// const viewproduct = async (req, res) => {
+//     try {
+//         let id = req.params.id
+//         session = req.session.user
+//         let categoryData = await category.find()
+//         let acname = await user.findOne({ email: session })
+//         let productData = await product.findOne({ _id: id })
 
-        res.render("user/viewproduct", { categoryData, acname, product: productData })
+//         res.render("user/viewproduct", { categoryData, acname, product: productData })
 
-    } catch (error) {
-        res.render("user/500")
-        console.log(error);
-    }
-}
+//     } catch (error) {
+//         res.render("user/500")
+//         console.log(error);
+//     }
+// }
 const getcart = async (req, res) => {
     try {
         let session = req.session.user
@@ -330,24 +339,24 @@ const resetpassword = async (req, res) => {
     }
 
 }
-const categoryproduct = async (req, res) => {
-    try {
-        let id = req.query.id
-        let session = req.session.user
+// const categoryproduct = async (req, res) => {
+//     try {
+//         let id = req.query.id
+//         let session = req.session.user
     
        
       
-        let categoryData = await category.find()
-        let [categoryDatas] = await category.find({ _id: id })
-        let acname = await user.findOne({ email: session })
-        let products = await product.find({ category: categoryDatas.categoryName })
-        res.render("user/categoryproduct", { acname, categoryData, products })
+//         let categoryData = await category.find()
+//         let [categoryDatas] = await category.find({ _id: id })
+//         let acname = await user.findOne({ email: session })
+//         let products = await product.find({ category: categoryDatas.categoryName })
+//         res.render("user/categoryproduct", { acname, categoryData, products })
 
-    } catch (error) {
-        res.render("user/500")
-        console.log(error);
-    }
-}
+//     } catch (error) {
+//         res.render("user/500")
+//         console.log(error);
+//     }
+// }
 const addtocart = async (req, res) => {
     try {
         let id = req.params.id
@@ -405,11 +414,11 @@ module.exports = {
     forgetpassword,
     postforgetpassword,
     getshop,
-    viewproduct,
+    // viewproduct,
     getcart,
     getresetpassword,
     resetpassword,
-    categoryproduct,
+    // categoryproduct,
     addtocart
 
 }

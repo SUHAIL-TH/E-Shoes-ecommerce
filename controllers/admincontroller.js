@@ -88,194 +88,196 @@ const unblockuser=async(req,res)=>{
         console.log(error);
     }
 }  
-const viewproduct=async(req,res)=>{ 
-    try { 
-        let products=await product.find()
-        res.render("admin/viewproduct",{products})
+// const viewproduct=async(req,res)=>{ 
+//     try { 
+//         let products=await product.find()
+//         res.render("admin/viewproduct",{products})
              
-    } catch (error) {
-        res.render("admin/500") 
-        console.log(error);     
-    }
-}
-const addproduct=async(req,res)=>{
-    try {
-        let categoryData=await category.find()
+//     } catch (error) {
+//         res.render("admin/500") 
+//         console.log(error);     
+//     }
+// }
+// const addproduct=async(req,res)=>{
+//     try {
+//         let categoryData=await category.find()
         
-        res.render("admin/addproduct",{categoryData})
+//         res.render("admin/addproduct",{categoryData})
         
-    } catch (error) {
-        console.log(error);
-        res.render("admin/500")        
-    }
-}
-const postaddproduct=async(req,res)=>{
-    try {
-        const image=[]
-        for(i=0;i<req.files.length;i++){
-            image[i]=req.files[i].filename;
-        }
-        const products= new product({
-            productName:req.body.name,
-            price:req.body.price,
-            image:image,
-            discription:req.body.discription,
-            category:req.body.category,
-            stock:req.body.stock
+//     } catch (error) {
+//         console.log(error);
+//         res.render("admin/500")        
+//     }
+// }
+// const postaddproduct=async(req,res)=>{
+//     try {
+//         const image=[]
+//         for(i=0;i<req.files.length;i++){
+//             image[i]=req.files[i].filename;
+//         }
+//         const products= new product({
+//             productName:req.body.name,
+//             price:req.body.price,
+//             image:image,
+//             discription:req.body.discription,
+//             category:req.body.category,
+//             stock:req.body.stock
 
-        } )
+//         } )
      
-        await products.save()
-        res.redirect("/admin/addproduct")
+//         await products.save()
+//         res.redirect("/admin/addproduct")
         
-    } catch (error) {
-        res.render("admin/500")
-        console.log(error);
-    }
-}
-const editproduct=async(req,res)=>{
-    try {
-        let id=req.params.id
-        let categoryData=await category.find()
-        let productData= await product.findOne({_id:id})
+//     } catch (error) {
+//         res.render("admin/500")
+//         console.log(error);
+//     }
+// }
+// const editproduct=async(req,res)=>{
+//     try {
+//         let id=req.params.id
+//         let categoryData=await category.find()
+//         let productData= await product.findOne({_id:id})
       
-        res.render("admin/editproduct",{productData,categoryData})
+//         res.render("admin/editproduct",{productData,categoryData})
 
         
-    } catch (error) {
-        res.render("admin/500")
-    }
-}
-const posteditproduct=async(req,res)=>{
-    try {
-        let id=req.params.id
-        if(req.files.length!=0){
-            const image=[]
-        for(i=0;i<req.files.length;i++){
-            image[i]=req.files[i].filename
-        }
-        await product.findByIdAndUpdate({_id:id},{$set:
-            {productName:req.body.name,
-                price:req.body.price,
-                category:req.body.category,
-                discription:req.body.discription,
-                stock:req.body.stock,
-                image:image
-            }})
+//     } catch (error) {
+//         res.render("admin/500")
+//     }
+// }
+// const posteditproduct=async(req,res)=>{
+//     try {
+//         let id=req.params.id
+//         if(req.files.length!=0){
+//             const image=[]
+//         for(i=0;i<req.files.length;i++){
+//             image[i]=req.files[i].filename
+//         }
+//         await product.findByIdAndUpdate({_id:id},{$set:
+//             {productName:req.body.name,
+//                 price:req.body.price,
+//                 category:req.body.category,
+//                 discription:req.body.discription,
+//                 stock:req.body.stock,
+//                 status:req.body.status,
+//                 image:image
+//             }})
 
-        }else{
-            await product.findByIdAndUpdate({_id:id},{$set:
-                {productName:req.body.name,
-                    price:req.body.price,
-                    category:req.body.category,
-                    discription:req.body.discription,
-                    stock:req.body.stock,
+//         }else{
+//             await product.findByIdAndUpdate({_id:id},{$set:
+//                 {productName:req.body.name,
+//                     price:req.body.price,
+//                     category:req.body.category,
+//                     discription:req.body.discription,
+//                     stock:req.body.stock,
+//                     status:req.body.status,
                     
-                }})
+//                 }})
 
-        }
+//         }
         
-        res.redirect("/admin/product")
+//         res.redirect("/admin/product")
         
         
-    } catch (error) {
-        res.render(admin/500)
-    }
-}
-const deleteproduct=async(req,res)=>{
-    try {
-        let id=req.params.id
-        await product.deleteOne({_id:id})
-        res.redirect("/admin/product")
+//     } catch (error) {
+//         res.render(admin/500)
+//     }
+// }
+// const deleteproduct=async(req,res)=>{
+//     try {
+//         let id=req.params.id
+//         await product.deleteOne({_id:id})
+//         res.redirect("/admin/product")
         
-    } catch (error) {
-        res.render("admin/500")
-    }
-}
-const viewcategory=async(req,res)=>{
-    try {
-        let categoryData=await category.find()
+//     } catch (error) {
+//         res.render("admin/500")
+//     }
+// }
+// const viewcategory=async(req,res)=>{
+//     try {
+//         let categoryData=await category.find()
         
-        res.render("admin/viewcategory",{categoryData})
+//         res.render("admin/viewcategory",{categoryData})
         
-    } catch (error) {
-        res.render("admin/500")
-    }
-}
-const addcategory=(req,res)=>{
-    try {
-        res.render("admin/addcategory")
+//     } catch (error) {
+//         res.render("admin/500")
+//     }
+// }
+// const addcategory=(req,res)=>{
+//     try {
+//         res.render("admin/addcategory")
         
-    } catch (error) {
-        res.render("admin/500")
+//     } catch (error) {
+//         res.render("admin/500")
         
-    }
-}
-const postaddcategory=async(req,res)=>{
-    try {
-        let categoryname= uc.upperCase(req.body.category) 
-        let categoryData=await category.findOne({categoryName:categoryname})
+//     }
+// }
+// const postaddcategory=async(req,res)=>{
+//     try {
+//         let categoryname= uc.upperCase(req.body.category) 
+//         let categoryData=await category.findOne({categoryName:categoryname})
         
-        const categorys=new category({
-            categoryName:categoryname
+//         const categorys=new category({
+//             categoryName:categoryname
 
-        })
+//         })
         
-        if(categoryData){
-            res.render("admin/addcategory",{error:"Category already exsisted"})
+//         if(categoryData){
+//             res.render("admin/addcategory",{error:"Category already exsisted"})
           
             
 
-        }else{
-            await categorys.save()
-            res.render("admin/addcategory",{error:"Category added successfully"})
-        }
+//         }else{
+//             await categorys.save()
+//             res.render("admin/addcategory",{error:"Category added successfully"})
+//         }
        
        
 
         
-    } catch (error) {
-        res.render("admin/500")
-        console.log(error);
+//     } catch (error) {
+//         res.render("admin/500")
+//         console.log(error);
         
-    }
-}
-const deletecategory=async(req,res)=>{
-    try {
-        let id=req.params.id
-        await category.deleteOne({_id:id})
-        res.redirect("/admin/viewcategory")
+//     }
+// }
+// const deletecategory=async(req,res)=>{
+//     try {
+//         let id=req.params.id
+//         await category.deleteOne({_id:id})
+//         res.redirect("/admin/viewcategory")
 
         
-    } catch (error) {
-        res.render("admin/500")        
-    }
-}
-const truecategory=async(req,res)=>{
-    try {
-        let id =req.params.id
-        await category.updateOne({_id:id},{$set:{status:true}})
-        res.redirect("/admin/viewcategory")
+//     } catch (error) {
+//         res.render("admin/500")        
+//     }
+// }
+// const truecategory=async(req,res)=>{
+//     try {
+//         let id =req.params.id
+//         await category.updateOne({_id:id},{$set:{status:true}})
+//         res.redirect("/admin/viewcategory")
         
-    } catch (error) {
-        res.render("admin/500")
+//     } catch (error) {
+//         res.render("admin/500")
         
-    }
+//     }
 
-}
-const falsecategory=async(req,res)=>{
-    try {
-        let id =req.params.id
-        console.log(id); 
-        await category.updateOne({_id:id},{$set:{status:false}})
-        res.redirect("/admin/viewcategory")
+// }
+// const falsecategory=async(req,res)=>{
+//     try {
+//         let id =req.params.id
+//         console.log(id); 
+//         await category.updateOne({_id:id},{$set:{status:false}})
+//         res.redirect("/admin/viewcategory")
         
-    } catch (error) {
-        res.render("admin/500")
+//     } catch (error) {
+//         res.render("admin/500")
         
-    }
+//     }
 
-}
+// }
 
 
 module.exports={
@@ -285,19 +287,19 @@ module.exports={
     viewusers,
     blockuser,
     unblockuser,
-    viewproduct,
     logout ,
-    addproduct,
-    postaddproduct,
-    editproduct,
-    posteditproduct,
-    deleteproduct,
-    viewcategory,
-    addcategory,
-    postaddcategory,
-    deletecategory, 
-    truecategory,
-    falsecategory,
+    // viewproduct,
+    // addproduct,
+    // postaddproduct,
+    // editproduct,
+    // posteditproduct,
+    // deleteproduct,
+    // viewcategory,
+    // addcategory,
+    // postaddcategory,
+    // deletecategory, 
+    // truecategory,
+    // falsecategory,
     
 
      
