@@ -59,10 +59,18 @@ const home = async (req, res) => {
     try {
         if (session) {
             let [cartcount]=await cart.aggregate([{$match:{user:acname._id}}])
-            
-             count= cartcount.product.length
             customer = true;
-            res.render("user/home", { customer, acname, productData, categoryData,count })
+            if(cartcount){
+                count= cartcount.product.length
+               
+                res.render("user/home", { customer, acname, productData, categoryData,count })
+
+            }else{
+                 res.render("user/home", { customer, acname, productData, categoryData,count })
+
+            }
+            
+           
         }
         else {
             customer = false
@@ -383,7 +391,8 @@ const addtocart = async (req, res) => {
                 })
                 console.log("product added to the cart");
             }
-            res.redirect("/")
+            // res.redirect("/")
+            res.json({status:true})
         } else {
             let carts = new cart({
                 user: acname._id,
@@ -391,7 +400,8 @@ const addtocart = async (req, res) => {
             })
             await carts.save()
             console.log("new product added successfully");
-            res.redirect("/")
+            // res.redirect("/")
+            res.json({status:true})
         }
 
 
