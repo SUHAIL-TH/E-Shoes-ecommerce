@@ -47,11 +47,27 @@
                         </select>
                       </div>
                       <div class="form-group">
+                        <label for="exampleSelectGender">Status</label>
+                        <select class="form-control" id="status" name="status">
+                            
+                                <option>true</option>
+                                <option>false</option>
+  
+                           
+                          
+                        </select>
+                      </div>
+                      <div class="form-group">
                         <label>File upload</label>
                         
                         <div>
                           
                             <img src="/product-image/<%= productData.image[0]%>" alt="product image is here" style="width: 100px;height: auto;" id="imgView">
+                            <img src="/product-image/<%= productData.image[1]%>" alt="" style="width: 100px;height: auto;" id="imgView">
+                            <img src="/product-image/<%= productData.image[2]%>" alt="" style="width: 100px;height: auto;" id="imgView">
+                            <img src="/product-image/<%= productData.image[3]%>" alt="" style="width: 100px;height: auto;" id="imgView">
+                            <img src="/product-image/<%= productData.image[4]%>" alt="" style="width: 100px;height: auto;" id="imgView">
+                            <img src="/product-image/<%= productData.image[5]%>" alt="" style="width: 100px;height: auto;" id="imgView">
 
                          
                             
@@ -73,15 +89,19 @@
                       <button type="submit" class="btn btn-primary mr-2">Submit</button>
                       <a href="/admin/product" class="btn btn-dark">Cancel</a>
                     </form>
-                    <script>
-                        function viewImage(event){
-                            document.getElementById("imgView").src=URL.createObjectURL(event.target.file[0])
-                        }
-
-                    </script>
+                  
                   </div>
                 </div>
               </div>
+              <script>
+                function viewImage(event){
+                 
+                    document.getElementById("imgView").src=URL.createObjectURL(event.target.files [i])
+
+                   
+                }
+
+            </script>
               
               
               
