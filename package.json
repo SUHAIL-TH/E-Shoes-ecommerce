@@ -22,6 +22,7 @@
     "nodemailer": "^6.9.1",
     "nodemon": "^2.0.22",
     "randomstring": "^1.2.3",
+    "sharp": "^0.32.0",
     "upper-case": "^2.0.2"
   }
 }

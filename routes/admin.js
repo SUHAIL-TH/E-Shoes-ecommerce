@@ -1,6 +1,8 @@
 const express=require("express")
 const adminRouter=express()
 const adminController=require('../controllers/admincontroller')
+const productController=require("../controllers/productController")
+const categoryController=require("../controllers/categoryController")
 const verifyAdmin=require("../middleware/session")
 const multer=require("multer")
 const path=require("path")
@@ -42,19 +44,20 @@ adminRouter.get("/viewusers",verifyAdmin.verifyLoginAdmin,adminController.viewus
 adminRouter.get("/blockuser/:id",adminController.blockuser)
 adminRouter.get("/unblockuser/:id",adminController.unblockuser)
 
-adminRouter.get("/product",verifyAdmin.verifyLoginAdmin,adminController.viewproduct) 
-adminRouter.get("/addproduct",verifyAdmin.verifyLoginAdmin,adminController.addproduct)
-adminRouter.post("/addproduct",verifyAdmin.verifyLoginAdmin,upload.array("image",5),adminController.postaddproduct)
-adminRouter.get("/editproduct/:id",verifyAdmin.verifyLoginAdmin,adminController.editproduct)
-adminRouter.post("/editproduct/:id",verifyAdmin.verifyLoginAdmin,upload.array("image",5),adminController.posteditproduct)
-adminRouter.get("/deleteproduct/:id",verifyAdmin.verifyLoginAdmin,adminController.deleteproduct)
+adminRouter.get("/product",verifyAdmin.verifyLoginAdmin,productController.viewproduct) 
+adminRouter.get("/addproduct",verifyAdmin.verifyLoginAdmin,productController.addproduct)
+adminRouter.post("/addproduct",verifyAdmin.verifyLoginAdmin,upload.array("image",5),productController.postaddproduct)
+adminRouter.get("/editproduct/:id",verifyAdmin.verifyLoginAdmin,productController.editproduct)
+adminRouter.post("/editproduct/:id",verifyAdmin.verifyLoginAdmin,upload.array("image",5),productController.posteditproduct)
+adminRouter.get("/deleteproduct/:id",verifyAdmin.verifyLoginAdmin,productController.deleteproduct)
 
-adminRouter.get("/addcategory",verifyAdmin.verifyLoginAdmin,adminController.addcategory)
-adminRouter.get("/viewcategory",verifyAdmin.verifyLoginAdmin,adminController.viewcategory )
-adminRouter.post("/addcategory",verifyAdmin.verifyLoginAdmin,adminController.postaddcategory)
-adminRouter.get("/deletecategory/:id",verifyAdmin.verifyLoginAdmin,adminController.deletecategory)
-adminRouter.get("/truecategory/:id",verifyAdmin.verifyLoginAdmin,adminController.truecategory)
-adminRouter.get("/falsecategory/:id",verifyAdmin.verifyLoginAdmin,adminController.falsecategory)
+adminRouter.get("/addcategory",verifyAdmin.verifyLoginAdmin,categoryController.addcategory)
+adminRouter.get("/viewcategory",verifyAdmin.verifyLoginAdmin,categoryController.viewcategory )
+adminRouter.post("/addcategory",verifyAdmin.verifyLoginAdmin,categoryController.postaddcategory)
+adminRouter.get("/deletecategory/:id",verifyAdmin.verifyLoginAdmin,categoryController.deletecategory)
+adminRouter.get("/truecategory/:id",verifyAdmin.verifyLoginAdmin,categoryController.truecategory)
+adminRouter.get("/falsecategory/:id",verifyAdmin.verifyLoginAdmin,categoryController.falsecategory)
+
 
 
 
