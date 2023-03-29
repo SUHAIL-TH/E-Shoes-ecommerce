@@ -1,4 +1,4 @@
-<%- include("../partials/admin_header")%>
+ <%- include("../partials/admin_header")%>
     <div class="container-scroller">
       <!-- partial:../../partials/_sidebar.html -->
       <%- include('../partials/admin_sidebar')%>
@@ -20,7 +20,7 @@
                 <div class="card">
                   <div class="card-body">
                     
-                    <form class="forms-sample" action="/admin/addproduct" method="post" enctype="multipart/form-data">
+                    <form class="forms-sample" id="myForm" action="/admin/addproduct" method="post" enctype="multipart/form-data">
                       <div class="form-group">
                         <label for="exampleInputName1">Name</label>
                         <input type="text" class="form-control" id="name"  name="name" placeholder="Enter the product name" required>
@@ -151,14 +151,17 @@
           stock.setCustomValidity("stock field cannot be empty")
 
         }else{
-          function addproduct(){
-          alert("product added successfully")
- 
-      }
+       
           stock.setCustomValidity("")
         
 
         }
+      })
+      const form = document.getElementById("myForm")
+      form.addEventListener("submit",(event)=>{
+        event.preventDefault();
+        alert("Add Product")
+        form.submit()
       })
      
     </script>

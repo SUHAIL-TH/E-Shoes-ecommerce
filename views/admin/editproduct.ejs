@@ -62,7 +62,7 @@
                         
                         <div>
                           
-                            <img src="/product-image/<%= productData.image[0]%>" alt="product image is here" style="width: 100px;height: auto;" id="imgView">
+                            <img src="/product-image/<%= productData.image[0]%>" alt="" style="width: 100px;height: auto;" id="imgView">
                             <img src="/product-image/<%= productData.image[1]%>" alt="" style="width: 100px;height: auto;" id="imgView">
                             <img src="/product-image/<%= productData.image[2]%>" alt="" style="width: 100px;height: auto;" id="imgView">
                             <img src="/product-image/<%= productData.image[3]%>" alt="" style="width: 100px;height: auto;" id="imgView">
@@ -71,7 +71,7 @@
 
                          
                             
-                          <input type="file" id="image" name="image"  class="form-control" onchange="viewImage(event)"  multiple>
+                          <input type="file" id="image" name="image"  class="form-control" onchange="viewImage(event)"  multiple accept="image/*">
 
                         </div>
                         
@@ -96,7 +96,7 @@
               <script>
                 function viewImage(event){
                  
-                    document.getElementById("imgView").src=URL.createObjectURL(event.target.files [i])
+                    document.getElementById("imgView").src=URL.createObjectURL(event.target.files[0])
 
                    
                 }
