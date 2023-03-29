@@ -6,6 +6,7 @@ const product = require("../model/productModel")
 const category = require("../model/categoryModel")
 const cart = require("../model/cartModel")
 const nodemailer = require("nodemailer")
+const { isValidObjectId } = require("mongoose")
 
 
 let name
@@ -48,7 +49,7 @@ const sendresetPasswordMail = async (name, email, token) => {
 const home = async (req, res) => {
     let session = req.session.user;
     let acname = await user.findOne({ email: session })
-    let productData = await product.find()
+    let productData = await product.find().limit(8)
     let categoryData = await category.find()
 
    let count=0;
@@ -241,6 +242,33 @@ const getshop = async (req, res) => {
 
     }
 }
+const profile=async(req,res)=>{
+    try {
+        
+        let userData=await user.findOne({email:req.session.user})
+        res.render("user/userprofile",{userData})
+    } catch (error) {
+        res.render("user/500")
+    }
+}
+const postprofile=async(req,res)=>{
+    try {
+       
+        let name=req.body.name
+        let email=req.body.email
+        let phone=req.body.phone
+        let password=await bcrypt.hash(req.body.password, 10)
+       
+        
+        await user.updateOne({email:req.session.user},{$set:{name:name,email:email,phone:phone,password:password}})
+
+        res.redirect("/")
+
+        
+    } catch (error) {
+        res.render("user/500")
+    }
+}
 // const viewproduct = async (req, res) => {
 //     try {
 //         let id = req.params.id
@@ -256,8 +284,29 @@ const getshop = async (req, res) => {
 //         console.log(error);
 //     }
 // }
+
+
+// const categoryproduct = async (req, res) => {
+//     try {
+//         let id = req.query.id
+//         let session = req.session.user
+    
+       
+      
+//         let categoryData = await category.find()
+//         let [categoryDatas] = await category.find({ _id: id })
+//         let acname = await user.findOne({ email: session })
+//         let products = await product.find({ category: categoryDatas.categoryName })
+//         res.render("user/categoryproduct", { acname, categoryData, products })
+
+//     } catch (error) {
+//         res.render("user/500")
+//         console.log(error);
+//     }
+// }
 const getcart = async (req, res) => {
     try {
+        var Total=0
         let session = req.session.user
         let categoryData = await category.find()
         let acname = await user.findOne({ email: session })
@@ -277,34 +326,47 @@ const getcart = async (req, res) => {
     //  ])
     //     console.log(cartData[1].product);
 
-    let cartData=await cart.findOne({user:acname._id}).populate("product.productId")
-    console.log(cartData);
-    if(cartData){
-       let total=await cart.aggregate([{
-            $match:{
-                user:acname._id
-            }
-        },
-        {
-            $unwind:"$product"
-        },{
-        $project:{
-            price:"$product.price",quantity:"$product.quantity"
-        }
-        },
-        {
-            $group:{
-                _id:null,
-                total:{$sum:{$multiply:["$price","$quantity"]}}
-            }
-        }
-    ])
-    var Total=total[0].total  
-    console.log(Total);
-        res.render("user/cart", { acname, categoryData,cartData,Total})
+    
 
-    }else{
-        res.render("user/cart", { acname, categoryData,})
+    let cartData=await cart.findOne({user:acname._id}).populate("product.productId")
+    
+    console.log(cartData  );
+    if(cartData){
+        if(cartData.product!=0){
+            let total=await cart.aggregate([{
+                $match:{
+                    user:acname._id
+                }
+            },
+            {
+                $unwind:"$product"
+            },{
+            $project:{
+                price:"$product.price",quantity:"$product.quantity"
+            }
+            },
+            {
+                $group:{
+                    _id:null,
+                    total:{$sum:{$multiply:["$price","$quantity"]}}
+                }
+            }
+        ])
+         Total=total[0].total  
+         console.log(Total);
+            res.render("user/cart", { acname, categoryData,cartData,Total})
+    
+        }else{
+       console.log("hii");
+            res.render("user/cart", { acname, categoryData,cartData,Total})
+    
+    
+        }
+
+        }
+        else{
+       
+        res.render("user/cart", { acname, categoryData,cartData,Total})
 
 
     }
@@ -347,24 +409,7 @@ const resetpassword = async (req, res) => {
     }
 
 }
-// const categoryproduct = async (req, res) => {
-//     try {
-//         let id = req.query.id
-//         let session = req.session.user
-    
-       
-      
-//         let categoryData = await category.find()
-//         let [categoryDatas] = await category.find({ _id: id })
-//         let acname = await user.findOne({ email: session })
-//         let products = await product.find({ category: categoryDatas.categoryName })
-//         res.render("user/categoryproduct", { acname, categoryData, products })
 
-//     } catch (error) {
-//         res.render("user/500")
-//         console.log(error);
-//     }
-// }
 const addtocart = async (req, res) => {
     try {
         let id = req.params.id
@@ -410,7 +455,96 @@ const addtocart = async (req, res) => {
         console.log(error);
     }
 }
+const changeproductquantity=async(req,res,next)=>{
+    try {
+       
+        let cartId=req.body.cart
+        let proId=req.body.product
+        let count=parseInt(req.body.count)
+        let quantity=req.body.quantity
 
+      
+      
+        
+        
+        
+            
+           if(count==-1 &quantity==1) {
+            await cart.updateOne({_id:cartId,"product._id":proId},{
+                $pull:{product:{_id:proId}}
+            })
+            res.json({quantity:true})
+
+           }else{
+            
+           
+            await cart.updateOne({_id:cartId,"product._id":proId},{$inc:{"product.$.quantity":count}})
+           res.json({success:true})
+           }
+    } catch (error) {
+        console.log(error);
+        res.render("admin/500")
+        
+    }
+
+}
+const checkout=async(req,res,next)=>{
+    try {
+        let total=req.query.total
+
+        let categoryData = await category.find()
+        let acname = await user.findOne({ email:req.session.user })
+        let productData = await product.find()
+        res.render("user/checkout", { product: productData, acname, categoryData,total })
+       
+    } catch (error) {
+        res.render("user/500")
+    }
+}
+const removeproduct=async(req,res)=>{
+    try {
+        let cartId=req.body.cart
+        let proId=req.body.product
+        
+        console.log("hello suhail");
+
+        await cart.updateOne({_id:cartId,"product._id":proId},{
+            $pull:{product:{_id:proId}}
+        })       
+         res.json({remove:true})
+
+
+
+        
+    } catch (error) {
+        res.render(user/500)
+        console.log(error);
+    }
+}
+const addaddress=async(req,res)=>{
+    try {
+        let address=req.body
+        const data = await user.findOneAndUpdate({email:req.session.user},{$push:{address:{name:address.name,housename:address.housename,city:address.city,district:address.discrict,phone:address.phone,state:address.state}}})
+        
+        res.redirect("/checkout")
+        
+    } catch (error) {
+        res.render("user/500")
+        console.log(error);
+    }
+}
+const deleteaddress=async(req,res)=>{
+    try {
+        let id=req.params.id
+        await user.findOneAndUpdate({email:req.session.user},{$pull:{address:{_id:id}}})
+        res.redirect("/checkout")
+        
+    } catch (error) {
+        console.log(error);
+        res.render("user/500")
+    }
+
+}
 
 
 module.exports = {
@@ -425,10 +559,18 @@ module.exports = {
     postforgetpassword,
     getshop,
     // viewproduct,
+    // categoryproduct,
     getcart,
     getresetpassword,
     resetpassword,
-    // categoryproduct,
-    addtocart
+    addtocart,
+    changeproductquantity,
+    profile,
+    postprofile,
+    checkout,
+    removeproduct,
+    addaddress,
+    deleteaddress
+    
 
 }

@@ -17,27 +17,54 @@
                 <div class="card">
                   <div class="card-body">
                    
-                    <form class="forms-sample" action="/admin/addcategory" method="post">
+                    <form class="forms-sample" id="catform" action="/admin/addcategory" method="post">
                       <div class="form-group">
                         <label for="exampleInputUsername1">Category Name</label>
-                        <input type="text" class="form-control" id="category" name="category" placeholder="Enter the category name" required>
+
+                        <input type="text" class="form-control" id="catname" name="category" placeholder="Enter the category name" required>
+
+                      </div> 
+                      <div class="mt-2">
+                        <% if(locals.error){%>
+                          <p class="text-danger font-weight-bold"><%=error%></p>
+                          <%}%>
+                       
+                       
+    
                       </div>
                       
-                      <button type="submit" class="btn btn-success mr-2">Submit</button>
+                      <button type="submit" id="catform" class="btn btn-success mr-2">Submit</button>
                       <a href="/admin/viewcategory" class="btn btn-danger">Cancel</a>
                     </form>
                   </div>
                 </div>
               </div>
           </div>
-          <!-- content-wrapper ends -->
-          <!-- partial:../../partials/_footer.html -->
+        
           
-          <!-- partial -->
+          
         </div>
         <!-- main-panel ends -->
       </div>
       <!-- page-body-wrapper ends -->
     </div>
+    <script>
+     let category=document.getElementById("catname")
+
+     category.addEventListener("input",()=>{
+      if(category.value.trim()==""){
+        category.setCustomValidity("category name cannot be empty")
+      }else {
+        category.setCustomValidity("")
+      }
+
+     })
+    //  let catform =document.getElementById("catform")
+    //   catform.addEventListener("submit",(event)=>{
+    //     event.preventDefault()
+    //     alert("category added")
+    //     catform.submit()
+    //   })
+    </script>
     <%- include('../partials/admin_footer')%>
    

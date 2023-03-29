@@ -26,22 +26,18 @@ const userSchema=new mongoose.Schema({
         housename:{
             type:String
         },
-        post:{
-            type:String
-        },
         city:{
             type:String
         },
         district:{
             type:String
         },
-        pin:{
+        state:{
             type:String
         },
         phone:{
-            type:String
+            type:Number
         }
-
     }],
     password:{
         type:String,
