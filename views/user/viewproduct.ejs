@@ -41,15 +41,36 @@
 			<div class="row">
 				<div class="col-md-6">
 					<div class="single-product-img">
+						
+						
+									
+		
+								
+	
 
 
 
 
-						<figure id="zoomer" class="zoom" onmousemove="zoom(event)"
+						<figure id="zoomer"  class="zoom" onmousemove="zoom(event)"
 							style="background-image: url(/product-image/<%=product.image[0]%>);width: 350px; height: 300px;">
 							<img id="main-image" style="width: 350px;height: 300px; object-fit: cover;"
 								src="/product-image/<%=product.image[0]%>"  />
+								
 						</figure>
+
+						<div class="row">
+							<a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">
+								<div class="product_thumb_pic set-bg" >
+									<img src="/product-image/<%= product.image[0]%>" alt="" width="50px" height="50px" >
+								</div>
+							</a>
+							<a class="nav-link active" data-toggle="tab" href="#tabs-2" role="tab">
+								<div class="product_thumb_pic set-bg" >
+									<img src="/product-image/<%= product.image[1]%>" alt="" width="50px" height="50px">
+								</div>
+							</a>
+
+						</div>
 
 
 
@@ -68,7 +89,7 @@
 						<p style="font-weight: 400;">
 							<span class=""  style="color: rgb(56, 55, 55); ">Category: </span> <%=product.category%>
 						</p>
-						<h6>
+						<h6> 
 							Discription:
 						</h6>
 						<p>

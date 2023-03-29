@@ -34,6 +34,8 @@
                         <th>Category</th>
                         <th>Price</th>
                         <th>Stock</th>
+                        <th>status</th>
+                        
                         <th>Options</th>
                         <th>Remove</th>
                       </tr>
@@ -59,6 +61,8 @@
 
                         <td><%=product.price%></td>
                         <td><%=product.stock%></td>
+                        <td><%=product.status%></td>
+                       
                         <td>
                           <a
                             href="/admin/editproduct/<%=product._id%>"
