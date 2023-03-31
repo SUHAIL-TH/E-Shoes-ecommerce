@@ -6,16 +6,24 @@ function addtocart(proId){
         method:"get",
         success:(response)=>{
             if(response.status){
-                swal({
-                    title: "Product added to cart",
-                    text: "",
-                    icon: "success",
-                    button: "Ok",
-                  });
+                Swal.fire({
+                    icon: 'success',
+                    title: 'product added to cart',
+                    
+                   
+                  })
                 let count=$('#cartcount').html()
                 count=parseInt(count)+1
                 $("#cartcount").html(count)
                 
+            }else{
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...You are not a user..',
+                    text: 'plze signup!',
+                   
+                  })
+
             }
 
         }

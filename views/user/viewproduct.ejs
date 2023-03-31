@@ -96,7 +96,8 @@
 							<%=product.discription%>
 						</p>
 						<div class="single-product-form" style="display: flex;width: 200px;justify-content: space-between;">
-							<a class="btn btn-outline-dark btn-square" style="border-radius: 5px;" href=""><i class="fa fa-shopping-cart"></i></a>
+							<a class="btn btn-outline-dark btn-square"  onclick="addtocart('<%=product._id%>')"><i class="fa fa-shopping-cart"></i></a>
+							<!-- <a class="btn btn-outline-dark btn-square" onclick="addtocart('<%=product._id%>')" style="border-radius: 5px;"><i class="fa fa-shopping-cart"></i></a> -->
                             <a class="btn btn-outline-dark btn-square" style="border-radius: 5px;" href=""><i class="far fa-heart"></i></a>
 							
 						</div>
@@ -116,6 +117,9 @@
 	<!-- end logo carousel -->
 
 	<!-- footer -->
+	
+	<script src="/javascript/ajax.js"></script>
+	<script src="/user/js/main.js"></script>
 	<div class="container-fluid bg-dark text-secondary mt-5 pt-5">
 		<div class="row px-xl-5 pt-5">
 			<div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
@@ -197,8 +201,10 @@
 <script src="/user/mail/jqBootstrapValidation.min.js"></script>
 <script src="/user/mail/contact.js"></script>
 
+
+
 <!-- Template Javascript -->
-<script src="/user/js/main.js"></script>
+
 
 
 		<!-- <script src="/assets/js/jquery-1.11.3.min.js"></script>
