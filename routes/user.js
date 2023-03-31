@@ -29,7 +29,7 @@ userRouter.get("/shop",blockeduser,verifyLogin.verifyUserLogin,userController.ge
 
 
 userRouter.get("/viewproduct/:id",productController.viewproductuser)
-userRouter.post("/changeproductquantity",userController.changeproductquantity,)
+userRouter.post("/changeproductquantity",userController.changeproductquantity,userController.totalproductprice)
 
 userRouter.get("/categoryproduct",blockeduser,categoryController.categoryproduct)
 
