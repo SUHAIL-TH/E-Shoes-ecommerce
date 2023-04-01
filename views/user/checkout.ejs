@@ -7,7 +7,7 @@
     <div class="col-12">
       <nav class="breadcrumb bg-light mb-30">
         <a class="breadcrumb-item text-dark" href="/">Home</a>
-        <a class="breadcrumb-item text-dark" href="#">Shop</a>
+        <a class="breadcrumb-item text-dark" href="/shop">Shop</a>
         <span class="breadcrumb-item active">Checkout</span>
       </nav>
     </div>
@@ -17,116 +17,17 @@
 
 <!-- Checkout Start -->
 <div class="container-fluid">
+  
   <div class="row px-xl-5">
     <div class="col-lg-8">
       <h5 class="section-title position-relative text-uppercase mb-3">
         <span class="bg-secondary pr-3">Address</span>
       </h5>
       <div class="bg-light p-30 mb-5">
-        <button
-          type="button"
-          class="btn btn-success"
-          style="border-radius: 6px"
-          data-toggle="modal"
-          data-target="#exampleModal"
-        >
+        <button type="button" class="btn btn-success"  style="border-radius: 6px" data-toggle="modal" data-target="#exampleModalLong">
           Add Address
         </button>
-
-        <div
-          class="modal fade"
-          id="exampleModal"
-          tabindex="-1"
-          aria-labelledby="exampleModalLabel1"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog d-flex justify-content-center">
-            <div class="modal-content w-75">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel1">Add address</h5>
-                <div class="modal-header">
-                  <button
-                    type="button"
-                    class="close"
-                    data-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-              </div>
-              <div class="modal-body p-4">
-                <form method="post" action="/addaddress">
-                  <div class="form-outline mb-4">
-                    <label class="form-label" for="email1">name</label>
-                    <input
-                      type="text"
-                      name="name"
-                      id="name"
-                      class="form-control"
-                      required
-                    />
-                  </div>
-                  <div class="form-outline mb-4">
-                    <label class="form-label" for="email1">House name</label>
-                    <input
-                      type="text"
-                      name="housename"
-                      id="housename"
-                      class="form-control"
-                      required
-                    />
-                  </div>
-                  <div class="form-outline mb-4">
-                    <label class="form-label" for="email1">Mobile</label>
-                    <input
-                      type="text"
-                      name="phone"
-                      id="phone"
-                      class="form-control"
-                      required
-                    />
-                  </div>
-                  <div class="form-outline mb-4">
-                    <label class="form-label" for="email1">City</label>
-                    <input
-                      type="text"
-                      name="city"
-                      id="city"
-                      class="form-control"
-                      required
-                    />
-                  </div>
-                  <div class="form-outline mb-4">
-                    <label class="form-label" for="email1">Disctrict</label>
-                    <input
-                      type="text"
-                      name="discrict"
-                      id="discrict"
-                      class="form-control"
-                      required
-                    />
-                  </div>
-                  <div class="form-outline mb-4">
-                    <label class="form-label" for="email1">State</label>
-                    <input
-                      type="text"
-                      name="state"
-                      id="state"
-                      class="form-control"
-                      required
-                    />
-                  </div>
-
-                  <button type="submit" class="btn btn-info btn-block">
-                    Add
-                  </button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-
+        <form id="checkoutform"  method="post">
         <div class="pt-5">
             
 
@@ -134,9 +35,12 @@
             <hr>
             <div class="row d-flex align-items-center">
                 <div class="col-1">
-                    <input type="radio"  name="address" id="address" value="<%= address.name %>,
-                    ,<%=address.housename %>,
-                     <%= address.phone %> ,<%= address.city %> ,<%= address.district %>, <%= address.state %>" required />
+                    <input type="radio"  name="address" id="address" value="<%= address.name %>     
+<%=address.housename %>     
+<%= address.phone %> ,<%= address.city %>    
+<%= address.district %>, <%= address.state %> 
+<%= address.pincode%>",
+ required />
 
                 </div>
                 <div class="col-7">
@@ -144,31 +48,20 @@
                         <%= address.name %>
                          ,<%=address.housename %>,
                           <br /><%= address.phone %>, <%= address.city %>
-                          <br> <%= address.district %>, <%= address.state %>
-                       
-                      </label>
-                      
-                     
+                          <br> <%= address.district %>, <%= address.state %><br>
+                          <%= address.pincode %>
+                      </label>   
                 </div>
                 <div class="col-2">
                     <a href="/deleteaddress/<%=address._id%>" class="btn btn-danger btn-sm" style="border-radius: 6px;">Delete</a>
                   </div>
-                
-               
-      
-               
-
             </div>
-           
-           
-
-         
           <%})%>
         </div>
       </div>
     </div>
     <div class="col-lg-4">
-      <form class="mb-30" action="">
+      <!-- <form class="mb-30" action=""> -->
         <h5 class="section-title position-relative text-uppercase mb-3">
           <span class="bg-secondary pr-3">coupen</span>
         </h5>
@@ -182,7 +75,7 @@
             <button class="btn btn-primary">Apply Coupon</button>
           </div>
         </div>
-      </form>
+      <!-- </form> -->
       <h5 class="section-title position-relative text-uppercase mb-3">
         <span class="bg-secondary pr-3">Order Total</span>
       </h5>
@@ -205,7 +98,7 @@
         <div class="border-bottom pt-3 pb-2">
           <div class="d-flex justify-content-between mb-3">
             <h6>Subtotal</h6>
-            <h6>₹  <%=total%></h6>
+            <h6>₹  <%=Total%></h6>
           </div>
           <div class="d-flex justify-content-between">
             <h6 class="font-weight-medium">Shipping</h6>
@@ -215,7 +108,7 @@
         <div class="pt-2">
           <div class="d-flex justify-content-between mt-2">
             <h5>Total</h5>
-            <h5>₹  <%=total%></h5>
+            <h5>₹ <span id="total-amount"><%=Total%></span> </h5>
           </div>
         </div>
       </div>
@@ -231,8 +124,9 @@
                 class="custom-control-input"
                 name="payment"
                 id="paypal"
+                value="COD"
               />
-              <label class="custom-control-label" for="paypal">COD</label>
+              <label class="custom-control-label text-dark font-weight-bold" for="paypal">Cash on delivery</label>
             </div>
           </div>
 
@@ -243,20 +137,247 @@
                 class="custom-control-input"
                 name="payment"
                 id="banktransfer"
+
+                value="ONLINE"
               />
-              <label class="custom-control-label" for="banktransfer"
+              <label class="custom-control-label text-dark font-weight-bold" for="banktransfer"
                 >Online</label
               >
             </div>
           </div>
-          <button class="btn btn-block btn-primary font-weight-bold py-3">
+          <%if(acname.address.length<=0){%>
+            <button type="submit" class="btn btn-block btn-primary font-weight-bold py-3" disabled>
+              Place Order
+            </button>
+          </div>
+
+         <% }else{%>
+          <button type="submit" class="btn btn-block btn-primary font-weight-bold py-3">
             Place Order
           </button>
         </div>
+
+         <% }%>
+          
+      </div>
+    </div>
+  </div>
+</form>
+</div>
+<!-- Checkout End -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="post" action="/addaddress">
+          <div class="form-outline mb-4">
+            <label class="form-label" for="email1">name</label>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              class="form-control"
+              required
+            />
+          </div>
+          <div class="form-outline mb-4">
+            <label class="form-label" for="email1">House name</label>
+            <input
+              type="text"
+              name="housename"
+              id="housename"
+              class="form-control"
+              required
+            />
+          </div>
+          <div class="form-outline mb-4">
+            <label class="form-label" for="email1">Mobile</label>
+            <input
+              type="text"
+              name="phone"
+              id="phone"
+              class="form-control"
+              required
+            />
+          </div>
+          <div class="form-outline mb-4">
+            <label class="form-label" for="email1">City</label>
+            <input
+              type="text"
+              name="city"
+              id="city"
+              class="form-control"
+              required
+            />
+          </div>
+          <div class="form-outline mb-4">
+            <label class="form-label" for="email1">Disctrict</label>
+            <input
+              type="text"
+              name="discrict"
+              id="discrict"
+              class="form-control"
+              required
+            />
+          </div>
+          <div class="form-outline mb-4">
+            <label class="form-label" for="email1">State</label>
+            <input
+              type="text"
+              name="state"
+              id="state"
+              class="form-control"
+              required
+            />
+          </div>
+          <div class="form-outline mb-4">
+            <label class="form-label" for="email1">pincode</label>
+            <input
+              type="text"
+              name="pincode"
+              id="pincode"
+              class="form-control"
+              required
+            />
+          </div>
+
+         
+        
+      </div>
+      <div class="modal-footer">
+        <a href="/checkout" class="" > <button class="btn btn-dark" data-dismiss="modal">Close</button></a>
+       
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </form>
       </div>
     </div>
   </div>
 </div>
-<!-- Checkout End -->
 
-<%- include('../partials/userfooter')%>
+
+<div class="container-fluid bg-dark text-secondary mt-5 pt-5">
+  <div class="row px-xl-5 pt-5">
+      <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
+          <h5 class="text-secondary text-uppercase mb-4">Get In Touch</h5>
+          <p class="mb-4">No dolore ipsum accusam no lorem. Invidunt sed clita kasd clita et et dolor sed dolor. Rebum tempor no vero est magna amet no</p>
+          <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Street 12,Kannur,Kerala</p>
+          <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>info@example.com</p>
+          <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+91 7558949012</p>
+      </div>
+      <div class="col-lg-8 col-md-12">
+          <div class="row">
+              <div class="col-md-4 mb-5">
+                  <h5 class="text-secondary text-uppercase mb-4">Quick Shop</h5>
+                  <div class="d-flex flex-column justify-content-start">
+                      <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                      <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
+                      <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Shop Detail</a>
+                      <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
+                      <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Checkout</a>
+                      <a class="text-secondary" href="#"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
+                  </div>
+              </div>
+              <div class="col-md-4 mb-5">
+                  <h5 class="text-secondary text-uppercase mb-4">My Account</h5>
+                  <div class="d-flex flex-column justify-content-start">
+                      <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                      <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
+                      <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Shop Detail</a>
+                      <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
+                      <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Checkout</a>
+                      <a class="text-secondary" href="#"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
+                  </div>
+              </div>
+              <div class="col-md-4 mb-5">
+                  <h5 class="text-secondary text-uppercase mb-4">Newsletter</h5>
+                  <p>Duo stet tempor ipsum sit amet magna ipsum tempor est</p>
+                  <form action="">
+                      <div class="input-group">
+                          <input type="text" class="form-control" placeholder="Your Email Address">
+                          <div class="input-group-append">
+                              <button class="btn btn-primary">Sign Up</button>
+                          </div>
+                      </div>
+                  </form>
+                  <h6 class="text-secondary text-uppercase mt-4 mb-3">Follow Us</h6>
+                  <div class="d-flex">
+                      <a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-twitter"></i></a>
+                      <a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-facebook-f"></i></a>
+                      <a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-linkedin-in"></i></a>
+                      <a class="btn btn-primary btn-square" href="#"><i class="fab fa-instagram"></i></a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="row border-top mx-xl-5 py-4" style="border-color: rgba(256, 256, 256, .1) !important;">
+      <div class="col-md-6 px-xl-0">
+          <p class="mb-md-0 text-center text-md-left text-secondary">
+              &copy; <a class="text-primary" href="#">Domain</a>. All Rights Reserved. Designed
+              by
+              <a class="text-primary" href="https://htmlcodex.com">E - SHOES</a>
+          </p>
+      </div>
+      <div class="col-md-6 px-xl-0 text-center text-md-right">
+          <img class="img-fluid" src="/user/img/card.jpg" alt="" style="height: 60px; width: 160px;">
+      </div>
+  </div>
+</div>
+<!-- Footer End -->
+
+<!-- jquery -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<!-- Back to Top -->
+<a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+<!-- swall fire -->
+<!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="/user/lib/easing/easing.min.js"></script>
+<script src="/user/lib/owlcarousel/owl.carousel.min.js"></script>
+
+<!-- Contact Javascript File -->
+<script src="/user/mail/jqBootstrapValidation.min.js"></script>
+<script src="/user/mail/contact.js"></script>
+
+<!-- Template Javascript -->
+<script src="/user/js/main.js"></script>
+
+<script>
+  $("#checkoutform").submit((e)=>{
+  
+   const amount=document.getElementById("total-amount").innerHTML
+   
+   let address=$("input[name=address]:checked").val()
+   let payment=$("input[name=payment]:checked").val()
+   e.preventDefault()
+   $.ajax({
+     url:"/placeorder",
+     method:"post",
+     data:{
+       total:amount,
+       address:address,
+       payment:payment
+     },
+     success:(response)=>{
+      if(response.codsuccess==true){
+        location.href="/ordersuccess"
+      }
+        
+     }
+   })
+  })
+</script>
+</body>
+
+</html>
