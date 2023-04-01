@@ -37,6 +37,9 @@ const userSchema=new mongoose.Schema({
         },
         phone:{
             type:Number
+        },
+        pincode:{
+            type:Number
         }
     }],
     password:{

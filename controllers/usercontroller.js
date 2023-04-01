@@ -6,7 +6,9 @@ const product = require("../model/productModel")
 const category = require("../model/categoryModel")
 const cart = require("../model/cartModel")
 const nodemailer = require("nodemailer")
-const { isValidObjectId } = require("mongoose")
+const order=require("../model/ordermodel")
+
+
 
 
 let name
@@ -330,7 +332,7 @@ const getcart = async (req, res) => {
 
     let cartData=await cart.findOne({user:acname._id}).populate("product.productId")
     
-    console.log(cartData  );
+    // console.log(cartData  );
     if(cartData){
         if(cartData.product!=0){
             let total=await cart.aggregate([{
@@ -353,11 +355,11 @@ const getcart = async (req, res) => {
             }
         ])
          Total=total[0].total  
-         console.log(Total);
+        //  console.log(Total);
             res.render("user/cart", { acname, categoryData,cartData,Total})
     
         }else{
-       console.log("hii");
+      
             res.render("user/cart", { acname, categoryData,cartData,Total})
     
     
@@ -461,26 +463,23 @@ const changeproductquantity=async(req,res,next)=>{
         let cartId=req.body.cart
         let proId=req.body.product
         let count=parseInt(req.body.count)
-        let quantity=req.body.quantity
-
-      
-      
-        
-        
-        
+        let quantity=parseInt(req.body.quantity)
+        let proprice=req.body.proprice
+        let userid=req.body.user
             
            if(count==-1 &quantity==1) {
             await cart.updateOne({_id:cartId,"product._id":proId},{
                 $pull:{product:{_id:proId}}
             })
-            res.json({quantity:true})
+            res.json({remove:true})
 
            }else{
+           await cart.updateOne({_id:cartId,"product._id":proId},{$inc:{"product.$.quantity":count}})
             
-           
-            await cart.updateOne({_id:cartId,"product._id":proId},{$inc:{"product.$.quantity":count}})
-           res.json({success:true})
+        
            }
+           next()
+         
     } catch (error) {
         console.log(error);
         res.render("admin/500")
@@ -490,23 +489,46 @@ const changeproductquantity=async(req,res,next)=>{
 }
 const checkout=async(req,res,next)=>{
     try {
-        let total=req.query.total
-
         let categoryData = await category.find()
         let acname = await user.findOne({ email:req.session.user })
         let productData = await product.find()
-        res.render("user/checkout", { product: productData, acname, categoryData,total })
+        let cartData=await cart.findOne({user:acname._id})
+        console.log(cartData);
+        const Total=0
+        if(cartData.product.length>0){
+            let sum =await cart.aggregate([{
+                $match:{
+                    _id:cartData._id
+                }
+            },{$unwind:"$product"
+    
+            },{
+                $project:{
+                    price:"$product.price",quantity:"$product.quantity"
+                }
+            },{
+                $group:{
+                    _id:null,
+                    total:{$sum:{$multiply:["$price","$quantity"]}}
+                }
+            }])
+            Total=sum[0].total
+
+        }
+        
+       
+       
+        res.render("user/checkout", { product: productData, acname, categoryData,Total })
        
     } catch (error) {
         res.render("user/500")
+        console.log(error);
     }
 }
 const removeproduct=async(req,res)=>{
     try {
         let cartId=req.body.cart
         let proId=req.body.product
-        
-        console.log("hello suhail");
 
         await cart.updateOne({_id:cartId,"product._id":proId},{
             $pull:{product:{_id:proId}}
@@ -524,7 +546,9 @@ const removeproduct=async(req,res)=>{
 const addaddress=async(req,res)=>{
     try {
         let address=req.body
-        const data = await user.findOneAndUpdate({email:req.session.user},{$push:{address:{name:address.name,housename:address.housename,city:address.city,district:address.discrict,phone:address.phone,state:address.state}}})
+        const data = await user.findOneAndUpdate({email:req.session.user},{$push:{address:{name:address.name,housename:address.housename,
+            city:address.city,district:address.discrict,
+            phone:address.phone,state:address.state,pincode:address.pincode}}})
         
         res.redirect("/checkout")
         
@@ -544,6 +568,81 @@ const deleteaddress=async(req,res)=>{
         res.render("user/500")
     }
 
+}
+const totalproductprice=async(req,res)=>{
+    try {
+        
+        let userid=req.body.user
+        const users=await user.findOne({email:req.session.user})
+
+       let total =await cart.aggregate([{
+            $match:{
+                user:users._id
+            }
+        },{$unwind:"$product"
+
+        },{
+            $project:{
+                price:"$product.price",quantity:"$product.quantity"
+            }
+        },{
+            $group:{
+                _id:null,
+                total:{$sum:{$multiply:["$price","$quantity"]}}
+            }
+        }])
+  
+      let Total=total[0].total
+       
+       
+       
+        res.json({success:true,Total})
+        
+    } catch (error) {
+        res.render("user/500")
+    } 
+     
+}
+const placeorder=async(req,res)=>{
+    try {
+       
+        const address=req.body.address
+        const amount=req.body.total
+        const payment=req.body.payment
+        const userData=await user.findOne({email:req.session.user})
+        const cartData=await cart.findOne({user:userData._id})
+        const product=cartData.product
+        const status=payment==="COD"?"placed":"pending"
+
+ console.log(status);
+
+        const newOrder=new order({
+            deliveryDetails:address,
+            user:userData._id,
+            totalamount:amount,
+            paymentMethode:payment,
+            status:status,
+            product:product
+        })
+        await newOrder.save()
+        await cart.deleteOne({user:userData._id})
+        if(status=="placed"){
+            res.json({codsuccess:true})
+        }
+
+        
+    } catch (error) {
+        res.render("user/500")
+        console.log(error)
+    }
+}
+const ordersuccess=async(req,res)=>{
+    try {
+        res.render("user/ordersuccess")
+    } catch (error) {
+        res.render("user/500")
+        console.log(error);
+    }
 }
 
 
@@ -570,7 +669,11 @@ module.exports = {
     checkout,
     removeproduct,
     addaddress,
-    deleteaddress
+    deleteaddress,
+    totalproductprice,
+    placeorder,
+    ordersuccess
+    
     
 
 }
