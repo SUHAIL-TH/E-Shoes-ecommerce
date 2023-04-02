@@ -66,10 +66,10 @@ const posteditproduct=async(req,res)=>{
     try {
         let id=req.params.id
         if(req.files.length!=0){
-            const image=[]
-        for(i=0;i<req.files.length;i++){
-            image[i]=req.files[i].filename
-        }
+        //     const image=[]
+        // for(i=0;i<req.files.length;i++){
+        //     image[i]=req.files[i].filename
+        // }
         await product.findByIdAndUpdate({_id:id},{$set:
             {productName:req.body.name,
                 price:req.body.price,
@@ -77,9 +77,13 @@ const posteditproduct=async(req,res)=>{
                 discription:req.body.discription,
                 stock:req.body.stock,
                 status:req.body.status,
-                image:image
-            }})
+                
+            }}) 
+            for(i=0;i<req.files.length;i++){
+                await product.findByIdAndUpdate({_id:id},{$push:{image:req.files[i].filename}})
 
+            }
+            
         }else{
             await product.findByIdAndUpdate({_id:id},{$set:
                 {productName:req.body.name,
@@ -112,7 +116,7 @@ const deleteproduct=async(req,res)=>{
 }
 
 //////////////////////////////////////////user
-const viewproductuser = async (req, res) => {
+const  viewproductuser = async (req, res) => {
     try {
         let id = req.params.id
         session = req.session.user

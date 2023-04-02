@@ -3,6 +3,7 @@ const admin=require("../model/adminModel")
 const user=require("../model/userModel")
 const product=require("../model/productModel")
 const category=require("../model/categoryModel")
+const order =require("../model/ordermodel")
 const uc=require("upper-case")
 
 
@@ -278,6 +279,17 @@ const unblockuser=async(req,res)=>{
 //     }
 
 // }
+const orders=async(req,res)=>{
+    try {
+        let orderData=await order.find()
+
+        res.render("admin/orders",{orderData})
+        
+    } catch (error) {
+        res.render("admin/500")
+        console.log(error)
+    }
+}
 
 
 module.exports={
@@ -288,6 +300,7 @@ module.exports={
     blockuser,
     unblockuser,
     logout ,
+    orders
     // viewproduct,
     // addproduct,
     // postaddproduct,

@@ -675,7 +675,7 @@ const ordersuccess=async(req,res)=>{
 }
 const vieworders=async(req,res)=>{
     try {
-        let userData=await user.findOne({email:req.session.user})
+        // let userData=await user.findOne({email:req.session.user})
         let categoryData = await category.find()
         let acname = await user.findOne({ email: req.session.user })
        
@@ -718,11 +718,20 @@ const verifypayment=async(req,res)=>{
         res.render("user/500")
         
     }
-    
-   
-      
-
-
+}
+const orderedproduct=async(req,res)=>{
+    try {
+        let id=req.params.id
+        let categoryData = await category.find()
+        let acname = await user.findOne({ email: req.session.user })
+        let orderData=await order.findById({_id:id}).populate("product.productId")
+        console.log(orderData);
+        res.render("user/orderedproduct",{categoryData, acname,orderData})
+        
+    } catch (error) {
+        res.render("user/500")
+        console.log(error);
+    }
 }
 
 
@@ -754,7 +763,8 @@ module.exports = {
     placeorder,
     ordersuccess,
     vieworders,
-    verifypayment
+    verifypayment,
+    orderedproduct
     
     
 

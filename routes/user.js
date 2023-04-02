@@ -40,8 +40,12 @@ userRouter.post("/removeproduct",userController.removeproduct)
 userRouter.get("/checkout",verifyLogin.verifyUserLogin,userController.checkout)
 userRouter.post("/addaddress",verifyLogin.verifyUserLogin,userController.addaddress)
 userRouter.get("/deleteaddress/:id",verifyLogin.verifyUserLogin,userController.deleteaddress)
+
 userRouter.post("/placeorder",verifyLogin.verifyUserLogin,userController.placeorder)
 userRouter.get("/ordersuccess",verifyLogin.verifyUserLogin,userController.ordersuccess)
+userRouter.get("/vieworders",verifyLogin.verifyUserLogin,userController.vieworders)
+userRouter.post("/verifypayment",userController.verifypayment)
+userRouter.get("/orderedproduct/:id",verifyLogin.verifyUserLogin,userController.orderedproduct)
 
 
 module.exports=userRouter
