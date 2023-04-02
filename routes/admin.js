@@ -58,6 +58,8 @@ adminRouter.get("/deletecategory/:id",verifyAdmin.verifyLoginAdmin,categoryContr
 adminRouter.get("/truecategory/:id",verifyAdmin.verifyLoginAdmin,categoryController.truecategory)
 adminRouter.get("/falsecategory/:id",verifyAdmin.verifyLoginAdmin,categoryController.falsecategory)
 
+adminRouter.get("/orders",verifyAdmin.verifyLoginAdmin,adminController.orders)
+
 
 
 
