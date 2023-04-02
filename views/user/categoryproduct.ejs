@@ -178,7 +178,7 @@
                             <div class="product-img position-relative overflow-hidden">
                                 <img class="img-fluid w-100" src="/product-image/<%=product.image[0]%>" alt="">
                                 <div class="product-action">
-                                    <a class="btn btn-outline-dark btn-square" href="/addtocart/<%=product._id%>"><i class="fa fa-shopping-cart"></i></a>
+                                    <a class="btn btn-outline-dark btn-square"  onclick="addtocart('<%=product._id%>')"><i class="fa fa-shopping-cart"></i></a>
                                     <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
                                     
                                     <a class="btn btn-outline-dark btn-square" href="/viewproduct/<%=product._id%>"><i class="fa fa-eye"></i></a>
@@ -221,5 +221,5 @@
     </div>
     <!-- Shop End -->
 
-
+<script src="/javascript/ajax.js"></script>
     <%- include('../partials/userfooter')%>

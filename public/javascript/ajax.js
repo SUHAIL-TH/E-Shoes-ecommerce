@@ -19,8 +19,8 @@ function addtocart(proId){
             }else{
                 Swal.fire({
                     icon: 'error',
-                    title: 'Oops...You are not a user..',
-                    text: 'plze signup!',
+                    title: 'Oops...',
+                    text: 'Plz SignIn!',
                    
                   })
 
