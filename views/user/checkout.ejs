@@ -334,24 +334,13 @@
 <!-- jquery -->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <!-- Back to Top -->
 <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
 <!-- swall fire -->
 <!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
-
-<!-- JavaScript Libraries -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-<script src="/user/lib/easing/easing.min.js"></script>
-<script src="/user/lib/owlcarousel/owl.carousel.min.js"></script>
-
-<!-- Contact Javascript File -->
-<script src="/user/mail/jqBootstrapValidation.min.js"></script>
-<script src="/user/mail/contact.js"></script>
-
-<!-- Template Javascript -->
-<script src="/user/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
   $("#checkoutform").submit((e)=>{
@@ -372,12 +361,84 @@
      success:(response)=>{
       if(response.codsuccess==true){
         location.href="/ordersuccess"
+      }else{
+        console.log(response.order);
+        razorpayPayment(response.order)
       }
         
      }
    })
   })
+  function razorpayPayment(order){
+    var options = {
+    "key":"rzp_test_Yp5AmFQqgmu2Nq", // Enter the Key ID generated from the Dashboard
+    "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "E-SHOES", //your business name
+    "description": "Test Transaction",
+    "image": "https://example.com/your_logo",
+    "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    // "callback_url": "https://eneqd3r9zrjok.x.pipedream.net/",
+    "handler":function(response){
+        verifyPayment(response,order)
+    },
+    "prefill": {
+        "name": "Gaurav Kumar", //your customer's name
+        "email": "gaurav.kumar@example.com",
+        "contact": "9000090000"
+    },
+    "notes": {
+        "address": "Razorpay Corporate Office"
+    },
+    "theme": {
+        "color": "#3399cc"
+    }
+    
+};
+var rzp1 = new Razorpay(options);
+    rzp1.open();
+    
+
+  }
+  function verifyPayment(payment,order){
+  
+    $.ajax({
+      url:"/verifypayment",
+      method:'post',
+      data:{
+        payment,
+        order 
+      },
+      success:(response)=>{
+        if(response.success==true){
+         window.location.href = "/ordersuccess";
+        }else{
+          Swal.fire({
+            icon: 'error',
+            title: 'Payment has failed',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        }
+      }
+     
+    })
+  }
 </script>
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="/user/lib/easing/easing.min.js"></script>
+<script src="/user/lib/owlcarousel/owl.carousel.min.js"></script>
+
+<!-- Contact Javascript File -->
+<script src="/user/mail/jqBootstrapValidation.min.js"></script>
+<script src="/user/mail/contact.js"></script>
+
+<!-- Template Javascript -->
+<script src="/user/js/main.js"></script>
+
 </body>
 
 </html>

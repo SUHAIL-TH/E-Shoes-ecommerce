@@ -34,11 +34,15 @@ const orderSchema=new mongoose.Schema({
     },
     paymentMethode:{
         type:String
-    }
+    },
+     paymentId: {
+        type:String,
+      }
+      
 
 
 },{
-    timestamp:true
+    timestamps:true
 }
 )
 const order= mongoose.model("order",orderSchema)
