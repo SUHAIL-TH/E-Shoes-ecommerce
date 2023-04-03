@@ -1,0 +1,72 @@
+<%- include("../partials/admin_header")%>
+    <div class="container-scroller">
+      <!-- partial:../../partials/_sidebar.html -->
+      <%- include('../partials/admin_sidebar')%>
+      </nav>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:../../partials/_navbar.html -->
+        <%- include('../partials/admin_navbar')%>
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="page-header">
+              <h3 class="page-title"> Users</h3>
+              
+            </div>
+            <div class="row">
+              
+              
+              <div class="col-lg-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    
+                   
+                   
+                    <div class="table-responsive" >
+                      <table class="table table-striped" id="user-table">
+                        <thead>
+                          <tr>
+                            <th> No</th>
+                            <th> Name</th>
+                            <th> Email</th>
+                            <th> Phone</th>
+                            
+                            <th>Block</th>
+                            <th>Options</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% let count=1%>
+                         
+
+                          <tr >
+                            <td></td>
+                            <td></td>
+                            <td> </td>
+                            <td></td>
+                           <td></td>
+                            <td></td>
+                          </tr>
+                          <%count++%>
+                 
+                          
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              
+              
+            </div>
+          </div>
+          
+        </div>
+  
+      </div>
+      
+    </div>
+  
+    <%- include('../partials/admin_footer')%>

@@ -59,6 +59,12 @@ adminRouter.get("/truecategory/:id",verifyAdmin.verifyLoginAdmin,categoryControl
 adminRouter.get("/falsecategory/:id",verifyAdmin.verifyLoginAdmin,categoryController.falsecategory)
 
 adminRouter.get("/orders",verifyAdmin.verifyLoginAdmin,adminController.orders)
+adminRouter.get("/orderdetails/:id",verifyAdmin.verifyLoginAdmin,adminController.orderdetails)
+adminRouter.post("/updatestatus",verifyAdmin.verifyLoginAdmin,adminController.updatestatus)
+
+adminRouter.get("/viewcoupon",verifyAdmin.verifyLoginAdmin,adminController.viewcoupon)
+adminRouter.get("/addcoupon",verifyAdmin.verifyLoginAdmin,adminController.addcoupon)
+adminRouter.post("/addcoupon",verifyAdmin.verifyLoginAdmin,adminController.postaddcoupon)
 
 
 

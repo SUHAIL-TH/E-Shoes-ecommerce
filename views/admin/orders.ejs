@@ -11,7 +11,7 @@
         <div class="main-panel">
           <div class="content-wrapper">
             <div class="page-header">
-              <h3 class="page-title"> Users</h3>
+              <h3 class="page-title">Orders</h3>
               
             </div>
             <div class="row">
@@ -24,18 +24,19 @@
                    
                    
                     <div class="table-responsive" >
+                      
                       <table class="table table-striped" id="user-table">
                         <thead>
                           <tr>
                             <th> No</th>
                             <th>Order Id</th>
                             <th>Date</th>
-                            <th>Address</th>
+                            
                             <th>Amount</th>
                             <th>payment</th>
                             <th>status</th>
                             <th>Options</th>
-                            <th>View</th>
+                            <!-- <th>View</th> -->
                           </tr>
                         </thead>
                         <tbody>
@@ -46,40 +47,34 @@
                             <td><%=count%></td>
                             <td><%=order._id%></td>
                             <td><%=order.date.toISOString().substring(0,10)%></td>
-                            <td><button style="  border-color:rgb(38, 48, 141);border-width: 2px;" type="button" class="btn" data-toggle="modal" data-target="#exampleModalLong">
-                                view
-                              </button></td>
+                            
                       
                             <td><%=order.totalamount%></td>
                            
                          
                            <td><%=order.paymentMethode%></td>
-                            <td><label class="text-success font-weight-bold"><%=order.status%></label></td>
-                            <td><a href="/admin/unblockuser/"  class="btn btn-info">Edit</a>
+                            <td><%if(order.status=="pending"){%>
+                              <label class="text-danger font-weight-bold"><%=order.status%></label>
+                            <%}else{%>
+                              <label class="text-success font-weight-bold"><%=order.status%></label>
+
+                            <%}%>
+                            </td> 
+                            <!-- <td><a href="/admin/statusupdate"  class="btn btn-info">Edit</a> -->
+                              <!-- <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalCenter">
+                                Edit
+                              </button> -->
+                              </td>
 
                             </td>
-                            <td>                                <a href="/admin/unblockuser/"  class="mdi mdi-eye"></a>
+                            <td><a href="/admin/orderdetails/<%=order._id%>"  class="btn btn-info">View</a>
                             </td>
                             
                           </tr>
-                          <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <h5 class="modal-title" id="exampleModalLongTitle">Delivery address</h5>
-                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                  </button>
-                                </div>
-                                <div class="modal-body">
-                                  <%=order.deliveryDetails%>
-                                </div>
-                                <div class="modal-footer">
-                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                  
-                              </div>
-                            </div>
-                          </div>
+
+                          
+                          
+                          
                           <%count++%>
                          <%})%>
                           
@@ -91,6 +86,9 @@
               </div>
               
               
+             
+              
+              
               
             </div>
           </div>
@@ -100,5 +98,6 @@
       </div>
       
     </div>
+    
   
     <%- include('../partials/admin_footer')%>
