@@ -27,7 +27,8 @@ const couponSchema=new mongoose.Schema({
         type:Date
     },
     used:{
-        type:Array
+        type:Array,
+        default:[]
     },
     status:{
         type:Boolean,
