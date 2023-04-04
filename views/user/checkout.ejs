@@ -17,6 +17,30 @@
 
 <!-- Checkout Start -->
 <div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-8">
+ 
+    </div>
+    <div class="col-lg-3">
+      
+          <h5 class="section-title position-relative text-uppercase mb-3">
+            <span class="bg-secondary pr-3">coupen</span>
+          </h5>
+          <div class="input-group">
+            <input
+              type="text"
+              id="code"
+              class="form-control border-0 p-4"
+              placeholder="Coupon Code"
+            />
+            <div class="input-group-append">
+              <button class="btn btn-primary" onclick="applyCoupon($('#code').val())">Apply Coupon</button>
+            </div>
+          </div>
+        
+    </div>
+
+  </div>
   
   <div class="row px-xl-5">
     <div class="col-lg-8">
@@ -27,19 +51,15 @@
         <button type="button" class="btn btn-success"  style="border-radius: 6px" data-toggle="modal" data-target="#exampleModalLong">
           Add Address
         </button>
-        <form id="checkoutform"  method="post">
-        <div class="pt-5">
+        <form id="checkoutform" >
+        <div class="">
             
 
           <%acname.address.forEach((address)=>{%>
             <hr>
             <div class="row d-flex align-items-center">
                 <div class="col-1">
-                    <input type="radio"  name="address" id="address" value="<%= address.name %>     
-<%=address.housename %>     
-<%= address.phone %> ,<%= address.city %>    
-<%= address.district %>, <%= address.state %> 
-<%= address.pincode%>",
+                    <input type="radio"  name="address" id="address" value="<%= address.name %><%=address.housename %><%= address.phone %> ,<%= address.city %><%= address.district %>, <%= address.state %><%= address.pincode%>",
  required />
 
                 </div>
@@ -61,21 +81,7 @@
       </div>
     </div>
     <div class="col-lg-4">
-      <!-- <form class="mb-30" action=""> -->
-        <h5 class="section-title position-relative text-uppercase mb-3">
-          <span class="bg-secondary pr-3">coupen</span>
-        </h5>
-        <div class="input-group">
-          <input
-            type="text"
-            class="form-control border-0 p-4"
-            placeholder="Coupon Code"
-          />
-          <div class="input-group-append">
-            <button class="btn btn-primary">Apply Coupon</button>
-          </div>
-        </div>
-      <!-- </form> -->
+    
       <h5 class="section-title position-relative text-uppercase mb-3">
         <span class="bg-secondary pr-3">Order Total</span>
       </h5>
@@ -98,17 +104,17 @@
         <div class="border-bottom pt-3 pb-2">
           <div class="d-flex justify-content-between mb-3">
             <h6>Subtotal</h6>
-            <h6>₹  <%=Total%></h6>
+            <h6>₹  <span id="total"><%=Total%></h6>
           </div>
           <div class="d-flex justify-content-between">
-            <h6 class="font-weight-medium">Shipping</h6>
-            <h6 class="font-weight-medium">$ 0</h6>
+            <h6 class="font-weight-medium">Coupon Discount</h6>
+            <h6 class="font-weight-medium">₹  <span id="coupondiscount"></span></h6>
           </div>
         </div>
         <div class="pt-2">
           <div class="d-flex justify-content-between mt-2">
             <h5>Total</h5>
-            <h5>₹ <span id="total-amount"><%=Total%></span> </h5>
+            <h5>₹ <span id="total-amount" ><%=Total%></span> </h5>
           </div>
         </div>
       </div>
@@ -251,7 +257,7 @@
         
       </div>
       <div class="modal-footer">
-        <a href="/checkout" class="" > <button class="btn btn-dark" data-dismiss="modal">Close</button></a>
+        <!-- <a href="/checkout" class="" > <button class="btn btn-dark" data-dismiss="modal">Close</button></a> -->
        
         <button type="submit" class="btn btn-primary">Save changes</button>
       </form>
@@ -297,7 +303,7 @@
               <div class="col-md-4 mb-5">
                   <h5 class="text-secondary text-uppercase mb-4">Newsletter</h5>
                   <p>Duo stet tempor ipsum sit amet magna ipsum tempor est</p>
-                  <form action="">
+                  <form >
                       <div class="input-group">
                           <input type="text" class="form-control" placeholder="Your Email Address">
                           <div class="input-group-append">
@@ -424,6 +430,63 @@ var rzp1 = new Razorpay(options);
      
     })
   }
+  function applyCoupon(code){
+    let amount=document.getElementById("total").innerHTML
+    console.log(amount);
+    $.ajax({
+      url:'/applycoupon',
+      method:'post',
+      data:{
+        code:code,
+        amount:amount
+      },
+      success:(response)=>{
+        if(response.invalid){
+          Swal.fire({
+                  icon: "error",
+                  title: "Oops...",
+                  text: "Coupon Not found.",
+                });
+        }else if(response.expire){
+          Swal.fire({
+                  icon: "error",
+                  title: "Oops...",
+                  text: "Coupon as expired.",
+                });
+
+        }else if(response.cartamount){
+          Swal.fire({
+                  icon: "error",
+                  title: "Oops...",
+                  text: "Minimum Amount required.",
+                });
+
+        }else if(response.user){
+          Swal.fire({
+                  icon: "error",
+                  title: "Oops...",
+                  text: "Coupon has already user.",
+                });
+
+        }
+        else if(response.couponokey){
+          console.log('HI');
+         document.getElementById("coupondiscount").innerHTML=response.discountvalue
+         document.getElementById("total-amount").innerHTML=response.distotal
+         Swal.fire({
+                  icon: "success",
+                  title: "Oops...",
+                  text: "Coupon Added",
+                });
+        }
+        
+
+      }
+    })
+
+  }
+
+
 </script>
 
 <!-- JavaScript Libraries -->

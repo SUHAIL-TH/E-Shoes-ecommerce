@@ -20,18 +20,11 @@
                 <div class="card">
                   <div class="card-body">
                     
-                    <form class="forms-sample" id="myForm" action="/admin/addcoupon" method="post" enctype="multipart/form-data">
+                    <form class="forms-sample" id="myForm" action="/admin/addcoupon" method="post" >
                       <div class="form-group">
                         <label for="exampleInputName1">Coupon Name</label>
                         <input type="text" class="form-control" id="name"  name="name" placeholder="Enter the Coupon Name" required>
                       </div>
-                      <!-- <div class="form-group">
-                        <label for="">Coupon type</label>
-                        <input type="radio" class="form-control" id="price" name="coupontype" placeholder="" required>
-                        <label for="">Percentage</label>
-                        <input type="radio" class="form-control" id="price" name="coupontype" placeholder="" required>
-                        <label for="">Fixed</label>
-                      </div> -->
                       <div class="form-group">
                         <label for="exampleSelectGender">Coupon type</label>
                         <select class="form-control" id="coupontype" name="coupontype" required >
@@ -58,7 +51,7 @@
                       </div>
                       <div class="form-group">
                         <label for="">Expire Date</label>
-                        <input type="date" class="form-control" id="discription" name="maxredeem" placeholder="Enter the Maxredeem amount" required>
+                        <input type="date" class="form-control" id="discription" name="date" placeholder="Enter the Expiredate" required>
                       </div>
                       
                       <!-- <button class="btn btn-dark">Cancel</button> -->

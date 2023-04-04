@@ -8,10 +8,11 @@ const cart = require("../model/cartModel")
 const nodemailer = require("nodemailer")
 const order=require("../model/ordermodel")
 const Razorpay=require("razorpay")
+const coupon=require("../model/coupenmodel")
 
 var instance = new Razorpay({
     key_id: 'rzp_test_Yp5AmFQqgmu2Nq',
-    key_secret: 'IX4MjgOKq48Vtx2PlaHNSAnk',
+    key_secret:process.env.RAZORKEY
   });
 
 
@@ -504,7 +505,7 @@ const checkout=async(req,res,next)=>{
         let acname = await user.findOne({ email:req.session.user })
         let productData = await product.find()
         let cartData=await cart.findOne({user:acname._id})
-        console.log(cartData);
+        
         let Total=0
         if(cartData.product.length>0){
             let sum =await cart.aggregate([{
@@ -695,7 +696,7 @@ const verifypayment=async(req,res)=>{
 
        console.log(details);
         const crypto = require("crypto");
-        let hmac=crypto.createHmac("sha256","IX4MjgOKq48Vtx2PlaHNSAnk")
+        let hmac=crypto.createHmac("sha256",process.env.RAZORKEY)
         hmac.update(details.payment.razorpay_order_id+'|'+details.payment.razorpay_payment_id)
         hmac=hmac.digest('hex')
         if(hmac==details.payment.razorpay_signature){
@@ -733,6 +734,74 @@ const orderedproduct=async(req,res)=>{
         console.log(error);
     }
 }
+const applycoupon=async(req,res)=>{
+    try {
+        let code=req.body.code
+        let amount=req.body.amount
+        console.log(code);
+        console.log(amount);
+        let userData=await user.find({email:req.session.email})
+        let userexist=await coupon.findOne({couponcode:code,used:{$in:[userData._id]}})
+        console.log("userexits"+userexist);
+        if(userexist){
+            res.json({user:true})
+        }else{
+            const couponData=await coupon.findOne({couponcode:code})
+            
+            console.log("coupondata"+couponData);
+            if(couponData){
+                if(couponData.expiredate>=new Date()){
+                    console.log("expiredate");
+                    if(couponData.limit!=0){
+                        console.log("limit");
+                        if(couponData.mincartamount<=amount){
+                            console.log("mincartamount");
+                            if(couponData.couponamounttype=="Fixed"){
+                                let discountvalue=couponData.couponamount
+                                
+                                let distotal=Math.round(amount-discountvalue)
+                                console.log("fixed");
+                               
+                               return res.json({couponokey:true,
+                                    
+                                    distotal,
+                                    discountvalue,
+                                    code
+                                })
+    
+                            }else if(couponData.couponamounttype=="Percentage"){
+                             
+                                let discountvalue=(amount*couponData.couponamount)/100
+                               
+                                if(discountvalue<=couponData.maxredeemamount){
+                                    let distotal=Math.round(amount-discountvalue)
+                                   return res.json({couponokey:true,distotal,code,discountvalue })
+    
+                                }else{
+                                    let distotal=Math.round(amount-discountvalue)
+                                    
+                                   return res.json({couponokey:true,code,distotal,discountvalue})
+                                }
+                            }
+                        }else{
+                            res.json({cartamount:true})
+                        }
+                    }else{
+                        res.json({limit:true})
+                    }
+                }else{
+                    res.json({expire:true})
+                }
+            }else{
+                res.json({invalid:true})
+            }
+        }
+        
+    } catch (error) {
+        res.render("user/500")
+        console.log(error);
+    }
+}
 
 
 module.exports = {
@@ -764,7 +833,8 @@ module.exports = {
     ordersuccess,
     vieworders,
     verifypayment,
-    orderedproduct
+    orderedproduct,
+    applycoupon
     
     
 

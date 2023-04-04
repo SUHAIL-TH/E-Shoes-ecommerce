@@ -27,29 +27,39 @@
                       <table class="table table-striped" id="user-table">
                         <thead>
                           <tr>
-                            <th> No</th>
-                            <th> Name</th>
-                            <th> Email</th>
-                            <th> Phone</th>
-                            
-                            <th>Block</th>
+                            <!-- <th> No</th> -->
+                            <th>Coupon Name</th>
+                            <th>Amount</th>
+                            <th style="font-size:11px !important">MinCart Amount</th>
+                            <th style="font-size:11px !important">Maxredeem amount</th>
+                            <th>Expire Date</th>
+                            <th>Limit</th>
+                            <!-- <th>Used</th> -->
+                            <th>Status</th>
                             <th>Options</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <% let count=1%>
-                         
+                       
+                         <%couponData.reverse().forEach((coupon)=>{%>
 
                           <tr >
-                            <td></td>
-                            <td></td>
-                            <td> </td>
-                            <td></td>
-                           <td></td>
-                            <td></td>
+                           
+                            <td class="text-white"><%=coupon.couponcode%></td>
+                            <td  class="text-white"> <%=coupon.couponamount%>(<%=coupon.couponamounttype%>)</td>
+                            <td class="text-white"><%=coupon.mincartamount%></td>
+                           <td class="text-white"><%=coupon.maxredeemamount%></td>
+                            <td class="text-white"><%=coupon.expiredate.toISOString().substring(0,10)%></td>
+                            <td class="text-white"><%=coupon.limit%></td>
+                            <!-- <td class="text-white"><%=coupon.used%></td> -->
+                            <td class="text-white"><%=coupon.status%></td>
+                            <td class="text-white"><a href=""><button class="btn btn-info font-weight-bold">Edit</button></a>
+                              <button class="fa fa-trash "  style="font-size:20px;color:rgb(235, 14, 14) ; text-decoration: none; background-color: rgba(240, 248, 255, 0); border: none;" ></td>
+                            
                           </tr>
-                          <%count++%>
-                 
+                          <!-- onclick="deletecategory('')" -->
+                         
+                        <%})%>
                           
                         </tbody>
                       </table>

@@ -15,15 +15,14 @@ const couponSchema=new mongoose.Schema({
     },
     mincartamount:{
         type:Number,
+        required:true
 
     },
     maxredeemamount:{
         type:Number,
         requied:true
     },
-    startdate:{
-        type:Date
-    },
+
     expiredate:{
         type:Date
     },
@@ -33,6 +32,10 @@ const couponSchema=new mongoose.Schema({
     status:{
         type:Boolean,
         default:true
+    },
+    limit:{
+        type:Number,
+        required:true
     }
      
 
