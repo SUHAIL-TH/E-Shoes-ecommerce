@@ -242,34 +242,17 @@ function ImgUpload() {
                         </div>
                         <div class="upload__img-wrap">
                           
-                           <% for(i=0;i<productData.image.length;i++){%>
-                            <%console.log(productData.image[i])%>
-                            <img src="/product-image/<%= productData.image[i]%>" onclick="deleteimage()" alt="" style="width: 100px;height: auto; padding-left: 10px;" id="imgView">
-
-                         <% }%>
+                          <%productData.image.forEach((product,index)=>{%>
+                          
+                            <img src="/product-image/<%= productData.image[index]%>" alt="" style="width: 100px;height: auto; padding-left: 10px;" id="imgView">
+                            <a  class="fa fa-trash" onclick="removeimage('<%= productData._id%>','<%=index%>')" style="font-size:20px;color:rgb(235, 14, 14) ; text-decoration: none; background-color: rgba(240, 248, 255, 0); border: none;" ></a>
+                        
+                         <% })%>
                           
                         
                         </div>
                       </div>
-                      <!-- <div class="form-group">
-                        <label>File upload</label>
-                        
-                        <div>
-                          
-                            <img src="/product-image/<%= productData.image[0]%>" alt="" style="width: 100px;height: auto;" id="imgView">
-                            <img src="/product-image/<%= productData.image[1]%>" alt="" style="width: 100px;height: auto;" id="imgView">
-                            <img src="/product-image/<%= productData.image[2]%>" alt="" style="width: 100px;height: auto;" id="imgView">
-                            <img src="/product-image/<%= productData.image[3]%>" alt="" style="width: 100px;height: auto;" id="imgView">
-                            <img src="/product-image/<%= productData.image[4]%>" alt="" style="width: 100px;height: auto;" id="imgView">
-                            <img src="/product-image/<%= productData.image[5]%>" alt="" style="width: 100px;height: auto;" id="imgView">
-
-                         
-                            
-                          <input type="file" id="image" name="image"  class="form-control" onchange="viewImage(event)"  multiple accept="image/*">
-
-                        </div>
-                        
-                      </div> -->
+                    
                       
                       <div class="form-group">
                         <label for="exampleInputCity1">Stock</label>
@@ -287,7 +270,7 @@ function ImgUpload() {
                   </div>
                 </div>
               </div>
-              <script>
+              <!-- <script>
                 function viewImage(event){
                  
                     document.getElementById("imgView").src=URL.createObjectURL(event.target.files[0])
@@ -295,7 +278,7 @@ function ImgUpload() {
                    
                 }
 
-            </script>
+            </script> -->
               
               
               
@@ -315,5 +298,25 @@ function ImgUpload() {
       </div>
       <!-- page-body-wrapper ends -->
     </div>
+    <script>
+      function removeimage(id,position){
+        
+        $.ajax({
+          url:'/admin/removeimage',
+          method:'post',
+          data:{
+            id:id,
+            position:position
+          },
+          success:(response)=>{
+            if(response){
+              window.location.reload( )
+            }
+          }
+
+        })
+
+      }
+    </script>
     <%- include('../partials/admin_footer')%>
    

@@ -66,6 +66,8 @@ adminRouter.get("/viewcoupon",verifyAdmin.verifyLoginAdmin,adminController.viewc
 adminRouter.get("/addcoupon",verifyAdmin.verifyLoginAdmin,adminController.addcoupon)
 adminRouter.post("/addcoupon",verifyAdmin.verifyLoginAdmin,adminController.postaddcoupon)
 
+adminRouter.post("/removeimage",verifyAdmin.verifyLoginAdmin,adminController.removeimage)
+
 
 
 

@@ -48,7 +48,7 @@
         <span class="bg-secondary pr-3">Address</span>
       </h5>
       <div class="bg-light p-30 mb-5">
-        <button type="button" class="btn btn-success"  style="border-radius: 6px" data-toggle="modal" data-target="#exampleModalLong">
+        <button type="button" class="btn btn-success font-weight-bold"  style="border-radius: 6px" data-toggle="modal" data-target="#exampleModalLong">
           Add Address
         </button>
         <form id="checkoutform" >
@@ -101,6 +101,7 @@
             <p>$150</p>
           </div>
         </div>
+       
         <div class="border-bottom pt-3 pb-2">
           <div class="d-flex justify-content-between mb-3">
             <h6>Subtotal</h6>
@@ -473,6 +474,7 @@ var rzp1 = new Razorpay(options);
           console.log('HI');
          document.getElementById("coupondiscount").innerHTML=response.discountvalue
          document.getElementById("total-amount").innerHTML=response.distotal
+         document.getElementById("coupencode").innerHTML=response.code
          Swal.fire({
                   icon: "success",
                   title: "Oops...",
