@@ -47,5 +47,7 @@ userRouter.get("/vieworders",verifyLogin.verifyUserLogin,userController.vieworde
 userRouter.post("/verifypayment",userController.verifypayment)
 userRouter.get("/orderedproduct/:id",verifyLogin.verifyUserLogin,userController.orderedproduct)
 
+userRouter.post("/applycoupon",userController.applycoupon)
+
 
 module.exports=userRouter

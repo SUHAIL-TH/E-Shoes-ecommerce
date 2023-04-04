@@ -5,6 +5,7 @@ const product=require("../model/productModel")
 const category=require("../model/categoryModel")
 const order =require("../model/ordermodel")
 const uc=require("upper-case")
+const coupon=require("../model/coupenmodel")
 
 
 
@@ -290,6 +291,76 @@ const orders=async(req,res)=>{
         console.log(error)
     }
 }
+const orderdetails=async(req,res)=>{
+    try {
+        let id=req.params.id
+        let orderData=await order.findById({_id:id}).populate("product.productId")
+        res.render("admin/orderdetails",{orderData})
+        
+    } catch (error) {
+        res.render("admin/500")
+        console.log(error)
+    }
+}
+const updatestatus=async(req,res)=>{
+    try {
+        let id=req.body.id
+        let status=req.body.status
+        console.log(status,id);
+        await order.findByIdAndUpdate({_id:id},{$set:{status:status}})
+        res.redirect("/admin/orders")
+
+    } catch (error) {
+        res.render("admin/500")
+        console.log(error)
+    }
+}
+const viewcoupon=async(req,res)=>{
+    try {
+        let couponData=await coupon.find()
+        res.render("admin/viewcoupon",{couponData})
+        
+    } catch (error) {
+        res.render("admin/500")
+        console.log(error);
+    }
+}
+const addcoupon=async(req,res)=>{
+    try {
+        
+        res.render("admin/addcoupon")
+        
+    } catch (error) {
+        res.render("admin/500")
+        console.log(error)
+    }
+}
+const postaddcoupon=async(req,res)=>{
+
+    try {
+       
+        let couponData=req.body
+        console.log(req.body);
+        let coupons=new coupon({
+            couponcode:req.body.name,
+            couponamounttype:req.body.coupontype,
+            couponamount:req.body.amount,
+            mincartamount:req.body.mincart,
+            maxredeemamount:req.body.maxredeem,
+            expiredate:req.body.date,
+            limit:req.body.limit,
+          
+            
+        })
+        await coupons.save()
+        res.redirect("/admin/viewcoupon")
+        
+    } catch (error) {
+        res.render("admin/500")
+        console.log(error)
+        
+    }
+}
 
 
 module.exports={
@@ -300,7 +371,12 @@ module.exports={
     blockuser,
     unblockuser,
     logout ,
-    orders
+    orders,
+    orderdetails,
+    updatestatus,
+    viewcoupon,
+    addcoupon,
+    postaddcoupon
     // viewproduct,
     // addproduct,
     // postaddproduct,
