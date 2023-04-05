@@ -361,6 +361,32 @@ const postaddcoupon=async(req,res)=>{
         
     }
 }
+const removeimage=async(req,res)=>{
+    try {
+        let id=req.body.id
+       
+        let position=req.body.position
+        let productImg=await product.findById(id)
+        let image=productImg.image[position]
+        await product.updateOne({_id:id},{$pullAll:{image:[image]}})
+        res.json({remove:true})
+        
+    } catch (error) {
+        res.render("admin/500")
+        console.log(error)
+    }
+}
+const removecoupon=async(req,res)=>{
+    try {
+        let id=req.body.id
+        await coupon.findByIdAndRemove({_id:id})
+        res.json("removed:true")
+        
+    } catch (error) {
+        res.render("admin/500")
+        console.log(error);
+    }
+}
 
 
 module.exports={
@@ -376,7 +402,9 @@ module.exports={
     updatestatus,
     viewcoupon,
     addcoupon,
-    postaddcoupon
+    postaddcoupon,
+    removeimage,
+    removecoupon
     // viewproduct,
     // addproduct,
     // postaddproduct,
