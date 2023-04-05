@@ -39,8 +39,9 @@ app.use((req, res, next) => {
     );
     next();
 });
-app.use("/",userRouter)
 app.use("/admin",adminRouter)
+app.use("/",userRouter)
+
 app.use((req,res)=>{
     res.status(404).render("404")
 })
