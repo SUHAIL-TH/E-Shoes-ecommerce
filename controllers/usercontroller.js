@@ -9,6 +9,8 @@ const nodemailer = require("nodemailer")
 const order=require("../model/ordermodel")
 const Razorpay=require("razorpay")
 const coupon=require("../model/coupenmodel")
+const wishlist=require("../model/wishlistmodel")
+const { log } = require("console")
 
 var instance = new Razorpay({
     key_id: 'rzp_test_Yp5AmFQqgmu2Nq',
@@ -147,7 +149,7 @@ const postsignup = async (req, res) => {
 
 
 }
-const postotp = async (req, res) => {
+const  postotp = async (req, res) => {
     let otp = req.body.otp
     try {
         if (mailer.OTP == otp) {
@@ -621,6 +623,7 @@ const placeorder=async(req,res)=>{
         const address=req.body.address
         const amount=req.body.total
         const payment=req.body.payment
+        console.log(req.body.couponcode);
         const userData=await user.findOne({email:req.session.user})
         const cartData=await cart.findOne({user:userData._id})
         const product=cartData.product
@@ -676,7 +679,7 @@ const ordersuccess=async(req,res)=>{
 }
 const vieworders=async(req,res)=>{
     try {
-        // let userData=await user.findOne({email:req.session.user})
+
         let categoryData = await category.find()
         let acname = await user.findOne({ email: req.session.user })
        
@@ -736,13 +739,14 @@ const orderedproduct=async(req,res)=>{
 }
 const applycoupon=async(req,res)=>{
     try {
+        let userexist=false
         let code=req.body.code
         let amount=req.body.amount
-        console.log(code);
-        console.log(amount);
-        let userData=await user.find({email:req.session.email})
-        let userexist=await coupon.findOne({couponcode:code,used:{$in:[userData._id]}})
-        console.log("userexits"+userexist);
+        let userData=await user.findOne({email:req.session.user});
+       
+        
+         userexist=await coupon.findOne({couponcode:code,used:{$in:[userData._id]}})
+       
         if(userexist){
             res.json({user:true})
         }else{
@@ -751,16 +755,20 @@ const applycoupon=async(req,res)=>{
             console.log("coupondata"+couponData);
             if(couponData){
                 if(couponData.expiredate>=new Date()){
-                    console.log("expiredate");
+                   
                     if(couponData.limit!=0){
-                        console.log("limit");
+                        
                         if(couponData.mincartamount<=amount){
-                            console.log("mincartamount");
+                            let n=-1
+                          await coupon.findByIdAndUpdate({_id:couponData._id},{$push:{used:userData._id}})
+                          await coupon.findByIdAndUpdate({_id:couponData._id},{$inc:{limit:n}})
+                         
+                         
                             if(couponData.couponamounttype=="Fixed"){
                                 let discountvalue=couponData.couponamount
                                 
                                 let distotal=Math.round(amount-discountvalue)
-                                console.log("fixed");
+                               
                                
                                return res.json({couponokey:true,
                                     
@@ -802,6 +810,64 @@ const applycoupon=async(req,res)=>{
         console.log(error);
     }
 }
+const addtowishlist=async(req,res)=>{
+    try {
+        let id=req.body.id
+      
+     
+       let productData=await product.findOne({_id:id})
+       let acname=await user.findOne({email:req.session.user})
+       let wishlistData=await wishlist.findOne({user:acname.id})
+       console.log(acname._id);
+    
+    
+       if(wishlistData){
+       let wishExits=await wishlistData.product.findIndex((product)=>product.productId==id)
+      
+            if(wishExits!=-1){
+                res.json({productExit:true})
+            }else{
+               
+            await wishlist.findOneAndUpdate({user:acname._id},{
+                    $push:{product:{productId:productData._id,name:productData.name,price:productData.price}}
+                })
+           
+            }
+            res.json({status:true})
+
+       }else{
+        let wishlists=new wishlist({
+            user:acname._id,
+            product:[{productId:id,name:productData.productName,price:productData.price}]
+            
+        })
+        await wishlists.save()
+        res.json({status:true})
+        
+       }
+       
+
+        
+    } catch (error) {
+        res.render("user/500")
+        console.log(error)
+    }
+
+}
+const viewwishlist=async(req,res)=>{
+    try {
+        let categoryData = await category.find()
+        let acname = await user.findOne({ email: req.session.user })
+        let wishlistData=await wishlist.findOne({user:acname._id}).populate("product.productId")
+        
+
+        res.render("user/wishlist",{acname,categoryData,wishlistData})
+        
+    } catch (error) {
+        res.render("user/500")
+        log(error)
+    }
+}
 
 
 module.exports = {
@@ -834,7 +900,9 @@ module.exports = {
     vieworders,
     verifypayment,
     orderedproduct,
-    applycoupon
+    applycoupon,
+    addtowishlist,
+    viewwishlist
     
     
 
