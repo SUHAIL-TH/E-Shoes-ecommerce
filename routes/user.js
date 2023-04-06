@@ -23,10 +23,7 @@ userRouter.post("/resetpassword",blockeduser,userController.resetpassword)
 userRouter.get("/profile",blockeduser,verifyLogin.verifyUserLogin,userController.profile)
 userRouter.post("/postprofile",blockeduser,verifyLogin.verifyUserLogin,userController.postprofile)
 
-
 userRouter.get("/shop",blockeduser,verifyLogin.verifyUserLogin,userController.getshop)
-
-
 
 userRouter.get("/viewproduct/:id",productController.viewproductuser)
 userRouter.post("/changeproductquantity",userController.changeproductquantity,userController.totalproductprice)
@@ -48,6 +45,11 @@ userRouter.post("/verifypayment",userController.verifypayment)
 userRouter.get("/orderedproduct/:id",verifyLogin.verifyUserLogin,userController.orderedproduct)
 
 userRouter.post("/applycoupon",userController.applycoupon)
+
+userRouter.post("/addtowishlist",userController.addtowishlist)
+userRouter.get("/viewwishlist",verifyLogin.verifyUserLogin,userController.viewwishlist)
+userRouter.post("/removewishlist",verifyLogin.verifyUserLogin,userController.removewishlist)
+userRouter.post("/wishtocart",verifyLogin.verifyUserLogin ,userController.wishtocart)
 
 
 module.exports=userRouter

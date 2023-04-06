@@ -6,6 +6,7 @@ const categoryController=require("../controllers/categoryController")
 const verifyAdmin=require("../middleware/session")
 const multer=require("multer")
 const path=require("path")
+const { verify } = require("crypto")
 
 const storage=multer.diskStorage({
     destination:function(req,file,cb){
@@ -65,8 +66,14 @@ adminRouter.post("/updatestatus",verifyAdmin.verifyLoginAdmin,adminController.up
 adminRouter.get("/viewcoupon",verifyAdmin.verifyLoginAdmin,adminController.viewcoupon)
 adminRouter.get("/addcoupon",verifyAdmin.verifyLoginAdmin,adminController.addcoupon)
 adminRouter.post("/addcoupon",verifyAdmin.verifyLoginAdmin,adminController.postaddcoupon)
+adminRouter.post("/removecoupon",verifyAdmin.verifyLoginAdmin,adminController.removecoupon)
 
 adminRouter.post("/removeimage",verifyAdmin.verifyLoginAdmin,adminController.removeimage)
+
+adminRouter.get("/addbanner",verifyAdmin.verifyLoginAdmin,adminController.addbanner)
+adminRouter.post("/addbanner",verifyAdmin.verifyLoginAdmin,upload.single("bannerimage"),adminController.postaddbanner)
+adminRouter.get("/viewbanner",verifyAdmin.verifyLoginAdmin,adminController.viewbanner)
+adminRouter.post("/updatebanner",verifyAdmin.verifyLoginAdmin,adminController.bannerstatus)
 
 
 
