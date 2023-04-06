@@ -10,7 +10,7 @@ const order=require("../model/ordermodel")
 const Razorpay=require("razorpay")
 const coupon=require("../model/coupenmodel")
 const wishlist=require("../model/wishlistmodel")
-const { log } = require("console")
+const banner=require("../model/bannermodel")
 
 var instance = new Razorpay({
     key_id: 'rzp_test_Yp5AmFQqgmu2Nq',
@@ -61,8 +61,9 @@ const home = async (req, res) => {
     let acname = await user.findOne({ email: session })
     let productData = await product.find().limit(8)
     let categoryData = await category.find()
-
-   let count=0;
+   
+    let banners=await banner.find()
+    let count=0;
     
     
   
@@ -74,10 +75,10 @@ const home = async (req, res) => {
             if(cartcount){
                 count= cartcount.product.length
                
-                res.render("user/home", { customer, acname, productData, categoryData,count })
+                res.render("user/home", { customer, acname, productData, categoryData,count,banners })
 
             }else{
-                 res.render("user/home", { customer, acname, productData, categoryData,count })
+                 res.render("user/home", { banners,customer, acname, productData, categoryData,count, })
 
             }
             
@@ -85,7 +86,7 @@ const home = async (req, res) => {
         }
         else {
             customer = false
-            res.render("user/home", { customer, acname, productData, categoryData,count })
+            res.render("user/home", { customer, acname, productData, categoryData,count ,banners})
         }
 
     } catch (error) {
@@ -729,7 +730,7 @@ const orderedproduct=async(req,res)=>{
         let categoryData = await category.find()
         let acname = await user.findOne({ email: req.session.user })
         let orderData=await order.findById({_id:id}).populate("product.productId")
-        console.log(orderData);
+        // console.log(orderData);
         res.render("user/orderedproduct",{categoryData, acname,orderData})
         
     } catch (error) {
@@ -859,13 +860,85 @@ const viewwishlist=async(req,res)=>{
         let categoryData = await category.find()
         let acname = await user.findOne({ email: req.session.user })
         let wishlistData=await wishlist.findOne({user:acname._id}).populate("product.productId")
+        if(wishlistData){
+            if(wishlistData.product!=0){
+                res.render("user/wishlist",{acname,categoryData,wishlistData})
+
+            }else{
+                res.render("user/wishlist",{acname,categoryData,data:'hi'})
+
+            }
+          
+
+        }else{
+            res.render("user/wishlist",{acname,categoryData,data:'hi'})
+        }
         
 
-        res.render("user/wishlist",{acname,categoryData,wishlistData})
+        
         
     } catch (error) {
         res.render("user/500")
         log(error)
+    }
+}
+const removewishlist=async(req,res)=>{
+    try {
+        let id=req.body.id
+        let hii=await wishlist.findOneAndUpdate({"product.productId":id},{$pull:{product:{productId:id}}})
+        console.log(hii);
+        res.json({status:true})
+    } catch (error) {
+        res.render("user/500")
+        console.log(error)
+    }
+}
+const wishtocart=async(req,res)=>{
+    try {
+        let id = req.body.id
+      
+    
+  
+        let productData = await product.findOne({ _id: id })
+        let acname = await user.findOne({ email: req.session.user })
+        let cartData = await cart.findOne({ user: acname._id })
+        if (cartData) {
+
+            let proExit = await cartData.product.findIndex((product) => product.productId == id
+            )
+           
+            if (proExit != -1) {
+                await cart.updateOne({ "product.productId": productData._id }, { $inc: { 'product.$.quantity': 1 } })
+                await wishlist.findOneAndUpdate({user:acname._id},{$pull:{product:{productId:id}}})
+
+            } else {
+                await cart.findOneAndUpdate({ user: acname._id }, {
+                    $push: {
+                        product: {
+                            productId: productData._id,price:productData.price
+                        }
+                    }
+                })
+                console.log("product added to the cart");
+            }
+          
+            res.json({status:true})
+        } else {
+            let carts = new cart({
+                user: acname._id,
+                product: [{ productId: productData._id, price: productData.price }]
+            })
+            await carts.save()
+            await wishlist.findOneAndUpdate({user:acname._id},{$pull:{product:{productId:id}}})
+            
+          
+            res.json({status:true})
+        }
+
+        
+    } catch (error) {
+        res.render("user/500")
+        console.log(error)
     }
 }
 
@@ -902,7 +975,9 @@ module.exports = {
     orderedproduct,
     applycoupon,
     addtowishlist,
-    viewwishlist
+    viewwishlist,
+    removewishlist,
+    wishtocart
     
     
 
