@@ -1,0 +1,120 @@
+<%-include('../partials/userheader')%>
+<!-- Navbar End -->
+
+<!-- Breadcrumb Start -->
+<div class="container-fluid">
+  <div class="row px-xl-5">
+    <div class="col-12">
+      <nav class="breadcrumb bg-light mb-30">
+        <a class="breadcrumb-item text-dark" href="/">Home</a>
+        <a class="breadcrumb-item text-dark" href="/shop ">Shop</a>
+        <span class="breadcrumb-item active">View orders</span>
+      </nav>
+    </div>
+  </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- Cart Start -->
+<div class="container-fluid">
+  <div class="row px-xl-5">
+    <div class="col-lg-12 table-responsive mb-5">
+      <%if(typeof data=="undefined"){%>
+      <table
+        class="table table-light table-borderless table-hover text-center mb-0"
+      >
+        <thead class="" style="background-color: rgb(43, 43, 43)">
+          <tr>
+            <th class="text-white">No</th>
+            <th class="text-white">Name</th>
+            <th class="text-white">Image</th>
+            <th class="text-white">Category</th>
+            <th class="text-white">Price</th>
+            <th class="text-white">To cart</th>
+
+            <th class="text-white">Option</th>
+          </tr>
+        </thead>
+        <tbody class="align-middle">
+          <%let count=1%> 
+          <%wishlistData.product.forEach((product)=>{%>
+
+          <tr>
+            <td class="align-middle" class="text-dark"><%=count%></td>
+            <td class="align-middle" class="text-dark"><%=product.productId.productName%></td>
+            <td class="align-middle">
+              <img
+                src="/product-image/<%=product.productId.image[0]%>"
+                alt="product image"
+                style="width: 50px"
+              />
+            </td>
+            <td class="align-middle" class="text-dark"><%=product.productId.category%></td>
+            <td class="align-middle" class="text-dark"><%=product.price%></td>
+            <td class="align-middle"> <button
+              onclick="wishtocart('<%=product.productId._id%>','<%=product.productId.price%>')"class="btn btn-sm btn-success"><i class="fa fa-plus"></i></button></td></td>
+
+            <td class="align-middle">
+              <button
+                onclick="removewishlist('<%=product.productId._id%>')"class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button></td>
+              </tr>
+          <%count++%> <%})%>
+        </tbody>
+      </table>
+      <%}else{%>
+        <h5 class="font-weight-bold text-center">Wishlist Table is empty</h5>
+      <%}%>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  function removewishlist(id) {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          url: "/removewishlist",
+          method: "post",
+          data: {
+            id: id,
+          },
+          success: (response) => {
+            if (response.status) {
+              location.reload()
+            }
+          },
+        });
+      }
+    });
+  }
+
+  function wishtocart(id,price){
+    console.log(id,price);
+    $.ajax({
+      url:'/wishtocart',
+      method:"post",
+      data:{
+        id:id,
+        price:price
+      },
+      success:(response)=>{
+        if(response.status){
+          location.reload()
+        }
+      }
+    })
+
+  }
+</script>
+
+<%- include('../partials/userfooter')%>
