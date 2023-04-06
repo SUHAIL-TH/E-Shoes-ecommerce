@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>E-SHOES</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="/admin/assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="/admin/assets/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <link href="https://cdn1.vectorstock.com/i/1000x1000/32/60/shopping-cart-abstract-buy-speed-gold-logo-vector-15003260.jpg" rel="icon">
+
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="/admin/assets/vendors/jvectormap/jquery-jvectormap.css">
+    <link rel="stylesheet" href="/admin/assets/vendors/flag-icon-css/css/flag-icon.min.css">
+    <link rel="stylesheet" href="/admin/assets/vendors/owl-carousel-2/owl.carousel.min.css">
+    <link rel="stylesheet" href="/admin/assets/vendors/owl-carousel-2/owl.theme.default.min.css">
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="/admin/assets/css/style.css">
+    <!-- End layout styles -->
+    <link href="https://cdn1.vectorstock.com/i/1000x1000/32/60/shopping-cart-abstract-buy-speed-gold-logo-vector-15003260.jpg" rel="icon">
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+    <style>
+      html * {
+	 box-sizing: border-box;
+}
+ p {
+	 margin: 0;
+}
+ .upload__box {
+	 padding: 40px;
+}
+ .upload__inputfile {
+	 width: 0.1px;
+	 height: 0.1px;
+	 opacity: 0;
+	 overflow: hidden;
+	 position: absolute;
+	 z-index: -1;
+}
+ .upload__btn {
+	 display: inline-block;
+	 font-weight: 600;
+	 color: #fff;
+	 text-align: center;
+	 min-width: 116px;
+	 padding: 5px;
+	 transition: all 0.3s ease;
+	 cursor: pointer;
+	 border: 2px solid;
+	 background-color: #4045ba;
+	 border-color: #4045ba;
+	 border-radius: 10px;
+	 line-height: 26px;
+	 font-size: 14px;
+}
+ .upload__btn:hover {
+	 background-color: unset;
+	 color: #4045ba;
+	 transition: all 0.3s ease;
+}
+ .upload__btn-box {
+	 margin-bottom: 10px;
+}
+ .upload__img-wrap {
+	 display: flex;
+	 flex-wrap: wrap;
+	 margin: 0 -10px;
+}
+ .upload__img-box {
+	 width: 145px;
+   height: 100px;
+	 padding: 0 10px;
+	 margin-bottom: 12px;
+}
+ .upload__img-close {
+	 width: 24px;
+	 height: 24px;
+	 border-radius: 50%;
+	 background-color: rgba(0, 0, 0, 0.5);
+	 position: absolute;
+	 top: 10px;
+	 right: 10px;
+	 text-align: center;
+	 line-height: 24px;
+	 z-index: 1;
+	 cursor: pointer;
+}
+ .upload__img-close:after {
+	 content: "\2716";
+	 font-size: 14px;
+	 color: white;
+}
+ .img-bg {
+	 background-repeat: no-repeat;
+	 background-position: center;
+	 background-size: cover;
+	 position: relative;
+	 padding-bottom: 100%;
+}
+ 
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script >
+      jQuery(document).ready(function () {
+  ImgUpload();
+});
+
+function ImgUpload() {
+  var imgWrap = "";
+  var imgArray = [];
+
+  $('.upload__inputfile').each(function () {
+    $(this).on('change', function (e) {
+      imgWrap = $(this).closest('.upload__box').find('.upload__img-wrap');
+      var maxLength = $(this).attr('data-max_length');
+
+      var files = e.target.files;
+      var filesArr = Array.prototype.slice.call(files);
+      var iterator = 0;
+      filesArr.forEach(function (f, index) {
+
+        if (!f.type.match('image.*')) {
+          return;
+        }
+
+        if (imgArray.length > maxLength) {
+          return false
+        } else {
+          var len = 0;
+          for (var i = 0; i < imgArray.length; i++) {
+            if (imgArray[i] !== undefined) {
+              len++;
+            }
+          }
+          if (len > maxLength) {
+            return false;
+          } else {
+            imgArray.push(f);
+
+            var reader = new FileReader();
+            reader.onload = function (e) {
+              var html = "<div class='upload__img-box'><div style='background-image: url(" + e.target.result + ")' data-number='" + $(".upload__img-close").length + "' data-file='" + f.name + "' class='img-bg'><div class='upload__img-close'></div></div></div>";
+              imgWrap.append(html);
+              iterator++;
+            }
+            reader.readAsDataURL(f);
+          }
+        }
+      });
+    });
+  });
+
+  $('body').on('click', ".upload__img-close", function (e) {
+    var file = $(this).parent().data("file");
+    for (var i = 0; i < imgArray.length; i++) {
+      if (imgArray[i].name === file) {
+        imgArray.splice(i, 1);
+        break;
+      }
+    }
+    $(this).parent().parent().remove();
+  });
+}
+    </script>
+  
+    <!-- <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script> -->
+
+  </head>
+  <body>
+    <div class="container-scroller">
+      <!-- partial:../../partials/_sidebar.html -->
+      <%- include('../partials/admin_sidebar')%>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:../../partials/_navbar.html -->
+        <%- include('../partials/admin_navbar')%>
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="page-header">
+              <h3 class="page-title"> Edit product </h3>
+              
+            </div>
+            <div class="row">
+              
+              
+              <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    
+                    <form class="forms-sample" action="/admin/addbanner" method="post" enctype="multipart/form-data">
+                     
+                      <div class="form-group">
+                        <label for="exampleInputName1">Heading</label>
+                        <input type="text" class="form-control" id="heading"  name="heading" value="" placeholder="Enter the Heading">
+                      </div>
+                      
+                      <div class="form-group">
+                        <label for="">Discription</label>
+                        <input type="text" class="form-control" id="discription" name="discription" value="" placeholder="Enter the Discription">
+                      </div>
+                      
+                     
+                      <div class="upload__box">
+                        <div class="upload__btn-box">
+                          <label class="upload__btn">
+                            <p>Upload images</p>
+                            <input type="file" multiple="" data-max_length="20" class="upload__inputfile" name="bannerimage" accept="image/*">
+                          </label>
+                        </div>
+                        <div class="upload__img-wrap"></div>
+                      </div>
+                    
+                      
+                      
+                      <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                      <a href="/admin/viewbanner " class="btn btn-dark">Cancel</a>
+                    </form>
+                  
+                  </div>
+                </div>
+              </div>
+              <!-- <script>
+                function viewImage(event){
+                 
+                    document.getElementById("imgView").src=URL.createObjectURL(event.target.files[0])
+
+                   
+                }
+
+            </script> -->
+              
+              
+              
+              
+              
+              
+              
+              
+            </div>
+          </div>
+          <!-- content-wrapper ends -->
+          <!-- partial:../../partials/_footer.html -->
+          
+          <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <script>
+      function removeimage(id,position){
+        
+        $.ajax({
+          url:'/admin/removeimage',
+          method:'post',
+          data:{
+            id:id,
+            position:position
+          },
+          success:(response)=>{
+            if(response){
+              window.location.reload( )
+            }
+          }
+
+        })
+
+      }
+    </script>
+    <%- include('../partials/admin_footer')%>

@@ -6,6 +6,7 @@ const category=require("../model/categoryModel")
 const order =require("../model/ordermodel")
 const uc=require("upper-case")
 const coupon=require("../model/coupenmodel")
+const banner=require("../model/bannermodel")
 
 
 
@@ -387,6 +388,62 @@ const removecoupon=async(req,res)=>{
         console.log(error);
     }
 }
+const addbanner=async(req,res)=>{
+    try {
+        res.render("admin/addbanner")
+        
+    } catch (error) {
+        res.render("admin/500")
+        console.log(error);
+    }
+}
+const postaddbanner=async(req,res)=>{
+    try {
+       
+        const banners=new banner({
+            heading:req.body.heading,
+            discription:req.body.discription,
+            image:req.file.filename
+        })
+        await banners.save()
+        res.render("admin/viewbanner")      
+    } catch (error) {
+        res.render("admin/500")
+    }
+}
+const viewbanner=async(req,res)=>{
+    try {
+        let bannerData=await banner.find()      
+            res.render("admin/viewbanner",{bannerData})        
+    } catch (error) {
+        res.render("admin/500")
+        console.log(error)
+    }
+}
+const bannerstatus=async(req,res)=>{
+    try {
+        let id=req.body.id
+       
+        let text=req.body.text
+        console.log(text);
+    
+        if(text=="false"){
+            await banner.findOneAndUpdate({_id:id},{$set:{status:false}})
+
+        }else if(text=="true"){
+            await banner.findOneAndUpdate({_id:id},{$set:{status:true}})
+
+        }
+
+        res.json({status:true})
+
+        
+    } catch (error) {
+        res.render("admin/500")
+        console.log(error)
+    }
+}
+
 
 
 module.exports={
@@ -404,7 +461,11 @@ module.exports={
     addcoupon,
     postaddcoupon,
     removeimage,
-    removecoupon
+    removecoupon,
+    addbanner,
+    postaddbanner,
+    viewbanner,
+    bannerstatus
     // viewproduct,
     // addproduct,
     // postaddproduct,
