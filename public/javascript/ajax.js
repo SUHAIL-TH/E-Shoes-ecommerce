@@ -34,17 +34,17 @@ function addtocart(proId){
     })
 }
 
-function addtowishlist(id,name,price){
+function addtowishlist(id){
+    console.log(id);
     $.ajax({
-        url:"/addtowhishlist",
+        url:"/addtowishlist",
         method:"post",
         data:{
             id:id,
-            name:name,
-            price:price
+        
         },
         success:(response)=>{
-            if(response.statud){
+            if(response.status){
                 Swal.fire({
                     icon: 'success',
                     title: 'product added to wishlist',
@@ -54,7 +54,7 @@ function addtowishlist(id,name,price){
                    
                   })
                  
-            }else if(response.already){
+            }else if(response.productExit){
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
@@ -64,7 +64,8 @@ function addtowishlist(id,name,price){
                    
                   })
 
-            }else{
+            }
+           else{
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',

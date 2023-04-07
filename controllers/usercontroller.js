@@ -769,8 +769,6 @@ const applycoupon=async(req,res)=>{
                                 let discountvalue=couponData.couponamount
                                 
                                 let distotal=Math.round(amount-discountvalue)
-                               
-                               
                                return res.json({couponokey:true,
                                     
                                     distotal,
@@ -941,6 +939,28 @@ const wishtocart=async(req,res)=>{
         console.log(error)
     }
 }
+const cancelorder=async(req,res)=>{
+    try {
+
+        let id =req.body.id
+        await order.findByIdAndUpdate({_id:id},{$set:{status:"canceled"}})   
+        res.json({status:true})     
+    } catch (error) {
+        res.render("user/500")
+        console.log(error)
+    }
+}
+const returnorder=async(req,res)=>{
+    try {
+        let id=req.body.id
+        await order.findOneAndUpdate({_id:id},{$set:{status:"return pending"}})
+        res.json({status:true})   
+         
+    } catch (error) {
+        res.render("user/500")
+        console.log(error)
+    }
+}
 
 
 module.exports = {
@@ -977,7 +997,9 @@ module.exports = {
     addtowishlist,
     viewwishlist,
     removewishlist,
-    wishtocart
+    wishtocart,
+    cancelorder,
+    returnorder
     
     
 

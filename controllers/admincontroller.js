@@ -406,7 +406,7 @@ const postaddbanner=async(req,res)=>{
             image:req.file.filename
         })
         await banners.save()
-        res.render("admin/viewbanner")      
+        res.redirect("/admin/viewbanner")      
     } catch (error) {
         res.render("admin/500")
     }
@@ -425,7 +425,7 @@ const bannerstatus=async(req,res)=>{
         let id=req.body.id
        
         let text=req.body.text
-        console.log(text);
+        
     
         if(text=="false"){
             await banner.findOneAndUpdate({_id:id},{$set:{status:false}})
