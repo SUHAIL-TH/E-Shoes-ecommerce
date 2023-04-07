@@ -91,7 +91,7 @@
             <div class="col-lg-4 col-6 text-left">
                 <form >
                     <div class="input-group">
-                        <input type="text" class="form-control" name="search" placeholder="Search for products">
+                        <input type="text" class="form-control"  placeholder="Search for products">
                         <div class="input-group-append">
                             <button type="submit" class="input-group-text bg-transparent text-primary">
                                 <i class="fa fa-search"></i>
@@ -187,6 +187,7 @@
                         
                         
                         <%banners.forEach((banner,index)=>{ %>
+                            <%if(banner.status==true){%>
                             <% if(index == 0 ){ %>
                                 
                                 <div class="carousel-item position-relative active" style="height: 430px;">
@@ -197,15 +198,15 @@
                                 <img class="position-absolute w-100 h-100" src="/product-image/<%=banner.image%>" style="object-fit: cover;">
                                 <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                     <div class="p-3" style="max-width: 700px;">
-                                        <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown"><%=banner.heading%></h1>
-                                        <p class="mx-md-5 px-5 animate__animated animate__bounceIn"><%=banner.discription%></p>
+                                        <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown font-weight-bold"><%=banner.heading%></h1>
+                                        <p class="mx-md-5 px-5 animate__animated animate__bounceIn font-weight-bold"><%=banner.discription%></p>
                                         <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="#">Shop Now</a>
                                     </div>
                                 </div>
                             </div>
                         
                         
-                        
+                        <%}%>
                        
                         <% })%>
                     </div>
@@ -440,7 +441,7 @@
         <div class="row px-xl-5">
             
             <%productData.forEach((product)=>{%>
-           
+           <%if(product.status=="true"){%>
             
             <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
                 <div class="product-item bg-light mb-4">
@@ -473,6 +474,7 @@
                     </div>
                 </div>
             </div>
+           <%}%>
         <%})%>
             
         </div>

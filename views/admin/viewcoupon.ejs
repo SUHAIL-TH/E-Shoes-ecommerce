@@ -53,8 +53,9 @@
                             <td class="text-white"><%=coupon.limit%></td>
                             <!-- <td class="text-white"><%=coupon.used%></td> -->
                             <td class="text-white"><%=coupon.status%></td>
-                            <td class="text-white"><a href=""><button class="btn btn-info font-weight-bold">Edit</button></a>
-                              <button class="fa fa-trash "  style="font-size:20px;color:rgb(235, 14, 14) ; text-decoration: none; background-color: rgba(240, 248, 255, 0); border: none;" ></td>
+                            <td class="text-white">
+                              <!-- <a href=""><button class="btn btn-info font-weight-bold">Edit</button></a> -->
+                              <button class="fa fa-trash " onclick="removecoupon('<%=coupon._id%>')"  style="font-size:20px;color:rgb(235, 14, 14) ; text-decoration: none; background-color: rgba(240, 248, 255, 0); border: none;" ></td>
                             
                           </tr>
                           <!-- onclick="deletecategory('')" -->
@@ -78,5 +79,23 @@
       </div>
       
     </div>
+    <script>
+      function removecoupon(id){
+        $.ajax({
+          url:"/admin/removecoupon",
+          method:"post",
+          data:{
+            id:id
+          },
+          success:(response)=>{
+            if(response.remove=true){
+              alert("coupon removed")
+              window.location.reload()
+
+            }
+          }
+        })
+      }
+    </script>
   
     <%- include('../partials/admin_footer')%>
