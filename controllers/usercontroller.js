@@ -994,6 +994,19 @@ const returnorder=async(req,res)=>{
         console.log(error)
     }
 }
+const searchproduct=async (req,res)=>{
+    try {
+        let categoryData = await category.find()
+        let acname = await user.findOne({ email: req.session.user })
+        let search=req.body.search
+        let productData= await product.find({productName:{$regex:'^'+search,$options:'i'}})
+        res.render("user/shop",{categoryData,acname,product:productData})
+        
+    } catch (error) {
+        res.render("user/500")
+        console.log(error)
+    }
+}
 
 
 module.exports = {
@@ -1032,7 +1045,8 @@ module.exports = {
     removewishlist,
     wishtocart,
     cancelorder,
-    returnorder
+    returnorder,
+    searchproduct
     
     
 
