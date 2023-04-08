@@ -476,6 +476,7 @@ const changeproductquantity=async(req,res,next)=>{
         let proprice=req.body.proprice
         let userid=req.body.user
         console.log(proId);  
+        
         // let stockavailable=await product.findById(proId)
         // if(stockavailable.stock>quantity){
             if(count==-1 &quantity==1) {
@@ -506,8 +507,11 @@ const checkout=async(req,res,next)=>{
     try {
         let categoryData = await category.find()
         let acname = await user.findOne({ email:req.session.user })
-        let productData = await product.find()
-        let cartData=await cart.findOne({user:acname._id})
+        // let productData = await product.find()
+        let cartData=await cart.findOne({user:acname._id}).populate("product.productId")
+        console.log(cartData);
+        let walletamount=0;
+        let Totalcart
         
         let Total=0
         if(cartData.product.length>0){
@@ -527,13 +531,29 @@ const checkout=async(req,res,next)=>{
                     total:{$sum:{$multiply:["$price","$quantity"]}}
                 }
             }])
-            Total=sum[0].total
+            Totalcart=sum[0].total
+
+        
+        }
+        walletamount=acname.wallet
+       
+        if(walletamount>Totalcart){
+            Total=0;
+            const balances=walletamount-Totalcart
+            await user.updateOne({email:req.session.user},{$set:{wallet:balances}})
+        }else{
+            Total=Totalcart-walletamount
+            let n=0;
+            await user.updateOne({email:req.session.user},{$set:{wallet:n}})
 
         }
+       
+
+        
         
        
        
-        res.render("user/checkout", { product: productData, acname, categoryData,Total })
+        res.render("user/checkout", {  acname, categoryData,Total,walletamount,Totalcart,})
        
     } catch (error) {
         res.render("user/500")
@@ -624,6 +644,7 @@ const placeorder=async(req,res)=>{
         const address=req.body.address
         const amount=req.body.total
         const payment=req.body.payment
+        const wallet=req.body.wallet
         console.log(req.body.couponcode);
         const userData=await user.findOne({email:req.session.user})
         const cartData=await cart.findOne({user:userData._id})
@@ -639,7 +660,8 @@ const placeorder=async(req,res)=>{
             paymentMethode:payment,
             date:new Date(),
             status:status,
-            product:product
+            product:product,
+            wallet:wallet
         })
         await newOrder.save()
         let orderid=newOrder._id
@@ -698,7 +720,7 @@ const verifypayment=async(req,res)=>{
        
         const details=(req.body);
 
-       console.log(details);
+    //    console.log(details);
         const crypto = require("crypto");
         let hmac=crypto.createHmac("sha256",process.env.RAZORKEY)
         hmac.update(details.payment.razorpay_order_id+'|'+details.payment.razorpay_payment_id)
@@ -943,7 +965,18 @@ const cancelorder=async(req,res)=>{
     try {
 
         let id =req.body.id
-        await order.findByIdAndUpdate({_id:id},{$set:{status:"canceled"}})   
+        let orderData=await order.findOne({_id:id})
+        if(orderData.paymentMethode=="COD"){
+            await user.findOneAndUpdate({email:req.session.user},{$inc:{wallet:orderData.wallet}})
+            await order.findByIdAndUpdate({_id:id},{$set:{status:"canceled"}})   
+
+        }else{
+            await user.findOneAndUpdate({email:req.session.user},{$inc:{wallet:orderData.totalamount}})
+            await order.findByIdAndUpdate({_id:id},{$set:{status:"canceled"}})   
+
+            
+        }
+       
         res.json({status:true})     
     } catch (error) {
         res.render("user/500")

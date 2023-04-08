@@ -47,6 +47,11 @@ const userSchema=new mongoose.Schema({
         require:true,
         trim:true
     },
+    wallet:{
+        type:Number,
+        default:0
+
+    },
     blocked:{
         type:Boolean,
         default:false
