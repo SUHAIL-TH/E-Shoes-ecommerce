@@ -74,6 +74,8 @@ adminRouter.get("/addbanner",verifyAdmin.verifyLoginAdmin,adminController.addban
 adminRouter.post("/addbanner",verifyAdmin.verifyLoginAdmin,upload.single("bannerimage"),adminController.postaddbanner)
 adminRouter.get("/viewbanner",verifyAdmin.verifyLoginAdmin,adminController.viewbanner)
 adminRouter.post("/updatebanner",verifyAdmin.verifyLoginAdmin,adminController.bannerstatus)
+adminRouter.get("/editbanner/:id",verifyAdmin.verifyLoginAdmin,adminController.editbanner)
+adminRouter.post("/editbanner/:id",verifyAdmin.verifyLoginAdmin,upload.single("bannerimage"),adminController.posteditbanner)
 
 
 

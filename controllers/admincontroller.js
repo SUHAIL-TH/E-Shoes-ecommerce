@@ -45,9 +45,11 @@ const postlogin=async(req,res)=>{
         console.log(error);  
        }
     }
- const home=(req,res)=>{
+ const home=async(req,res)=>{
         if(req.session.admin){
-            res.render("admin/index")
+
+            let productscount= await product.find().count()
+            res.render("admin/index",{productscount})
         }else{
             res.redirect("/admin")
         }
@@ -306,8 +308,13 @@ const orderdetails=async(req,res)=>{
 const updatestatus=async(req,res)=>{
     try {
         let id=req.body.id
+       let orderData=await order.findOne({_id:id})
+
         let status=req.body.status
-        console.log(status,id);
+        if(status=="return aproved"){
+            await user.findOneAndUpdate({_id:orderData.user},{$inc:{wallet:orderData.totalamount}})
+        }
+        
         await order.findByIdAndUpdate({_id:id},{$set:{status:status}})
         res.redirect("/admin/orders")
 
@@ -443,6 +450,47 @@ const bannerstatus=async(req,res)=>{
         console.log(error)
     }
 }
+const editbanner=async(req,res)=>{
+    try {
+        let id=req.params.id
+        console.log(id);
+        let bannerData=await banner.findOne({_id:id})
+        res.render("admin/editbanner",{bannerData})
+        
+    } catch (error) {
+        res.render("admin/500")
+        console.log(error)
+    }
+}
+const posteditbanner=async(req,res)=>{
+    try {
+        let id =req.params.id
+      
+        // if(req.file.filename){
+            await banner.findOneAndUpdate({_id:id},{$set:{
+                heading:req.body.heading,
+                discription:req.body.discription,
+              
+            }})
+
+
+        // }else{
+        //     await banner.findOneAndUpdate({_id:id},{$set:{
+        //         heading:req.body.heading,
+        //         discription:req.body.discription,
+        //         image:req.file.filename
+        //     }})
+
+        // }
+        res.redirect("/admin/viewbanner")
+
+
+        
+    } catch (error) {
+        res.render("admin/500")
+        console.log(error);
+    }
+}
 
 
 
@@ -465,7 +513,9 @@ module.exports={
     addbanner,
     postaddbanner,
     viewbanner,
-    bannerstatus
+    bannerstatus,
+    editbanner,
+    posteditbanner
     // viewproduct,
     // addproduct,
     // postaddproduct,
