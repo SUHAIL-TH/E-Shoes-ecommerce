@@ -29,7 +29,8 @@
                         <th>Discription</th>
                         <th>Image</th>
                         <th>status</th>
-                        <th>Options</th>
+                        <th>Update</th>
+                        <th>Option </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -42,10 +43,11 @@
                           <img
                             src="/product-image/<%=banner.image%>"
                             alt="product image"
-                            style="width: 60px; height: 70px; border-radius: 0"
+                            style="width: 70px; height: 60px; border-radius: 0"
                           />
                         </td>
                         <td class="text-white"><%=banner.status%></td>
+                        <td class="text-white"><a href="/admin/editbanner/<%=banner._id%> " class="btn btn-info">Edit</a></td>
                         <td class="text-white">
                           <%if(banner.status==true){%>
                           <button
@@ -79,18 +81,20 @@
     </div>
   </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
   function bannerstatus(id,text) {
    console.log(id);
     Swal.fire({
       title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      text: "Do you want to change the status?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
+      confirmButtonText: "Yes, Do it!",
     }).then((result) => {
       if (result.isConfirmed) {
         $.ajax({
@@ -109,6 +113,7 @@
       }
     });
   }
+
 </script>
 
 <%- include('../partials/admin_footer')%>
