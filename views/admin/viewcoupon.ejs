@@ -54,7 +54,8 @@
                             <!-- <td class="text-white"><%=coupon.used%></td> -->
                             <td class="text-white"><%=coupon.status%></td>
                             <td class="text-white">
-                              <!-- <a href=""><button class="btn btn-info font-weight-bold">Edit</button></a> -->
+
+                              <a href="/admin/editcoupon/<%=coupon._id%>" class="fa fa-edit text-decoration-none "></a>
                               <button class="fa fa-trash " onclick="removecoupon('<%=coupon._id%>')"  style="font-size:20px;color:rgb(235, 14, 14) ; text-decoration: none; background-color: rgba(240, 248, 255, 0); border: none;" ></td>
                             
                           </tr>

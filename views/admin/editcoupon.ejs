@@ -1,0 +1,153 @@
+<%- include("../partials/admin_header")%>
+<div class="container-scroller">
+  <!-- partial:../../partials/_sidebar.html -->
+  <%- include('../partials/admin_sidebar')%>
+  <!-- partial -->
+  <div class="container-fluid page-body-wrapper">
+    <!-- partial:../../partials/_navbar.html -->
+    <%- include('../partials/admin_navbar')%>
+    <!-- partial -->
+    <div class="main-panel">
+      <div class="content-wrapper">
+        <div class="page-header">
+          <h3 class="page-title">Edit Coupon</h3>
+        </div>
+        <div class="row">
+          <div class="col-12 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <form
+                  class="forms-sample"
+                  id="myForm"
+                  action="/admin/editcoupon/<%=couponData._id%>"
+                  method="post"
+                >
+                  <div class="form-group">
+                    <label for="exampleInputName1">Coupon Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="name"
+                      name="name"
+                      value="<%=couponData.couponcode%>"
+                      placeholder="Enter the Coupon Name"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleSelectGender">Coupon type</label>
+                    <select
+                      class="form-control"
+                      id="coupontype"
+                      name="coupontype"
+                      required
+                    >
+                    <option><%=couponData.couponamounttype%></option>
+                      <option>Fixed</option>
+                      <option>Percentage</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="">Coupon Amount</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="amount"
+                      name="amount"
+                      value="<%=couponData.couponamount%>"
+                      placeholder="Enter the amount"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="">Min Cart Amount</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="mincart"
+                      name="mincart"
+                      value="<%=couponData.mincartamount%>"
+                      placeholder="Enter the Min cart amount "
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="">Max Redeem Amount</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="maxredeem"
+                      name="maxredeem"
+                      value="<%=couponData.maxredeemamount%>"
+                      placeholder="Enter the Maxredeem amount"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="">Limit</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="limit"
+                      name="limit"
+                      value="<%=couponData.limit%>"
+                      placeholder="Enter the Limit"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="">Expire Date</label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="discription"
+                      name="date"
+                      value="<%=couponData.expiredate.toISOString().substring(0,10)%>"
+                      placeholder="Enter the Expiredate"
+                      required
+                    />
+                  </div>
+
+                  <!-- <button class="btn btn-dark">Cancel</button> -->
+                  <a href="/admin/viewcoupon" class="btn btn-danger">Cancel</a>
+                  <button type="submit" class="btn btn-success mr-2">
+                    Submit
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+      <!-- partial:../../partials/_footer.html -->
+
+      <!-- partial -->
+    </div>
+    <!-- main-panel ends -->
+  </div>
+  <!-- page-body-wrapper ends -->
+</div>
+
+<script>
+  let name = document.getElementById("name");
+
+  name.addEventListener("input", () => {
+    if (name.value.trim() == "") {
+      name.setCustomValidity("name cannot be null");
+    } else if (name.value.trim().length <= 4) {
+      name.setCustomValidity("minimum 4 letters required");
+    } else {
+      name.setCustomValidity("");
+    }
+  });
+
+//   const form = document.getElementById("myForm");
+//   form.addEventListener("submit", (event) => {
+//     event.preventDefault();
+//     alert("Add Product");
+//     form.submit();
+//   });
+</script>
+
+<%- include('../partials/admin_footer')%>
