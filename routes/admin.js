@@ -3,6 +3,8 @@ const adminRouter=express()
 const adminController=require('../controllers/admincontroller')
 const productController=require("../controllers/productController")
 const categoryController=require("../controllers/categoryController")
+const bannerController=require("../controllers/bannercontroller")
+const couponController=require("../controllers/coupencontroller")
 const verifyAdmin=require("../middleware/session")
 const multer=require("multer")
 const path=require("path")
@@ -51,6 +53,7 @@ adminRouter.post("/addproduct",verifyAdmin.verifyLoginAdmin,upload.array("image"
 adminRouter.get("/editproduct/:id",verifyAdmin.verifyLoginAdmin,productController.editproduct)
 adminRouter.post("/editproduct/:id",verifyAdmin.verifyLoginAdmin,upload.array("image",5),productController.posteditproduct)
 adminRouter.get("/deleteproduct/:id",verifyAdmin.verifyLoginAdmin,productController.deleteproduct)
+adminRouter.post("/removeimage",verifyAdmin.verifyLoginAdmin,productController.removeimage)
 
 adminRouter.get("/addcategory",verifyAdmin.verifyLoginAdmin,categoryController.addcategory)
 adminRouter.get("/viewcategory",verifyAdmin.verifyLoginAdmin,categoryController.viewcategory )
@@ -59,25 +62,29 @@ adminRouter.get("/deletecategory/:id",verifyAdmin.verifyLoginAdmin,categoryContr
 adminRouter.get("/truecategory/:id",verifyAdmin.verifyLoginAdmin,categoryController.truecategory)
 adminRouter.get("/falsecategory/:id",verifyAdmin.verifyLoginAdmin,categoryController.falsecategory)
 
+
+
 adminRouter.get("/orders",verifyAdmin.verifyLoginAdmin,adminController.orders)
 adminRouter.get("/orderdetails/:id",verifyAdmin.verifyLoginAdmin,adminController.orderdetails)
 adminRouter.post("/updatestatus",verifyAdmin.verifyLoginAdmin,adminController.updatestatus)
 
-adminRouter.get("/viewcoupon",verifyAdmin.verifyLoginAdmin,adminController.viewcoupon)
-adminRouter.get("/addcoupon",verifyAdmin.verifyLoginAdmin,adminController.addcoupon)
-adminRouter.post("/addcoupon",verifyAdmin.verifyLoginAdmin,adminController.postaddcoupon)
-adminRouter.post("/removecoupon",verifyAdmin.verifyLoginAdmin,adminController.removecoupon)
-adminRouter.get("/editcoupon/:id",verifyAdmin.verifyLoginAdmin,adminController.editcoupon)
-adminRouter.post("/editcoupon/:id",verifyAdmin.verifyLoginAdmin,adminController.posteditcoupon)
 
-adminRouter.post("/removeimage",verifyAdmin.verifyLoginAdmin,adminController.removeimage)
 
-adminRouter.get("/addbanner",verifyAdmin.verifyLoginAdmin,adminController.addbanner)
-adminRouter.post("/addbanner",verifyAdmin.verifyLoginAdmin,upload.single("bannerimage"),adminController.postaddbanner)
-adminRouter.get("/viewbanner",verifyAdmin.verifyLoginAdmin,adminController.viewbanner)
-adminRouter.post("/updatebanner",verifyAdmin.verifyLoginAdmin,adminController.bannerstatus)
-adminRouter.get("/editbanner/:id",verifyAdmin.verifyLoginAdmin,adminController.editbanner)
-adminRouter.post("/editbanner/:id",verifyAdmin.verifyLoginAdmin,upload.single("bannerimage"),adminController.posteditbanner)
+adminRouter.get("/viewcoupon",verifyAdmin.verifyLoginAdmin,couponController.viewcoupon)
+adminRouter.get("/addcoupon",verifyAdmin.verifyLoginAdmin,couponController.addcoupon)
+adminRouter.post("/addcoupon",verifyAdmin.verifyLoginAdmin,couponController.postaddcoupon)
+adminRouter.post("/removecoupon",verifyAdmin.verifyLoginAdmin,couponController.removecoupon)
+adminRouter.get("/editcoupon/:id",verifyAdmin.verifyLoginAdmin,couponController.editcoupon)
+adminRouter.post("/editcoupon/:id",verifyAdmin.verifyLoginAdmin,couponController.posteditcoupon)
+
+
+
+adminRouter.get("/addbanner",verifyAdmin.verifyLoginAdmin,bannerController.addbanner)
+adminRouter.post("/addbanner",verifyAdmin.verifyLoginAdmin,upload.single("bannerimage"),bannerController.postaddbanner)
+adminRouter.get("/viewbanner",verifyAdmin.verifyLoginAdmin,bannerController.viewbanner)
+adminRouter.post("/updatebanner",verifyAdmin.verifyLoginAdmin,bannerController.bannerstatus)
+adminRouter.get("/editbanner/:id",verifyAdmin.verifyLoginAdmin,bannerController.editbanner)
+adminRouter.post("/editbanner/:id",verifyAdmin.verifyLoginAdmin,upload.single("bannerimage"),bannerController.posteditbanner)
 
 
 

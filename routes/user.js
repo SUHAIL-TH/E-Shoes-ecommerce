@@ -3,8 +3,11 @@ const userRouter=express()
 const userController=require("../controllers/usercontroller")
 const productController=require("../controllers/productController")
 const categoryController=require("../controllers/categoryController")
+const couponController=require("../controllers/coupencontroller")
 const verifyLogin=require("../middleware/session")
 const blockeduser=require("../middleware/blockedUser")
+const cartController=require("../controllers/cartcontroller")
+const wishlistController=require("../controllers/wishlistcontroller")
 
 
 
@@ -22,18 +25,25 @@ userRouter.get("/resetpassword",userController.getresetpassword)
 userRouter.post("/resetpassword",blockeduser,userController.resetpassword)
 userRouter.get("/profile",blockeduser,verifyLogin.verifyUserLogin,userController.profile)
 userRouter.post("/postprofile",blockeduser,verifyLogin.verifyUserLogin,userController.postprofile)
+userRouter.get("/contact",verifyLogin.verifyUserLogin,userController.contact)
+userRouter.get("/shop",userController.getshop)
 
-userRouter.get("/shop",blockeduser,verifyLogin.verifyUserLogin,userController.getshop)
 
+//product controller
 userRouter.get("/viewproduct/:id",productController.viewproductuser)
-userRouter.post("/changeproductquantity",userController.changeproductquantity,userController.totalproductprice)
+userRouter.post("/searchproduct",productController.searchproduct)
+userRouter.get("/categoryproduct",blockeduser,productController.categoryproduct)
 
-userRouter.get("/categoryproduct",blockeduser,categoryController.categoryproduct)
 
-userRouter.get("/addtocart/:id",verifyLogin.verifyUserLogin,userController.addtocart)
-userRouter.get("/cart",blockeduser,verifyLogin.verifyUserLogin,userController.getcart)
-userRouter.post("/removeproduct",userController.removeproduct)
 
+//cart controller
+userRouter.get("/addtocart/:id",verifyLogin.verifyUserLogin,cartController.addtocart)
+userRouter.get("/cart",blockeduser,verifyLogin.verifyUserLogin,cartController.getcart)
+userRouter.post("/removeproduct",cartController.removeproduct)
+userRouter.post("/changeproductquantity",cartController.changeproductquantity,cartController.totalproductprice)
+
+
+//order controller
 userRouter.get("/checkout",verifyLogin.verifyUserLogin,userController.checkout)
 userRouter.post("/addaddress",verifyLogin.verifyUserLogin,userController.addaddress)
 userRouter.get("/deleteaddress/:id",verifyLogin.verifyUserLogin,userController.deleteaddress)
@@ -43,13 +53,17 @@ userRouter.get("/ordersuccess",verifyLogin.verifyUserLogin,userController.orders
 userRouter.get("/vieworders",verifyLogin.verifyUserLogin,userController.vieworders)
 userRouter.post("/verifypayment",userController.verifypayment)
 userRouter.get("/orderedproduct/:id",verifyLogin.verifyUserLogin,userController.orderedproduct)
+userRouter.post("/cancelorder",verifyLogin.verifyUserLogin,userController.cancelorder)
+userRouter.post("/returnorder",verifyLogin.verifyUserLogin,userController.returnorder)
 
-userRouter.post("/applycoupon",userController.applycoupon)
+//coupon controller
+userRouter.post("/applycoupon",couponController.applycoupon)
 
-userRouter.post("/addtowishlist",userController.addtowishlist)
-userRouter.get("/viewwishlist",verifyLogin.verifyUserLogin,userController.viewwishlist)
-userRouter.post("/removewishlist",verifyLogin.verifyUserLogin,userController.removewishlist)
-userRouter.post("/wishtocart",verifyLogin.verifyUserLogin ,userController.wishtocart)
+//wishlist controller
+userRouter.post("/addtowishlist",wishlistController.addtowishlist)
+userRouter.get("/viewwishlist",verifyLogin.verifyUserLogin,wishlistController.viewwishlist)
+userRouter.post("/removewishlist",verifyLogin.verifyUserLogin,wishlistController.removewishlist)
+userRouter.post("/wishtocart",verifyLogin.verifyUserLogin ,wishlistController.wishtocart)
 
 
 module.exports=userRouter
