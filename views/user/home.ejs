@@ -24,6 +24,17 @@
     <!-- Libraries Stylesheet -->
     <link href="/user/lib/animate/animate.min.css" rel="stylesheet">
     <link href="/user/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <style>
+        .banner{
+            height: 480px;
+
+        }
+      @media only screen and (max-width: 733px) {
+    .banner {
+     height: 240px;
+    }
+  }
+    </style>
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="/user/css/style.css" rel="stylesheet">
@@ -42,7 +53,7 @@
                     
                 </div>
             </div>
-            <div class="col-lg-6 text-center text-lg-right">
+            <div class="col-lg-6 text-right text-lg-right">
                 <div class="d-inline-flex align-items-center">
                     <div class="btn-group">
                         <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">
@@ -51,7 +62,7 @@
                                 <%=acname.name%>
                                 
                             <%}else {%>
-                                My Account
+                                Account
                             <%}%>
                                 </button>
                         <div class="dropdown-menu dropdown-menu-right">
@@ -75,7 +86,7 @@
                         <span class="badge text-dark border border-dark rounded-circle" style="padding-bottom: 2px;"></span>
                     </a>
                     <a href="/cart" class="btn px-0 ml-2">
-                        <i class="fas fa-shopping-cart text-dark"></i>
+                        <i class="fas fa-shopping-cart text-success"></i>
                         <span class="badge text-dark border border-dark rounded-circle" style="padding-bottom: 2px;"><%=count%></span>
                     </a>
                 </div>
@@ -89,9 +100,9 @@
                 </a>
             </div>
             <div class="col-lg-4 col-6 text-left">
-                <form >
+                <form action="/searchproduct" method="post" >
                     <div class="input-group">
-                        <input type="text" class="form-control"  placeholder="Search for products">
+                        <input type="text" class="form-control"  name="search" id="search" placeholder="Search for products">
                         <div class="input-group-append">
                             <button type="submit" class="input-group-text bg-transparent text-primary">
                                 <i class="fa fa-search"></i>
@@ -131,8 +142,8 @@
             <div class="col-lg-9">
                 <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 py-lg-0 px-0">
                     <a href="" class="text-decoration-none d-block d-lg-none">
-                        <span class="h1 text-uppercase text-primary bg-dark px-2">E-</span>
-                        <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1">SHOES</span>
+                        <span class="h1 text-uppercase text-primary font-weight-bold  bg-dark px-2">E-</span>
+                        <span class="h1 text-uppercase text-dark font-weight-bold bg-primary px-2 ml-n1">SHOES</span>
                     </a>
                     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                         <span class="navbar-toggler-icon"></span>
@@ -141,17 +152,17 @@
                         <div class="navbar-nav mr-auto py-0">
                             <a href="/" class="nav-item nav-link active">Home</a>
                             <a href="/shop" class="nav-item nav-link">Shop</a>
-                            <a href="detail.html" class="nav-item nav-link">Shop Detail</a>
+                           
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages <i class="fa fa-angle-down mt-1"></i></a>
+                                <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages <i class="fa fa-angle-down mt-1"></i></a>
                                 <div class="dropdown-menu bg-primary rounded-0 border-0 m-0">
                                     <a href="/cart" class="dropdown-item">Shopping Cart</a>
-                                    <a href="checkout.html" class="dropdown-item">Checkout</a>
+                                    <!-- <a href="checkout.html" class="dropdown-item">Checkout</a> -->
                                     <a href="/vieworders" class="dropdown-item">View orders</a>
 
                                 </div>
                             </div>
-                            <a href="contact.html" class="nav-item nav-link">Contact</a>
+                            <a href="/contact" class="nav-item nav-link">Contact</a>
                         </div>
                         <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
                             <a href="/viewwishlist" class="btn px-0">
@@ -173,14 +184,16 @@
     <!-- Carousel Start -->
     <div class="container-fluid mb-3">
         <div class="row px-xl-5">
-            <div class="col-lg-8">
+            <div class="col-lg-8 ">
                 <div id="header-carousel" class="carousel slide carousel-fade mb-30 mb-lg-0" data-ride="carousel">
                     <ol class="carousel-indicators">
                         <%banners.forEach((banner,index)=>{%>
+                            <%if(banner.status==true){%>
                             <%if(index == 0 ){%>
                         <li data-target="#header-carousel" data-slide-to="<%=index %>" class="active"></li>
                         <%}else{%>
                         <li data-target="#header-carousel" data-slide-to="<%=index %>" ></li>
+                        <%}%>
                         <%} })%>
                     </ol>
                     <div class="carousel-inner">
@@ -190,17 +203,17 @@
                             <%if(banner.status==true){%>
                             <% if(index == 0 ){ %>
                                 
-                                <div class="carousel-item position-relative active" style="height: 430px;">
+                                <div class="carousel-item position-relative active banner" >
                                     
                         <% }else{ %>
-                            <div class="carousel-item position-relative" style="height: 430px;">
+                            <div class="carousel-item position-relative banner" >
                                 <%} %>
-                                <img class="position-absolute w-100 h-100" src="/product-image/<%=banner.image%>" style="object-fit: cover;">
+                                <img class="position-absolute w-100 h-100 responsive" src="/product-image/<%=banner.image%>" style="object-fit: cover;">
                                 <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                     <div class="p-3" style="max-width: 700px;">
                                         <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown font-weight-bold"><%=banner.heading%></h1>
                                         <p class="mx-md-5 px-5 animate__animated animate__bounceIn font-weight-bold"><%=banner.discription%></p>
-                                        <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="#">Shop Now</a>
+                                        <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="/shop">Shop Now</a>
                                     </div>
                                 </div>
                             </div>
@@ -213,20 +226,20 @@
                 </div>
             </div>
             <div class="col-lg-4">
-                <div class="product-offer mb-30" style="height: 200px;">
-                    <img class="img-fluid" src="/user/img/offer-1.jpg" alt="">
+                <div class="product-offer mb-30"  style="height: 225px;">
+                    <img class="img-fluid"   src="https://mypstips.com/wp-content/uploads/2023/02/Simon_Nike_shoes_in_a_post-apocalyptic_cyberpunk_city_with_glow_24671038-8dd4-4790-9d6d-080e10ce7bac-min.png" alt="">
                     <div class="offer-text">
                         <h6 class="text-white text-uppercase">Save 20%</h6>
                         <h3 class="text-white mb-3">Special Offer</h3>
-                        <a href="" class="btn btn-primary">Shop Now</a>
+                        <a href="/shop" class="btn btn-primary">Shop Now</a>
                     </div>
                 </div>
-                <div class="product-offer mb-30" style="height: 200px;">
-                    <img class="img-fluid" src="/user/img/offer-2.jpg" alt="">
+                <div class="product-offer mb-30" style="height: 225px;">
+                    <img class="img-fluid"  style="object-fit: cover;" src="https://c4.wallpaperflare.com/wallpaper/90/40/918/logos-nike-famous-sports-brand-dark-background-shoe-colorful-rays-black-teal-and-yellow-nike-sneaker-wallpaper-preview.jpg" alt="">
                     <div class="offer-text">
                         <h6 class="text-white text-uppercase">Save 20%</h6>
                         <h3 class="text-white mb-3">Special Offer</h3>
-                        <a href="" class="btn btn-primary">Shop Now</a>
+                        <a href="/shop" class="btn btn-primary">Shop Now</a>
                     </div>
                 </div>
             </div>
@@ -254,7 +267,7 @@
             <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
                 <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
                     <h1 class="fas fa-exchange-alt text-primary m-0 mr-3"></h1>
-                    <h5 class="font-weight-semi-bold m-0">14-Day Return</h5>
+                    <h5 class="font-weight-semi-bold m-0">Return 0rder</h5>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
@@ -272,162 +285,27 @@
     <div class="container-fluid pt-5">
         <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Categories</span></h2>
         <div class="row px-xl-5 pb-3">
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <a class="text-decoration-none" href="">
+            <%categoryData.forEach((category)=>{%>
+                <%if(category.status==true){%>
+            <div class="col-lg-3 col-md-4 col-sm-6 pb-1" >
+                <a class="text-decoration-none" href="/categoryproduct?id=<%=category._id%>" >
                     <div class="cat-item d-flex align-items-center mb-4">
                         <div class="overflow-hidden" style="width: 100px; height: 100px;">
-                            <img class="img-fluid" src="/user/img/cat-1.jpg" alt="">
+                            <img class="img-fluid" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQozW-H3kOi207tA-aN6mSgJEMqVlpP3sQ5MUQEgTpWs5tlBZuowBZju4T2aJK7lAKGXuE&usqp=CAU" alt="">
                         </div>
                         <div class="flex-fill pl-3">
-                            <h6>Category Name</h6>
+                            <h6><%=category.categoryName%></h6>
                             <small class="text-body">100 Products</small>
                         </div>
                     </div>
                 </a>
             </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <a class="text-decoration-none" href="">
-                    <div class="cat-item img-zoom d-flex align-items-center mb-4">
-                        <div class="overflow-hidden" style="width: 100px; height: 100px;">
-                            <img class="img-fluid" src="/user/img/cat-2.jpg" alt="">
-                        </div>
-                        <div class="flex-fill pl-3">
-                            <h6>Category Name</h6>
-                            <small class="text-body">100 Products</small>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <a class="text-decoration-none" href="">
-                    <div class="cat-item img-zoom d-flex align-items-center mb-4">
-                        <div class="overflow-hidden" style="width: 100px; height: 100px;">
-                            <img class="img-fluid" src="/user/img/cat-3.jpg" alt="">
-                        </div>
-                        <div class="flex-fill pl-3">
-                            <h6>Category Name</h6>
-                            <small class="text-body">100 Products</small>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <a class="text-decoration-none" href="">
-                    <div class="cat-item img-zoom d-flex align-items-center mb-4">
-                        <div class="overflow-hidden" style="width: 100px; height: 100px;">
-                            <img class="img-fluid" src="/user/img/cat-4.jpg" alt="">
-                        </div>
-                        <div class="flex-fill pl-3">
-                            <h6>Category Name</h6>
-                            <small class="text-body">100 Products</small>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <a class="text-decoration-none" href="">
-                    <div class="cat-item img-zoom d-flex align-items-center mb-4">
-                        <div class="overflow-hidden" style="width: 100px; height: 100px;">
-                            <img class="img-fluid" src="/user/img/cat-4.jpg" alt="">
-                        </div>
-                        <div class="flex-fill pl-3">
-                            <h6>Category Name</h6>
-                            <small class="text-body">100 Products</small>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <a class="text-decoration-none" href="">
-                    <div class="cat-item img-zoom d-flex align-items-center mb-4">
-                        <div class="overflow-hidden" style="width: 100px; height: 100px;">
-                            <img class="img-fluid" src="/user/img/cat-3.jpg" alt="">
-                        </div>
-                        <div class="flex-fill pl-3">
-                            <h6>Category Name</h6>
-                            <small class="text-body">100 Products</small>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <a class="text-decoration-none" href="">
-                    <div class="cat-item img-zoom d-flex align-items-center mb-4">
-                        <div class="overflow-hidden" style="width: 100px; height: 100px;">
-                            <img class="img-fluid" src="/user/img/cat-2.jpg" alt="">
-                        </div>
-                        <div class="flex-fill pl-3">
-                            <h6>Category Name</h6>
-                            <small class="text-body">100 Products</small>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <a class="text-decoration-none" href="">
-                    <div class="cat-item img-zoom d-flex align-items-center mb-4">
-                        <div class="overflow-hidden" style="width: 100px; height: 100px;">
-                            <img class="img-fluid" src="/user/img/cat-1.jpg" alt="">
-                        </div>
-                        <div class="flex-fill pl-3">
-                            <h6>Category Name</h6>
-                            <small class="text-body">100 Products</small>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <a class="text-decoration-none" href="">
-                    <div class="cat-item img-zoom d-flex align-items-center mb-4">
-                        <div class="overflow-hidden" style="width: 100px; height: 100px;">
-                            <img class="img-fluid" src="/user/img/cat-2.jpg" alt="">
-                        </div>
-                        <div class="flex-fill pl-3">
-                            <h6>Category Name</h6>
-                            <small class="text-body">100 Products</small>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <a class="text-decoration-none" href="">
-                    <div class="cat-item img-zoom d-flex align-items-center mb-4">
-                        <div class="overflow-hidden" style="width: 100px; height: 100px;">
-                            <img class="img-fluid" src="/user/img/cat-1.jpg" alt="">
-                        </div>
-                        <div class="flex-fill pl-3">
-                            <h6>Category Name</h6>
-                            <small class="text-body">100 Products</small>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <a class="text-decoration-none" href="">
-                    <div class="cat-item img-zoom d-flex align-items-center mb-4">
-                        <div class="overflow-hidden" style="width: 100px; height: 100px;">
-                            <img class="img-fluid" src="/user/img/cat-4.jpg" alt="">
-                        </div>
-                        <div class="flex-fill pl-3">
-                            <h6>Category Name</h6>
-                            <small class="text-body">100 Products</small>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <a class="text-decoration-none" href="">
-                    <div class="cat-item img-zoom d-flex align-items-center mb-4">
-                        <div class="overflow-hidden" style="width: 100px; height: 100px;">
-                            <img class="img-fluid" src="/user/img/cat-3.jpg" alt="">
-                        </div>
-                        <div class="flex-fill pl-3">
-                            <h6>Category Name</h6>
-                            <small class="text-body">100 Products</small>
-                        </div>
-                    </div>
-                </a>
-            </div>
+                <%}%>
+            <%})%>
+            
+            
+           
+           
         </div>
     </div>
     <!-- Categories End -->
@@ -444,8 +322,8 @@
            <%if(product.status=="true"){%>
             
             <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <div class="product-item bg-light mb-4">
-                    <div class="product-img position-relative overflow-hidden">
+                <div class="product-item bg-light mb-4" style="box-shadow: 5px 1px 6px;">
+                    <div class="product-img position-relative overflow-hidden "  style="height: 390px; width: 100%;" >
                         <img class="img-fluid w-100" src="/product-image/<%=product.image[0]%> " alt="">
                         <!-- href="/addtocart/<%=product._id%>" -->
                         <div class="product-action">
@@ -487,21 +365,21 @@
         <div class="row px-xl-5">
             <div class="col-md-6">
                 <div class="product-offer mb-30" style="height: 300px;">
-                    <img class="img-fluid" src="/user/img/offer-1.jpg" alt="">
+                    <img class="img-fluid" src="https://mypstips.com/wp-content/uploads/2023/02/Simon_Nike_shoes_in_a_post-apocalyptic_cyberpunk_city_with_glow_24671038-8dd4-4790-9d6d-080e10ce7bac-min.png" alt="">
                     <div class="offer-text">
                         <h6 class="text-white text-uppercase">Save 20%</h6>
                         <h3 class="text-white mb-3">Special Offer</h3>
-                        <a href="" class="btn btn-primary">Shop Now</a>
+                        <a href="/shop" class="btn btn-primary">Shop Now</a>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="product-offer mb-30" style="height: 300px;">
-                    <img class="img-fluid" src="/user/img/offer-2.jpg" alt="">
+                    <img class="img-fluid" src="https://c4.wallpaperflare.com/wallpaper/90/40/918/logos-nike-famous-sports-brand-dark-background-shoe-colorful-rays-black-teal-and-yellow-nike-sneaker-wallpaper-preview.jpg" alt="">
                     <div class="offer-text">
                         <h6 class="text-white text-uppercase">Save 20%</h6>
                         <h3 class="text-white mb-3">Special Offer</h3>
-                        <a href="" class="btn btn-primary">Shop Now</a>
+                        <a href="/shop" class="btn btn-primary">Shop Now</a>
                     </div>
                 </div>
             </div>
@@ -510,70 +388,7 @@
     <!-- Offer End -->
 
 
-    <!-- Products Start -->
-    <!-- <div class="container-fluid pt-5 pb-3">
-        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Recent Products</span></h2>
-        <div class="row px-xl-5">
-           
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <div class="product-item bg-light mb-4">
-                    <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="/user/img/product-4.jpg" alt="">
-                        <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                        </div>
-                    </div>
-                    <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                        <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>$123.00</h5><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-center mb-1">
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="far fa-star text-primary mr-1"></small>
-                            <small class="far fa-star text-primary mr-1"></small>
-                            <small>(99)</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <div class="product-item bg-light mb-4">
-                    <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="/user/img/product-5.jpg" alt="">
-                        <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                        </div>
-                    </div>
-                    <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                        <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>$123.00</h5><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-center mb-1">
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small>(99)</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-           
-            
-        </div>
-    </div>
-    Products End -->
+
 
 
     <!-- Vendor Start -->
