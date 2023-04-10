@@ -42,15 +42,6 @@
 				<div class="col-md-6">
 					<div class="single-product-img">
 						
-						
-									
-		
-								
-	
-
-
-
-
 						<figure id="zoomer"  class="zoom" onmousemove="zoom(event)"
 							style="background-image: url(/product-image/<%=product.image[0]%>);width: 350px; height: 300px;">
 							<img id="main-image" style="width: 350px;height: 300px; object-fit: cover;"
@@ -64,15 +55,7 @@
 									<img src="/product-image/<%= product.image[0]%>" alt="" width="50px" height="50px" >
 								</div>
 							</a>
-							<a class="nav-link active" data-toggle="tab" href="#tabs-2" role="tab">
-								<div class="product_thumb_pic set-bg" >
-									<img src="/product-image/<%= product.image[1]%>" alt="" width="50px" height="50px">
-								</div>
-							</a>
-
 						</div>
-
-
 
 					</div>
 				</div>
@@ -98,7 +81,7 @@
 						<div class="single-product-form" style="display: flex;width: 200px;justify-content: space-between;">
 							<a class="btn btn-outline-dark btn-square"  onclick="addtocart('<%=product._id%>')"><i class="fa fa-shopping-cart"></i></a>
 							<!-- <a class="btn btn-outline-dark btn-square" onclick="addtocart('<%=product._id%>')" style="border-radius: 5px;"><i class="fa fa-shopping-cart"></i></a> -->
-                            <a class="btn btn-outline-dark btn-square" style="border-radius: 5px;" href=""><i class="far fa-heart"></i></a>
+                            <a class="btn btn-outline-dark btn-square" onclick="addtowishlist('<%=product._id%>')" ><i class="far fa-heart"></i></a>
 							
 						</div>
 						
@@ -111,6 +94,7 @@
 	<!-- end single product -->
 
 	<!-- more products -->
+	
 	<!-- end more products -->
 
 	<!-- logo carousel -->
