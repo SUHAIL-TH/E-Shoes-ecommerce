@@ -1,0 +1,113 @@
+<%- include("../partials/admin_header")%>
+    <div class="container-scroller">
+      <!-- partial:../../partials/_sidebar.html -->
+      <%- include('../partials/admin_sidebar')%>
+      </nav>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:../../partials/_navbar.html -->
+        <%- include('../partials/admin_navbar')%>
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="page-header">
+              <h3 class="page-title">Orders</h3>
+            
+              
+              <a href="/admin/pdforder" style="text-decoration: none;"><span class="mdi mdi-download text-danger  ">Download</span></a>
+              
+            </div>
+            <div class="row">
+              
+              
+              <div class="col-lg-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    
+                   
+                   
+                    <div class="table-responsive" >
+                      
+                      <table class="table table-striped" id="user-table">
+                        <thead>
+                          <tr>
+                            <th> No</th>
+                            <th>Order Id</th>
+                            <th>Date</th>
+                            
+                            <th>Amount</th>
+                            <th>payment</th>
+                            <th>status</th>
+                          
+                          
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% let count=1%>
+                         <%orderData.forEach((order)=>{%>
+
+                          <tr >
+                            <td><%=count%></td>
+                            <td><%=order._id%></td>
+                            <td><%=order.date.toISOString().substring(0,10)%></td>
+                            
+                      
+                            <td><%=order.totalamount%></td>
+                           
+                         
+
+                           <td>
+                            <%if(order.paymentMethode=="COD"){%>
+                              <div class="badge badge-outline-success"><%=order.paymentMethode%></div>
+                            
+                            <%}else{%>
+                              <div class="badge badge-outline-primary"><%=order.paymentMethode%></div>
+
+                              <%}%>
+                          </td>
+                        
+                        
+
+                       
+                            <td><%if(order.status=="pending" ||order.status=="return pending" ||order.status=="return approved" ||order.status=="return reject" ||order.status=="canceled"){%>
+                              <label class="text-danger font-weight-bold"><%=order.status%></label>
+                            <%}else{%>
+                              <label class="text-success font-weight-bold"><%=order.status%></label>
+
+                            <%}%>
+                            </td> 
+                           
+
+                            
+                            
+                          </tr>
+
+                          
+                          
+                          
+                          <%count++%>
+                         <%})%>
+                          
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              
+             
+              
+              
+              
+            </div>
+          </div>
+          
+        </div>
+  
+      </div>
+      
+    </div>
+    
+  
+    <%- include('../partials/admin_footer')%>

@@ -1,12 +1,21 @@
 
-const admin=require("../model/adminModel")
+const admin=require("../model/adminmodel")
 const user=require("../model/userModel")
-const product=require("../model/productModel")
-const category=require("../model/categoryModel")
+const product=require("../model/productmodel")
+const category=require("../model/categorymodel")
 const order =require("../model/ordermodel")
 const uc=require("upper-case")
 const coupon=require("../model/coupenmodel")
+const excel=require("exceljs")
 const banner=require("../model/bannermodel")
+const moment=require("moment")
+moment().format()
+//html to pdf generate required things
+const ejs=require("ejs")
+const pdf=require("html-pdf")
+const fs=require("fs")
+const path=require("path")
+const { response } = require("express")
 
 
 
@@ -46,13 +55,34 @@ const postlogin=async(req,res)=>{
        }
     }
  const home=async(req,res)=>{
-        if(req.session.admin){
+    try {
+        let productscount= await product.find().count()
+            const activeUsers=await user.find({blocked:false}).count()
+            const blockedUsers=await user.find({blocked:true}).count()
+            const deliveredCount=await order.find({status:"Delivered"}).count()
+            const totalOrder=await order.find().count()
+            const razopayCount=await order.find({paymentMethode:"ONLINE"}).count()
+            const codCount=await order.find({paymentMethode:"COD"}).count()
+            const orderCanceled=await order.find({status:"Canceled"}).count()
+            const categoryCount=await category.find().count()
+            const couponCount=await coupon.find().count()
+            
+           
+            res.render("admin/index",{productscount
+                ,totalOrder,
+                activeUsers,
+                blockedUsers,
+                deliveredCount,
+                razopayCount,codCount,
+                orderCanceled,categoryCount,couponCount
 
-            let productscount= await product.find().count()
-            res.render("admin/index",{productscount})
-        }else{
-            res.redirect("/admin")
-        }
+            })
+        
+    } catch (error) {
+        res.render("admin/500")
+        console.log(error)
+        
+    }
         
     }
 const logout=(req,res)=>{
@@ -323,175 +353,291 @@ const updatestatus=async(req,res)=>{
         console.log(error)
     }
 }
-const viewcoupon=async(req,res)=>{
-    try {
-        let couponData=await coupon.find()
-        res.render("admin/viewcoupon",{couponData})
+// const viewcoupon=async(req,res)=>{
+//     try {
+//         let couponData=await coupon.find()
+//         res.render("admin/viewcoupon",{couponData})
         
-    } catch (error) {
-        res.render("admin/500")
-        console.log(error);
-    }
-}
-const addcoupon=async(req,res)=>{
-    try {
+//     } catch (error) {
+//         res.render("admin/500")
+//         console.log(error);
+//     }
+// }
+// const addcoupon=async(req,res)=>{
+//     try {
         
-        res.render("admin/addcoupon")
+//         res.render("admin/addcoupon")
         
-    } catch (error) {
-        res.render("admin/500")
-        console.log(error)
-    }
-}
-const postaddcoupon=async(req,res)=>{
+//     } catch (error) {
+//         res.render("admin/500")
+//         console.log(error)
+//     }
+// }
+// const postaddcoupon=async(req,res)=>{
 
-    try {
+//     try {
        
-        let couponData=req.body
-        console.log(req.body);
-        let coupons=new coupon({
-            couponcode:req.body.name,
-            couponamounttype:req.body.coupontype,
-            couponamount:req.body.amount,
-            mincartamount:req.body.mincart,
-            maxredeemamount:req.body.maxredeem,
-            expiredate:req.body.date,
-            limit:req.body.limit,
+//         let couponData=req.body
+//         console.log(req.body);
+//         let coupons=new coupon({
+//             couponcode:req.body.name,
+//             couponamounttype:req.body.coupontype,
+//             couponamount:req.body.amount,
+//             mincartamount:req.body.mincart,
+//             maxredeemamount:req.body.maxredeem,
+//             expiredate:req.body.date,
+//             limit:req.body.limit,
           
             
-        })
-        await coupons.save()
-        res.redirect("/admin/viewcoupon")
+//         })
+//         await coupons.save()
+//         res.redirect("/admin/viewcoupon")
         
-    } catch (error) {
-        res.render("admin/500")
-        console.log(error)
+//     } catch (error) {
+//         res.render("admin/500")
+//         console.log(error)
         
-    }
-}
-const removeimage=async(req,res)=>{
-    try {
-        let id=req.body.id
+//     }
+// }
+// const removeimage=async(req,res)=>{
+//     try {
+//         let id=req.body.id
        
-        let position=req.body.position
-        let productImg=await product.findById(id)
-        let image=productImg.image[position]
-        await product.updateOne({_id:id},{$pullAll:{image:[image]}})
-        res.json({remove:true})
+//         let position=req.body.position
+//         let productImg=await product.findById(id)
+//         let image=productImg.image[position]
+//         await product.updateOne({_id:id},{$pullAll:{image:[image]}})
+//         res.json({remove:true})
         
-    } catch (error) {
-        res.render("admin/500")
-        console.log(error)
-    }
-}
-const removecoupon=async(req,res)=>{
-    try {
-        let id=req.body.id
-        await coupon.findByIdAndRemove({_id:id})
-        res.json("removed:true")
+//     } catch (error) {
+//         res.render("admin/500")
+//         console.log(error)
+//     }
+// }
+// const removecoupon=async(req,res)=>{
+//     try {
+//         let id=req.body.id
+//         await coupon.findByIdAndRemove({_id:id})
+//         res.json("removed:true")
         
-    } catch (error) {
-        res.render("admin/500")
-        console.log(error);
-    }
-}
-const addbanner=async(req,res)=>{
-    try {
-        res.render("admin/addbanner")
+//     } catch (error) {
+//         res.render("admin/500")
+//         console.log(error);
+//     }
+// }
+// const addbanner=async(req,res)=>{
+//     try {
+//         res.render("admin/addbanner")
         
-    } catch (error) {
-        res.render("admin/500")
-        console.log(error);
-    }
-}
-const postaddbanner=async(req,res)=>{
-    try {
+//     } catch (error) {
+//         res.render("admin/500")
+//         console.log(error);
+//     }
+// }
+// const postaddbanner=async(req,res)=>{
+//     try {
        
-        const banners=new banner({
-            heading:req.body.heading,
-            discription:req.body.discription,
-            image:req.file.filename
-        })
-        await banners.save()
-        res.redirect("/admin/viewbanner")      
-    } catch (error) {
-        res.render("admin/500")
-    }
-}
-const viewbanner=async(req,res)=>{
-    try {
-        let bannerData=await banner.find()      
-            res.render("admin/viewbanner",{bannerData})        
-    } catch (error) {
-        res.render("admin/500")
-        console.log(error)
-    }
-}
-const bannerstatus=async(req,res)=>{
-    try {
-        let id=req.body.id
+//         const banners=new banner({
+//             heading:req.body.heading,
+//             discription:req.body.discription,
+//             image:req.file.filename
+//         })
+//         await banners.save()
+//         res.redirect("/admin/viewbanner")      
+//     } catch (error) {
+//         res.render("admin/500")
+//     }
+// }
+// const viewbanner=async(req,res)=>{
+//     try {
+//         let bannerData=await banner.find()      
+//             res.render("admin/viewbanner",{bannerData})        
+//     } catch (error) {
+//         res.render("admin/500")
+//         console.log(error)
+//     }
+// }
+// const bannerstatus=async(req,res)=>{
+//     try {
+//         let id=req.body.id
        
-        let text=req.body.text
+//         let text=req.body.text
         
     
-        if(text=="false"){
-            await banner.findOneAndUpdate({_id:id},{$set:{status:false}})
+//         if(text=="false"){
+//             await banner.findOneAndUpdate({_id:id},{$set:{status:false}})
 
-        }else if(text=="true"){
-            await banner.findOneAndUpdate({_id:id},{$set:{status:true}})
+//         }else if(text=="true"){
+//             await banner.findOneAndUpdate({_id:id},{$set:{status:true}})
 
-        }
+//         }
 
-        res.json({status:true})
+//         res.json({status:true})
 
         
-    } catch (error) {
-        res.render("admin/500")
-        console.log(error)
-    }
-}
-const editbanner=async(req,res)=>{
-    try {
-        let id=req.params.id
-        console.log(id);
-        let bannerData=await banner.findOne({_id:id})
-        res.render("admin/editbanner",{bannerData})
+//     } catch (error) {
+//         res.render("admin/500")
+//         console.log(error)
+//     }
+// }
+// const editbanner=async(req,res)=>{
+//     try {
+//         let id=req.params.id
+//         console.log(id);
+//         let bannerData=await banner.findOne({_id:id})
+//         res.render("admin/editbanner",{bannerData})
         
-    } catch (error) {
-        res.render("admin/500")
-        console.log(error)
-    }
-}
-const posteditbanner=async(req,res)=>{
-    try {
-        let id =req.params.id
+//     } catch (error) {
+//         res.render("admin/500")
+//         console.log(error)
+//     }
+// }
+// const posteditbanner=async(req,res)=>{
+//     try {
+//         let id =req.params.id
       
-        // if(req.file.filename){
-            await banner.findOneAndUpdate({_id:id},{$set:{
-                heading:req.body.heading,
-                discription:req.body.discription,
+//         if(typeof(req.files==="undefined")){
+//             await banner.findOneAndUpdate({_id:id},{$set:{
+//                 heading:req.body.heading,
+//                 discription:req.body.discription,
               
-            }})
+//             }})
 
 
-        // }else{
-        //     await banner.findOneAndUpdate({_id:id},{$set:{
-        //         heading:req.body.heading,
-        //         discription:req.body.discription,
-        //         image:req.file.filename
-        //     }})
+//         }else{
+//             await banner.findOneAndUpdate({_id:id},{$set:{
+//                 heading:req.body.heading,
+//                 discription:req.body.discription,
+//                 image:req.file.filename
+//             }})
 
-        // }
-        res.redirect("/admin/viewbanner")
+//         }
+//         res.redirect("/admin/viewbanner")
 
 
+        
+//     } catch (error) {
+//         res.render("admin/500")
+//         console.log(error);
+//   }
+// }
+
+// const editcoupon=async(req,res)=>{
+//     try {
+//         id=req.params.id
+//         let couponData=await coupon.findOne({_id:id})
+//         res.render("admin/editcoupon",{couponData})
+        
+//     } catch (error) {
+//         res.render("admin/500")
+//         console.log(error);
+//     }
+// }
+// const posteditcoupon=async(req,res)=>{
+//     try {
+//         let id=req.params.id
+//         await coupon.findOneAndUpdate({_id:id},{$set:{
+//             couponcode:req.body.name,
+//             couponamounttype:req.body.coupontype,
+//             couponamount:req.body.amount,
+//             mincartamount:req.body.mincart,
+//             maxredeemamount:req.body.maxredeem,
+//             expiredate:req.body.date,
+//             limit:req.body.limit,
+//         }})
+
+//         res.redirect("/admin/viewcoupon")
+//     } catch (error) {
+//         res.render("admin/500")
+//         console.log(error);
+//     }
+// }
+
+
+const excelorder=async(req,res)=>{
+    try {
+         const workbook=new excel.Workbook();
+       const worksheet=  workbook.addWorksheet("orders")
+       worksheet.columns=[
+        {header:"No:" ,key:"no"},
+        {header:"User Id" ,key:"user",width:30},
+        {header:"Delivery Address" ,key:"deliveryDetails",width:30},
+        {header:"Products" ,key:"product",width:30},
+        {header:"Amount" ,key:"totalamount",},
+        {header:"Date" ,key:"date",width:20},
+        {header:"Status" ,key:"status"},
+        {header:"Payment type" ,key:"paymentMethode"},
+       ]
+       let counter=1;
+       const  orderData=await order.find({})
+       orderData.forEach((orders)=>{
+            orders.no=counter;
+            worksheet.addRow(orders)
+
+            counter++
+       })
+       worksheet.getRow(1).eachCell((cell)=>{
+            cell.font={bold:true};
+       })
+       res.setHeader(
+        "Content-Type",
+        "application/vnd.openxmlformats-officedocument.spreadsheatml.sheet"
+       )
+       res.setHeader("Content-Disposition",`attachment; filename=orders.xlsx`);
+       return workbook.xlsx.write(res).then(()=>{
+            res.status(200);
+
+       })
+        
+    } catch (error) {
+        res.render("admin/500")
+        console.log(error)
+    }
+}
+
+const salesreport=async(req,res)=>{
+    try {
+        const orderData=await order.find().sort({date:-1 })
+        res.render("admin/salesreport",{orderData})
+        
+    } catch (error) {
+        res.render("admin/500")
+        console.log(error)
+    }
+}
+const pdforder=async(req,res)=>{
+    try {
+        let orders=await order.find().sort({data:-1})
+        const data={
+            orders:orders
+        }
+       const filePathName =path.resolve(__dirname,'../views/admin/htmltopdf.ejs')
+       const htmlString= fs.readFileSync(filePathName).toString()
+       let options={
+        format:'Letter',
+
+       }
+      const ejsData= ejs.render(htmlString,data)
+       pdf.create(ejsData,options).toFile('orders.pdf',(err,response)=>{
+        if(err)    console.log(err)
+        const filePath = path.resolve(__dirname,'../orders.pdf')
+        fs.readFile(filePath,(err,file)=>{
+            if(err){
+                console.log(err)
+                return res.status(500).send('could not download file');
+            }
+            res.setHeader('Content-Type','application/pdf')
+            res.setHeader('Content-Disposition','attachment;filename="orders.pdf')
+            res.send(file);
+        })
+       
+       })
         
     } catch (error) {
         res.render("admin/500")
         console.log(error);
     }
 }
-
 
 
 module.exports={
@@ -505,17 +651,22 @@ module.exports={
     orders,
     orderdetails,
     updatestatus,
-    viewcoupon,
-    addcoupon,
-    postaddcoupon,
-    removeimage,
-    removecoupon,
-    addbanner,
-    postaddbanner,
-    viewbanner,
-    bannerstatus,
-    editbanner,
-    posteditbanner
+    excelorder,
+    salesreport,
+    pdforder
+    // viewcoupon,
+    // addcoupon,
+    // postaddcoupon,
+    // removeimage,
+    // removecoupon,
+    // addbanner,
+    // postaddbanner,
+    // viewbanner,
+    // bannerstatus,
+    // editbanner,
+    // posteditbanner,
+    // editcoupon,
+    // posteditcoupon
     // viewproduct,
     // addproduct,
     // postaddproduct,

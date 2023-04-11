@@ -41,11 +41,14 @@ const upload=multer({
 
 adminRouter.get("/",adminController.login)
 adminRouter.post("/login",adminController.postlogin)
-adminRouter.get("/home",adminController.home)
+adminRouter.get("/home",verifyAdmin.verifyLoginAdmin,adminController.home)
 adminRouter.get("/logout",adminController.logout)
 adminRouter.get("/viewusers",verifyAdmin.verifyLoginAdmin,adminController.viewusers)
 adminRouter.get("/blockuser/:id",adminController.blockuser)
 adminRouter.get("/unblockuser/:id",adminController.unblockuser)
+adminRouter.get("/excelexport",verifyAdmin.verifyLoginAdmin,adminController.excelorder)
+adminRouter.get("/salesreport",verifyAdmin.verifyLoginAdmin,adminController.salesreport)
+adminRouter.get("/pdforder",verifyAdmin.verifyLoginAdmin,adminController.pdforder)
 
 adminRouter.get("/product",verifyAdmin.verifyLoginAdmin,productController.viewproduct) 
 adminRouter.get("/addproduct",verifyAdmin.verifyLoginAdmin,productController.addproduct)
