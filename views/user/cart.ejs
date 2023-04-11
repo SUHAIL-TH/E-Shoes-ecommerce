@@ -40,7 +40,7 @@
             
           <tr>
             <td class="align-middle"><%=cart.productId.productName%></td>
-            <!-- <td class="align-middle"><img src="/product-image/<%=cart.productId.image[0]%>" alt="" style="width: 50px;"> Product Name</td> -->
+            
             <td class="align-middle">
               <img
                 src="/product-image/<%=cart.productId.image[0]%>"
@@ -152,30 +152,7 @@
 </div>
 <!-- Cart End -->
 
-<!-- <script>
-    function changeQuantity(cartId,proId,count){
-        
-        $.ajax({
-            url:'/changeproductquantity',
-            data:{
-
-                cart:cartId,
-                product:proId,
-                count:count
-            },
-            method:"post",
-            success:(response)=>{
-                console.log(response);
-            }
-        }).done((data)=>{
-            console.log("data");
-            if(data.success){
-                window.location.reload()
-            }
-        })
-    }
-</script>  -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+ 
 <script>
   function changeQuantity(cartId, proId, count, proprice,user) {
     let quantity = parseInt(document.getElementById(proId).innerHTML);

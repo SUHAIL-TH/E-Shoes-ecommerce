@@ -20,7 +20,7 @@
   <div class="row px-xl-5">
     <div class="col-lg-12 table-responsive mb-5">
      
-      <table
+      <table id="table-setting"
         class="table table-light table-borderless table-hover text-center mb-0"
       >
         <thead class="" style="background-color: rgb(43, 43, 43);"> 
@@ -33,6 +33,7 @@
             <th class="text-white">Status</th>
 
             <th class="text-white">Option</th>
+        
           </tr>
         </thead>
         <tbody class="align-middle">
@@ -40,19 +41,24 @@
           <%orderData.reverse().forEach((order)=>{%>
 
           <tr>
-            <td class="align-middle"><%=order._id%></td>
-            <td class="align-middle"><%=order.date.toISOString().substring(0,10)%></td>
-            <td class="align-middle"><%=order.deliveryDetails %></td>  
-            <td class="align-middle"><%=order.totalamount %></td>
+            <td class="align-middle text-dark"><%=order._id%></td>
+            <td class="align-middle  text-dark"><%=order.date.toISOString().substring(0,10)%></td>
+            <td class="align-middle text-dark"><%=order.deliveryDetails %></td>  
+            <td class="align-middle text-dark"><%=order.totalamount %></td>
 
            
-            <td class="align-middle"><%=order.paymentMethode%></td>
+            <td class="align-middle text-dark"><%=order.paymentMethode%></td>
+            <%if(order.status=="canceled" || order.status=="return pending" ||order.status=="return reject" ){%>
+            <td class="align-middle text-danger font-weight-bold"><%=order.status%></td>
+          
             
-            <td class="align-middle"><%=order.status%></td>
+            <%}else{%>
+              <td class="align-middle text-success font-weight-bold"><%=order.status%></td>
+            <%}%>
             
             <!-- <td class="align-middle"><a href="" class="btn btn-sm btn-danger"><i class="fa fa-times"></i></a></td> -->
            <td><a href="/orderedproduct/<%=order._id%>" class="btn btn-success">view</a></td>
-          </tr>
+          
         <%})%>
     
         </tbody>
