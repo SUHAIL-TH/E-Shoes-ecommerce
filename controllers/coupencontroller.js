@@ -1,8 +1,8 @@
 const randomString = require("randomstring");
-const admin = require("../model/adminModel");
+const admin = require("../model/adminmodel");
 const user = require("../model/userModel");
-const product = require("../model/productModel");
-const category = require("../model/categoryModel");
+const product = require("../model/productmodel");
+const category = require("../model/categorymodel");
 const order = require("../model/ordermodel");
 const uc = require("upper-case");
 const coupon = require("../model/coupenmodel");
@@ -96,8 +96,8 @@ const posteditcoupon = async (req, res) => {
 const applycoupon = async (req, res) => {
   try {
     let userexist = false;
-    let code = req.body.code;
-    let amount = req.body.amount;
+    let{ code,amount }= req.body;
+    // let amount = req.body.amount;
     let userData = await user.findOne({ email: req.session.user });
 
     userexist = await coupon.findOne({

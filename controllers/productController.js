@@ -1,7 +1,7 @@
 const user = require("../model/userModel");
-const product = require("../model/productModel");
-const category = require("../model/categoryModel");
-const cart = require("../model/cartModel");
+const product = require("../model/productmodel");
+const category = require("../model/categorymodel");
+const cart = require("../model/cartmodel");
 
 const viewproduct = async (req, res) => {
   try {
@@ -143,13 +143,23 @@ const viewproductuser = async (req, res) => {
 };
 const searchproduct = async (req, res) => {
   try {
+    let totalpage=2
     let categoryData = await category.find();
     let acname = await user.findOne({ email: req.session.user });
-    let search = req.body.search;
+    let search = req.body.search.trim()
     let productData = await product.find({
       productName: { $regex: "^" + search, $options: "i" },
     });
-    res.render("user/shop", { categoryData, acname, product: productData });
+    let filter="default"
+    console.log(productData.length);
+    if(productData!=0){
+      res.render("user/shop", { categoryData, acname, product: productData,filter,totalpage });
+
+    }else{
+      res.render("user/shop", { categoryData, acname, product: productData,filter,totalpage });
+
+    }
+   
   } catch (error) {
     res.render("user/500");
     console.log(error);

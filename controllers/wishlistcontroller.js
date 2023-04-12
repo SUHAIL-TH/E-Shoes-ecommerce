@@ -1,7 +1,7 @@
 const user = require("../model/userModel");
-const product = require("../model/productModel");
-const category = require("../model/categoryModel");
-const cart = require("../model/cartModel");
+const product = require("../model/productmodel");
+const category = require("../model/categorymodel");
+const cart = require("../model/cartmodel");
 const wishlist = require("../model/wishlistmodel");
 
 const addtowishlist = async (req, res) => {
@@ -121,6 +121,10 @@ const wishtocart = async (req, res) => {
               },
             },
           }
+        );
+        await wishlist.findOneAndUpdate(
+          { user: acname._id },
+          { $pull: { product: { productId: id } } }
         );
         console.log("product added to the cart");
       }

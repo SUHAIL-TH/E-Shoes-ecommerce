@@ -1,8 +1,8 @@
 const user = require("../model/userModel")
 const randomString = require("randomstring")
-const product = require("../model/productModel")
-const category = require("../model/categoryModel")
-const cart = require("../model/cartModel")
+const product = require("../model/productmodel")
+const category = require("../model/categorymodel")
+const cart = require("../model/cartmodel")
 const order=require("../model/ordermodel")
 
 const banner=require("../model/bannermodel")

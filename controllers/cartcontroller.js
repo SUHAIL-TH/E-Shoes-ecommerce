@@ -1,7 +1,7 @@
 const user = require("../model/userModel");
-const product = require("../model/productModel");
-const category = require("../model/categoryModel");
-const cart = require("../model/cartModel");
+const product = require("../model/productmodel");
+const category = require("../model/categorymodel");
+const cart = require("../model/cartmodel");
 
 //user cart controller
 const getcart = async (req, res) => {

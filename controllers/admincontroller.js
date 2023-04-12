@@ -57,6 +57,7 @@ const postlogin=async(req,res)=>{
  const home=async(req,res)=>{
     try {
         let productscount= await product.find().count()
+        const activeProduct=await product.find({status:true}).count()
             const activeUsers=await user.find({blocked:false}).count()
             const blockedUsers=await user.find({blocked:true}).count()
             const deliveredCount=await order.find({status:"Delivered"}).count()
@@ -65,16 +66,17 @@ const postlogin=async(req,res)=>{
             const codCount=await order.find({paymentMethode:"COD"}).count()
             const orderCanceled=await order.find({status:"Canceled"}).count()
             const categoryCount=await category.find().count()
+            const activeCategory=await category.find({status:true}).count()
             const couponCount=await coupon.find().count()
             
            
-            res.render("admin/index",{productscount
+            res.render("admin/index",{productscount,activeProduct
                 ,totalOrder,
                 activeUsers,
                 blockedUsers,
                 deliveredCount,
                 razopayCount,codCount,
-                orderCanceled,categoryCount,couponCount
+                orderCanceled,categoryCount,activeCategory,couponCount
 
             })
         

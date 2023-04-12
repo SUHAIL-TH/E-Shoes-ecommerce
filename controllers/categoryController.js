@@ -1,4 +1,4 @@
-const category = require("../model/categoryModel");
+const category = require("../model/categorymodel");
 const uc = require("upper-case");
 
 const viewcategory = async (req, res) => {
