@@ -35,7 +35,7 @@ function addtocart(proId){
 }
 
 function addtowishlist(id){
-    console.log(id);
+    
     $.ajax({
         url:"/addtowishlist",
         method:"post",
@@ -49,9 +49,7 @@ function addtowishlist(id){
                     icon: 'success',
                     title: 'product added to wishlist',
                     showConfirmButton: false,
-                    timer: 1000
-                    
-                   
+                    timer: 1000  
                   })
                  
             }else if(response.productExit){
@@ -60,8 +58,7 @@ function addtowishlist(id){
                     title: 'Oops...',
                     text: 'Product already added to wishlist',
                     showConfirmButton: false,
-                    timer: 1000
-                   
+                    timer: 1000   
                   })
 
             }

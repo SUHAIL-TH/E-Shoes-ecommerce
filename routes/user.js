@@ -5,7 +5,7 @@ const productController=require("../controllers/productController")
 const categoryController=require("../controllers/categoryController")
 const couponController=require("../controllers/coupencontroller")
 const verifyLogin=require("../middleware/session")
-const blockeduser=require("../middleware/blockedUser")
+const blockeduser=require("../middleware/blockedusers")
 const cartController=require("../controllers/cartcontroller")
 const wishlistController=require("../controllers/wishlistcontroller")
 
