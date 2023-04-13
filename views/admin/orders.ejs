@@ -12,6 +12,9 @@
           <div class="content-wrapper">
             <div class="page-header">
               <h3 class="page-title">Orders</h3>
+            
+              
+              <a href="/admin/excelexport" style="text-decoration: none;"><span class="mdi mdi-download text-danger  ">Download</span></a>
               
             </div>
             <div class="row">
@@ -52,8 +55,21 @@
                             <td><%=order.totalamount%></td>
                            
                          
-                           <td><%=order.paymentMethode%></td>
-                            <td><%if(order.status=="pending"){%>
+
+                           <td>
+                            <%if(order.paymentMethode=="COD"){%>
+                              <div class="badge badge-outline-success"><%=order.paymentMethode%></div>
+                            
+                            <%}else{%>
+                              <div class="badge badge-outline-primary"><%=order.paymentMethode%></div>
+
+                              <%}%>
+                          </td>
+                        
+                        
+
+                       
+                            <td><%if(order.status=="pending" ||order.status=="return pending" ||order.status=="return approved" ||order.status=="return reject" ||order.status=="canceled"){%>
                               <label class="text-danger font-weight-bold"><%=order.status%></label>
                             <%}else{%>
                               <label class="text-success font-weight-bold"><%=order.status%></label>
