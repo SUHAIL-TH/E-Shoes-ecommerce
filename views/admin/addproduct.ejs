@@ -231,33 +231,23 @@ function ImgUpload() {
                         <div class="upload__btn-box">
                           <label class="upload__btn">
                             <p>Upload images</p>
-                            <input type="file" multiple="" data-max_length="20" name="image" class="upload__inputfile">
+                            <input type="file" multiple data-max_length="20" name="image" class="upload__inputfile" accept="image/*">
                           </label>
                         </div>
                         <div class="upload__img-wrap"></div>
                       </div>
-                      <!-- <div class="form-group">
-                        <label>File upload</label>
-                        
-                        <div>
-                          <input type="file" id="image" name="image" class="form-control" multiple required>
-
-                        </div>
-                        
-                      </div> -->
+                     
                       
                       <div class="form-group">
                         <label for="exampleInputCity1">Stock</label>
                         <input type="text" class="form-control" id="stock" name="stock" placeholder="Enter the stock" required>
                       </div>
                       
-                      <!-- <div class="form-group">
-                        <label for="exampleTextarea1">Textarea</label>
-                        <textarea class="form-control" id="exampleTextarea1" rows="4"></textarea>
-                      </div> -->
-                      <button type="submit" onclick="addproduct()" class="btn btn-success mr-2">Submit</button>
-                      <!-- <button class="btn btn-dark">Cancel</button> -->
+                      
+                      
                       <a href="/admin/product" class="btn btn-danger">Cancel</a>
+                      <button type="submit" class="btn btn-success mr-2">Submit</button>
+                    
                     </form>
                   </div>
                 </div>
@@ -272,10 +262,9 @@ function ImgUpload() {
               
             </div>
           </div>
-          <!-- content-wrapper ends -->
-          <!-- partial:../../partials/_footer.html -->
           
-          <!-- partial -->
+          
+          
         </div>
         <!-- main-panel ends -->
       </div>
@@ -317,19 +306,7 @@ function ImgUpload() {
           discription.setCustomValidity("")
         }
       })
-      // image.addEventListener("input",()=>{
-      //   if(image.files.length===0){
-      //     image.setCustomValidity("image field cannot be empty")
-
-      //   }else{
-      //     image.setCustomValidity("")
-      //   }
-      // })
-      // if( document.getElementById("image").files.length == 0 ){
-      //     image.setCustomValidity("image field cannot be empty")
-      //  }else{
-      //   image.setCustomValidity("")
-      //  }
+     
       stock.addEventListener("input",()=>{
         if(stock.value.trim()==""){
           stock.setCustomValidity("stock field cannot be empty")

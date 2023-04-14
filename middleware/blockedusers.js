@@ -1,4 +1,4 @@
-const user=require("../model/userModel")
+const user=require("../model/usermodels")
 const isblocked=(async(req,res,next)=>{
     if(req.session.user){
         let email=req.session.user

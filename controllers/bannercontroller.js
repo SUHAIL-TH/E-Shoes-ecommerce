@@ -1,4 +1,4 @@
-const user = require("../model/userModel")
+const user = require("../model/usermodels")
 const randomString = require("randomstring")
 const product = require("../model/productmodel")
 const category = require("../model/categorymodel")

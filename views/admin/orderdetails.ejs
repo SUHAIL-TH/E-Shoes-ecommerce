@@ -13,13 +13,13 @@
             <h5>Delivery Details</h5> 
             <div class="page-header">
 
-            <div class="col-md-6" style="background-color: rgb(42, 42, 57);" >
+            <div class="col-md-6 col-12" style="background-color: rgb(42, 42, 57);" >
               <h6 style="color: rgb(255, 254, 254);" class="pt-3">OrderId:    <%=orderData._id%></h6>
             
               <h6 style="color: rgb(255, 255, 255);">Address:    <%=orderData.deliveryDetails%></h6>
               <h6 style="color: rgb(255, 255, 255);">Payment Method:    <%=orderData.paymentMethode%></h6>
               <h6 style="color: rgb(255, 252, 252);">Status:  <span class="text-success font-weight-bold"><%=orderData.status%> </span>  <button type="button" class="btn btn-danger font-weight-bold float-right" data-toggle="modal" data-target="#exampleModalCenter">
-                Edit
+                Update
               </button></h6>
               <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -42,27 +42,30 @@
                                   <option>shipping</option>
                                   <option>Nearest hub</option>
                                   <option>Delivered</option>
+                                  <option>canceled</option>
 
                                  <%}else if(orderData.status=="placed"){%>
                                   <option disabled><%=orderData.status%></option>
                                   <option>shipping</option>
                                   <option>Nearest hub</option>
                                   <option>Delivered</option>
+                                  <option>canceled</option>
 
 
                                 <% }else if(orderData.status=="shipping"){%>
                                   <option disabled><%=orderData.status%></option>
                                   <option>Nearest hub</option>
                                   <option>Delivered</option>
+                                  <option>canceled</option>
 
-                                  
-                                 
-
-
+                               < %}else if(orderData.status=="Nearest hub"){%>
+                                <option disabled><%=orderData.status%></option>
+                                <option>Delivered</option>
+                                <option>canceled</option>
                                  <%}else{%>
                                   <option disabled><%=orderData.status%></option>
-                                  
-                                  <option>Delivered</option>
+                                  <option>return reject</option>
+                                  <option>return aproved</option>
 
                                 <% }%>
                           </select>

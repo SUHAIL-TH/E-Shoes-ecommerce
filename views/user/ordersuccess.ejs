@@ -1,70 +1,77 @@
+
+
+<!DOCTYPE html>
 <html>
-  <head>
-    <title>E-SHOES</title>
+<head>
+  <title>E-SHOES</title>
     <link href="https://cdn1.vectorstock.com/i/1000x1000/32/60/shopping-cart-abstract-buy-speed-gold-logo-vector-15003260.jpg" rel="icon">
+  <style>
+    
+    body {
+  background-color: #f8f8f8;
+  font-family: Arial, sans-serif;
+}
 
-    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <style>
-        .order-success-page {
-        text-align: center;
-        padding: 40px 0;
-        background: #b6b0b0;
-        vertical-align:middle;
-        height: 710px;
-      }
-        .success-h2 {
+.container {
+  text-align: center;
+  margin-top: 100px;
+}
 
-          color: #2ddf05;
-          font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
-          font-weight: 900;
-          font-size: 40px;
-          margin-bottom: 10px;
-        }
-        p {
-          font-weight: bold;
-          color: #b62e01;
-          font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
-          font-size:20px;
-          margin: 0;
-        }
-      i {
-        color: #9ABC66;
-        font-size: 100px;
-        line-height: 200px;
-        margin-left:-15px;
-      }
-      .card-success {
-        
-        background: rgb(232, 237, 239);
-        padding: 60px;
-        border-radius: 4px;
-        box-shadow: 0 2px 3px #C8D0D8;
-        display: inline-block;
-        margin: 0 auto;
-      }
+.success-message {
+  color: #32cd32;
+}
 
-    </style>
-  </head>
-    <body >
-      <div class="order-success-page">
-      <div class="card-success">
-      <div style="border-radius:200px; height:200px; width:200px; background: #F8FAF5; margin:0 auto;">
-        <i class="checkmark " style="color: #2ddf05;">✓</i>
-      </div>
-        <h2 class="success-h2">Success</h2> 
-        <p>We have received your order;<br/> Your order has successfullly  placed!</p>
-        <a href="/vieworders"><button class="btn btn-info font-weight-bold">view orders</button></a>
-        <div class="order-details">
-          <div  class="order-image">
-            <img >
-          </div>
-        </div>
-        
-      </div>
-      </div>
-      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    </body>
+.success-image {
+  width: 150px;
+  margin-top: 30px;
+}
+
+.success-details {
+  font-size: 18px;
+  margin-top: 20px;
+}
+
+.order-id {
+  font-weight: bold;
+}
+
+.order-total {
+  font-weight: bold;
+  color: #ff4500;
+}
+
+.continue-shopping-btn {
+  display: inline-block;
+  margin-top: 30px;
+  padding: 12px 20px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  font-size: 18px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.continue-shopping-btn:hover {
+  background-color: #0056b3;
+}
+
+
+
+
+
+
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="success-message  font-weight-bold">Order Successfully Placed!</h1>
+    <img src="https://media.istockphoto.com/id/882905872/vector/order-success-icon.jpg?s=170667a&w=0&k=20&c=O442rcdNvFkJsaw_voc4IXGYEvfRyU4a6AXiwavnvxc=" alt="Order Success" class="success-image">
+    <p class="success-details">Thank you for your order! Your order has been successfully placed and will be shipped to you soon.</p>
+    <p class="success-details">Order ID: <span class="order-id">123456789</span></p>
+    <p class="success-details">Track your order Below<span class="order-total"></span></p>
+    <a href="/vieworders" class="continue-shopping-btn">view orders</a>
+  </div>
+</body>
 </html>

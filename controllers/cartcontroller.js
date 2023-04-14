@@ -1,4 +1,4 @@
-const user = require("../model/userModel");
+const user = require("../model/usermodels");
 const product = require("../model/productmodel");
 const category = require("../model/categorymodel");
 const cart = require("../model/cartmodel");
@@ -54,10 +54,10 @@ const getcart = async (req, res) => {
     console.log(error);
   }
 };
-const addtocart = async (req, res) => {
+const  addtocart = async (req, res) => {
   try {
     let id = req.params.id;
-    let categoryData = await category.find();
+   
     let productData = await product.findOne({ _id: id });
     let acname = await user.findOne({ email: req.session.user });
     let cartData = await cart.findOne({ user: acname._id });
@@ -99,7 +99,7 @@ const addtocart = async (req, res) => {
       res.json({ status: true });
     }
   } catch (error) {
-    res.render("user/500");
+    res.status(500).render("user/500");
     console.log(error);
   }
 };

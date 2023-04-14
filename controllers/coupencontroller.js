@@ -1,6 +1,6 @@
 const randomString = require("randomstring");
 const admin = require("../model/adminmodel");
-const user = require("../model/userModel");
+const user = require("../model/usermodels");
 const product = require("../model/productmodel");
 const category = require("../model/categorymodel");
 const order = require("../model/ordermodel");
