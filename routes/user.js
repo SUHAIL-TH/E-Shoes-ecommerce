@@ -1,8 +1,8 @@
 const express=require("express");
 const userRouter=express()
 const userController=require("../controllers/usercontroller")
-const productController=require("../controllers/productController")
-const categoryController=require("../controllers/categoryController")
+const productController=require("../controllers/productcontroller")
+const categoryController=require("../controllers/categorycontroller")
 const couponController=require("../controllers/coupencontroller")
 const verifyLogin=require("../middleware/session")
 const blockeduser=require("../middleware/blockedusers")
