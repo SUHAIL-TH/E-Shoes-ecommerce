@@ -15,6 +15,7 @@ const ejs = require("ejs")
 const pdf = require("html-pdf")
 const fs = require("fs")
 const path = require("path")
+const { log } = require("console")
 
 
 
@@ -71,51 +72,63 @@ const home = async (req, res) => {
         const activeCategory = await category.find({ status: true }).count()
         const couponCount = await coupon.find().count()
         const paymentCount = await order.aggregate([{ $group: { _id: "$paymentMethode", count: { $count: {} } } }])
-        const start=moment().startOf('month');
-        const end=moment().endOf('month');
-        //year sales
-        // let monthOrder=await order.find({status:{$ne:"canceled"} ,createdAt:{$gt:start,$lt:end}}).count()
-        
-        // console.log(monthOrder);
-        let sales=[]
+        // const start = moment().startOf('day');
+        // const end = moment().endOf('month');
+
+        //year sales   
+        const currentDate = new Date();
+        currentDate.setHours(0);
+        currentDate.setMinutes(0);
+        currentDate.setSeconds(0);
+        currentDate.setMilliseconds(0);
+   
+        // let today=await order.find({status:{$ne:"canceled"} ,createdAt:{$gt:currentDate}}).count()
+        let todayRevenue=await order.aggregate([{$match:{status:{$ne:"canceled"},createdAt:{$gt:currentDate}}},{$group:{_id:null,total:{$sum:"$totalamount"}}}])
+        console.log(todayRevenue);
+
+
+
+        let sales = []
         var date = new Date();
-      
         var year = date.getFullYear();
         var currentYear = new Date(year, 0, 1);
-        
-       
-        let salesByYear=await order.aggregate([
-            {$match:{createdAt:{$gte:currentYear},status:{$ne:"canceled"}}},
-            {$group:{
-                _id:{ $dateToString: { format: "%m", date: "$createdAt" } },
-                total:{$sum:"$totalamount"},
-                count:{$sum:1}
-            }},{$sort:{_id:1}}
+
+
+
+
+        let salesByYear = await order.aggregate([
+            { $match: { createdAt: { $gte: currentYear }, status: { $ne: "canceled" } } },
+            {
+                $group: {
+                    _id: { $dateToString: { format: "%m", date: "$createdAt" } },
+                    total: { $sum: "$totalamount" },
+                    count: { $sum: 1 }
+                }
+            }, { $sort: { _id: 1 } }
         ])
-        for(let i=1;i<=12;i++){
-            let result=true;
-            for(k=0;k<salesByYear.length;k++){
-                result=false;
-                if(salesByYear[k]._id==i){
+        for (let i = 1; i <= 12; i++) {
+            let result = true;
+            for (k = 0; k < salesByYear.length; k++) {
+                result = false;
+                if (salesByYear[k]._id == i) {
                     sales.push(salesByYear[k])
                     break;
-                }else{
-                    result=true
+                } else {
+                    result = true
                 }
-                
+
             }
-           
+
             if (result) sales.push({ _id: i, total: 0, count: 0 });
         }
-        console.log(sales);
-       let salesData=[]
-       for(let i=0;i<sales.length;i++){
-        salesData.push(sales[i].total)
-       }
-      
-       console.log(salesData);
 
-     
+        let salesData = []
+        for (let i = 0; i < sales.length; i++) {
+            salesData.push(sales[i].total)
+        }
+
+
+
 
 
 
@@ -125,7 +138,7 @@ const home = async (req, res) => {
             activeUsers,
             blockedUsers,
             deliveredCount,
-            orderCanceled, categoryCount, activeCategory, couponCount, paymentCount, totalRevenue,salesData
+            orderCanceled, categoryCount, activeCategory, couponCount, paymentCount, totalRevenue, salesData,todayRevenue
 
         })
 
@@ -261,7 +274,7 @@ const excelorder = async (req, res) => {
 
 const salesreport = async (req, res) => {
     try {
-        const orderData = await order.find().sort({ date: -1 })
+        const orderData = await order.find({ status: { $ne: "canceled" } }).sort({ date: -1 })
         res.render("admin/salesreport", { orderData })
 
     } catch (error) {
@@ -271,7 +284,7 @@ const salesreport = async (req, res) => {
 }
 const pdforder = async (req, res) => {
     try {
-        let orders = await order.find().sort({ data: -1 })
+        let orders = await order.find({ status: { $ne: "canceled" } }).sort({ data: -1 })
         const data = {
             orders: orders
         }
