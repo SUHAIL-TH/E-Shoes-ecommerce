@@ -67,10 +67,13 @@ const home = async (req, res) => {
         const deliveredCount = await order.find({ status: "Delivered" }).count()
         const totalOrder = await order.find().count()
 
-        const orderCanceled = await order.find({ status: "Canceled" }).count()
+        const orderCanceled = await order.find({ status: "canceled" }).count()
+        const orderplaced = await order.find({ status: "placed" }).count()
+        const ordershipped = await order.find({ status: "shipping" }).count()
+
         const categoryCount = await category.find().count()
         const activeCategory = await category.find({ status: true }).count()
-        const couponCount = await coupon.find().count()
+        // const couponCount = await coupon.find().count()
         const paymentCount = await order.aggregate([{ $group: { _id: "$paymentMethode", count: { $count: {} } } }])
         // const start = moment().startOf('day');
         // const end = moment().endOf('month');
@@ -81,10 +84,9 @@ const home = async (req, res) => {
         currentDate.setMinutes(0);
         currentDate.setSeconds(0);
         currentDate.setMilliseconds(0);
-   
-        // let today=await order.find({status:{$ne:"canceled"} ,createdAt:{$gt:currentDate}}).count()
-        let todayRevenue=await order.aggregate([{$match:{status:{$ne:"canceled"},createdAt:{$gt:currentDate}}},{$group:{_id:null,total:{$sum:"$totalamount"}}}])
-        console.log(todayRevenue);
+        let todayRevenue=await order.aggregate([{$match:{status:{$ne:"canceled"},createdAt:{$gt:currentDate}}},{$group:{_id:null,total:{$sum:"$totalamount"},count:{$sum:1}}}])
+        
+       
 
 
 
@@ -138,7 +140,7 @@ const home = async (req, res) => {
             activeUsers,
             blockedUsers,
             deliveredCount,
-            orderCanceled, categoryCount, activeCategory, couponCount, paymentCount, totalRevenue, salesData,todayRevenue
+            orderCanceled,orderplaced,ordershipped, categoryCount, activeCategory, paymentCount, totalRevenue, salesData,todayRevenue
 
         })
 

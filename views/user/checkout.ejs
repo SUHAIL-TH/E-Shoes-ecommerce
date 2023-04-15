@@ -354,10 +354,72 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
+  document.getElementById("name").addEventListener("input",function(){
+    const name=document.getElementById("name").value.trim()
+    if(email==""){
+      document.getElementById("name").setCustomValidity("Name cannot be empty")
+    }else{
+      document.getElementById("name").setCustomValidity("")
+    }
+  })
+  document.getElementById("housename").addEventListener("input",function(){
+    let housename=document.getElementById("housename").value.trim()
+    if(housename==""){
+      document.getElementById("housename").setCustomValidity("House name cannot be null")
+    }else{
+      document.getElementById("housename").setCustomValidity("")
+    }
+  })
+  document.getElementById("phone").addEventListener("input",function(){
+    let phone=document.getElementById("phone").value.trim()
+    if(phone==""){
+      document.getElementById("phone").setCustomValidity("phone number cannot be null")
+
+    }else if(phone<10){
+      document.getElementById("phone"),setCustomValidity("phone number is less than 10")
+
+    }else{
+      document.getElementById("phone").setCustomValidity("")
+    }
+  })
+  document.getElementById("city").addEventListener("input",function(){
+    let city=document.getElementById("city").value.trim()
+    if(city==""){
+      document.getElementById("city").setCustomValidity("city cannot be null")
+    }else{
+      document.getElementById("city").setCustomValidity("")
+    }
+  }) 
+  document.getElementById("discrict").addEventListener("input",function(){
+    let discrict=document.getElementById("discrict").value.trim()
+    if(discrict==""){
+      document.getElementById("discrict").setCustomValidity("discrict cannot be empty")
+    }else{
+      document.getElementById("discrict").setCustomValidity("")
+    }
+  })
+  document.getElementById("state").addEventListener("input",function(){
+    let state=document.getElementById("state").value.trim()
+    if(state==""){
+      document.getElementById("state").setCustomValidity("state cannot be empty")
+    }else{
+      document.getElementById("state").setCustomValidity("")
+    }
+  })
+  document.getElementById("pincode").addEventListener("input",function(){
+    let pincode=document.getElementById("pincode").value.trim()
+    if(pincode==""){
+      document.getElementById("pincode").setCustomValidity("pincode cannot be empty")
+    }else{
+      document.getElementById("pincode").setCustomValidity("")
+    }
+  })
+
+
+
   $("#checkoutform").submit((e)=>{
   
    const amount=document.getElementById("total-amount").innerHTML
-   
    let address=$("input[name=address]:checked").val()
    let payment=$("input[name=payment]:checked").val()
    let walletprice=document.getElementById("walletamount").innerHTML

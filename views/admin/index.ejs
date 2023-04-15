@@ -48,7 +48,7 @@
                       <p class="text-success ml-2 mb-0 font-weight-medium">
                         Product delivered:
                       </p>
-                      <h3 class="mb-0"><%=deliveredCount%></h3>
+                      <h3 id="delivered" class="mb-0"><%=deliveredCount%></h3>
                     </div>
                   </div>
                   <div class="col-3">
@@ -140,7 +140,7 @@
                   class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3"
                 >
                   <div class="text-md-center text-xl-left">
-                    <h6 class="mb-1">Transfer to Razorpay</h6>
+                    <h6 class="mb-1">Transfer to COD</h6>
                     <p class="text-muted mb-0"></p>
                   </div>
                   <div
@@ -157,7 +157,7 @@
                   class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3"
                 >
                   <div class="text-md-center text-xl-left">
-                    <h6 class="mb-1">Tranfer to COD</h6>
+                    <h6 class="mb-1">Tranfer to Razorpay</h6>
                     <p class="text-muted mb-0"></p>
                   </div>
                   <div
@@ -193,8 +193,15 @@
                 <div class="row">
                   <div class="col-8 col-sm-12 col-xl-8 my-auto">
                     <div class="d-flex d-sm-block d-md-flex align-items-center">
+                      <%if(totalRevenue.length!=0){%>
+                        <span>0</span>
+
+                     <% }else{%>
                       <h2 class="mb-0">₹ <%=todayRevenue[0].total%></h2>
-                      <p class="text-success ml-2 mb-0 font-weight-medium">
+                      
+
+                     <%}%>
+                   <p class="text-success ml-2 mb-0 font-weight-medium">
                         
                       </p>
                     </div>
@@ -241,15 +248,23 @@
           <div class="col-sm-4 grid-margin">
             <div class="card">
               <div class="card-body">
-                <h5>Total Orders</h5>
+                <h5>Today Orders</h5>
                 <div class="row">
                   <div class="col-8 col-sm-12 col-xl-8 my-auto">
                     <div class="d-flex d-sm-block d-md-flex align-items-center">
-                      <h2 class="mb-0"><%=totalOrder%></h2>
+                      <%if(totalRevenue.length!=0){%>
+                        <span>0</span>
+
+                     <% }else{%>
+                      <h2 class="mb-0"><%=todayRevenue[0].count%></h2>
+                      
+
+                     <%}%>
+                     
                       <p class="text-danger ml-2 mb-0 font-weight-medium"></p>
                     </div>
                     <h6 class="text-muted font-weight-normal">
-                      Since last month
+                      Since Mid night
                     </h6>
                   </div>
                   <div
@@ -262,19 +277,20 @@
             </div>
           </div>
         </div>
+      
+
         <div class="row">
-          <div class="col-12 grid-margin tretch-card">
+          <div class="col-lg-6 grid-margin stretch-card">
             <div class="card">
               <div class="card-body">
-                <h4 class="card-title">Line chart</h4>
-                <canvas id="lineChart" style="height: 250px"></canvas>
+                <h4 class="card-title">Order status</h4>
+                <div>
+                  <canvas id="orderstat"></canvas>
+                </div> 
               </div>
             </div>
           </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-12 col-xl-4 grid-margin stretch-card">
+          <div class="col-md-12 col-lg-6 grid-margin stretch-card">
             <div class="card">
               <div class="card-body">
                 <h4 class="card-title">To do list</h4>
@@ -355,7 +371,10 @@
         <input type="hidden" id="oct" value="<%=salesData[9]%>">
         <input type="hidden" id="nov" value="<%=salesData[10]%>">
         <input type="hidden" id="dec" value="<%=salesData[11]%>">
-        
+        <input type="hidden" id="canceled" value="<%=orderCanceled%>">    
+        <input type="hidden" id="placed" value="<%=orderplaced%>">   
+        <input type="hidden" id="shipped" value="<%=ordershipped%>">   
+
       </div>
       <!-- content-wrapper ends -->
       <!-- partial:partials/_footer.html -->
@@ -412,6 +431,45 @@
   }]
     }
   });
+
+  /////////////////////
+  const orderstat = document.getElementById('orderstat');
+  const delivered=document.getElementById("delivered").innerHTML
+  const canceled=document.getElementById("canceled").value
+  const placed=document.getElementById("placed").value
+  const shipped=document.getElementById("shipped").value
+
+
+  new Chart(orderstat, {
+    type: 'bar',
+    data: {
+      labels: ['placed','delivered','Shipped','Cancelled'],
+      datasets: [{
+    label: 'Order status',
+    data:[placed,delivered,shipped,canceled],  
+    backgroundColor: [
+      'rgba(255, 99, 132, 0.2)',
+      'rgba(255, 159, 64, 0.2)',
+      'rgba(255, 205, 86, 0.2)',
+      'rgba(75, 192, 192, 0.2)',
+      'rgba(54, 162, 235, 0.2)',
+      'rgba(153, 102, 255, 0.2)',
+      'rgba(201, 203, 207, 0.2)'
+    ],
+    borderColor: [
+      'rgb(255, 99, 132)',
+      'rgb(255, 159, 64)',
+      'rgb(255, 205, 86)',
+      'rgb(75, 192, 192)',
+      'rgb(54, 162, 235)',
+      'rgb(153, 102, 255)',
+      'rgb(201, 203, 207)'
+    ],
+    borderWidth: 2
+  }]
+    }
+  });
+  ////////////////////
 
   const paymenttype = document.getElementById("myChart");
                   const cod=parseInt(document.getElementById("value").value)
