@@ -382,28 +382,32 @@ const checkout = async (req, res, next) => {
         let Totalcart
 
         let Total = 0
-        if (cartData.product.length > 0) {
-            let sum = await cart.aggregate([{
-                $match: {
-                    _id: cartData._id
-                }
-            }, {
-                $unwind: "$product"
-
-            }, {
-                $project: {
-                    price: "$product.price", quantity: "$product.quantity"
-                }
-            }, {
-                $group: {
-                    _id: null,
-                    total: { $sum: { $multiply: ["$price", "$quantity"] } }
-                }
-            }])
-            Totalcart = sum[0].total
-
+        if(cartData){
+            if (cartData.product.length > 0) {
+                let sum = await cart.aggregate([{
+                    $match: {
+                        _id: cartData._id
+                    }
+                }, {
+                    $unwind: "$product"
+    
+                }, {
+                    $project: {
+                        price: "$product.price", quantity: "$product.quantity"
+                    }
+                }, {
+                    $group: {
+                        _id: null,
+                        total: { $sum: { $multiply: ["$price", "$quantity"] } }
+                    }
+                }])
+                Totalcart = sum[0].total
+    
+    
+            }
 
         }
+    
         walletamount = acname.wallet
 
         if (walletamount > Totalcart) {

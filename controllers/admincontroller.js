@@ -75,7 +75,7 @@ const home = async (req, res) => {
         const activeCategory = await category.find({ status: true }).count()
         // const couponCount = await coupon.find().count()
         const paymentCount = await order.aggregate([{ $group: { _id: "$paymentMethode", count: { $count: {} } } }])
-        // const start = moment().startOf('day');
+        const start = moment().startOf('day');
         // const end = moment().endOf('month');
 
         //year sales   
@@ -84,12 +84,9 @@ const home = async (req, res) => {
         currentDate.setMinutes(0);
         currentDate.setSeconds(0);
         currentDate.setMilliseconds(0);
-        let todayRevenue=await order.aggregate([{$match:{status:{$ne:"canceled"},createdAt:{$gt:currentDate}}},{$group:{_id:null,total:{$sum:"$totalamount"},count:{$sum:1}}}])
         
-       
-
-
-
+        let todayRevenue=await order.aggregate([{$match:{status:{$ne:"canceled"},createdAt:{$gte:currentDate}}},{$group:{_id:null,total:{$sum:"$totalamount"},count:{$sum:1}}}])
+        
         let sales = []
         var date = new Date();
         var year = date.getFullYear();

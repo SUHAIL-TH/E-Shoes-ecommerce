@@ -60,7 +60,7 @@ adminRouter.post("/removeimage",verifyAdmin.verifyLoginAdmin,productController.r
 
 adminRouter.get("/addcategory",verifyAdmin.verifyLoginAdmin,categoryController.addcategory)
 adminRouter.get("/viewcategory",verifyAdmin.verifyLoginAdmin,categoryController.viewcategory )
-adminRouter.post("/addcategory",verifyAdmin.verifyLoginAdmin,categoryController.postaddcategory)
+adminRouter.post("/addcategory",verifyAdmin.verifyLoginAdmin,upload.single("catimage"),categoryController.postaddcategory)
 adminRouter.get("/deletecategory/:id",verifyAdmin.verifyLoginAdmin,categoryController.deletecategory)
 adminRouter.get("/truecategory/:id",verifyAdmin.verifyLoginAdmin,categoryController.truecategory)
 adminRouter.get("/falsecategory/:id",verifyAdmin.verifyLoginAdmin,categoryController.falsecategory)

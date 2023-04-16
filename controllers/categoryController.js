@@ -21,10 +21,11 @@ const postaddcategory = async (req, res) => {
   try {
     let categoryname = uc.upperCase(req.body.category);
     console.log(categoryname);
-    let categoryData = await category.findOne({ categoryName: categoryname });
+    let categoryData = await category.findOne({ categoryName: categoryname ,});
 
     const categorys = new category({
       categoryName: categoryname,
+      image:req.file.filename
     });
 
     if (categoryData) {
