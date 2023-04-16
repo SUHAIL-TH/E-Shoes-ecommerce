@@ -22,30 +22,30 @@
             <div class="col-lg-7 mb-5">
                 <div class="contact-form bg-light p-30">
                     <div id="success"></div>
-                    <form name="sentMessage" id="contactForm" novalidate="novalidate">
+                    <form name="" id="contactForm" novalidate="novalidate"  action="">
                         <div class="control-group">
-                            <input type="text" class="form-control" id="name" placeholder="Your Name"
+                            <input type="text" class="form-control" id="name" placeholder="Your Name" name="name"
                                 required="required" data-validation-required-message="Please enter your name" />
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="control-group">
-                            <input type="email" class="form-control" id="email" placeholder="Your Email"
+                            <input type="email" class="form-control" id="email" placeholder="Your Email" name="email"
                                 required="required" data-validation-required-message="Please enter your email" />
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="control-group">
-                            <input type="text" class="form-control" id="subject" placeholder="Subject"
+                            <input type="text" class="form-control" id="subject" placeholder="Subject" name="subject"
                                 required="required" data-validation-required-message="Please enter a subject" />
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="control-group">
-                            <textarea class="form-control" rows="8" id="message" placeholder="Message"
+                            <textarea class="form-control" rows="8" id="message" placeholder="Message" name="message"
                                 required="required"
                                 data-validation-required-message="Please enter your message"></textarea>
                             <p class="help-block text-danger"></p>
                         </div>
                         <div>
-                            <button class="btn btn-info font-weight-bold py-2 px-4" type="submit" id="sendMessageButton">Send
+                            <button class="btn btn-info font-weight-bold py-2 px-4 font-weight-bold" type="submit" id="sendMessageButton" style="border-radius: 5px;">Send
                                 Message</button>
                         </div>
                     </form>
@@ -65,6 +65,24 @@
         </div>
     </div>
     <!-- Contact End -->
-
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script>
+        $("#contactForm").submit((e)=>{
+            e.preventDefault()
+            $.ajax({
+                url:"https://script.google.com/macros/s/AKfycbz-OKV6yS162aMXGKwnYwg-RAaoYQXlgyPUz8TaLjXkx2-IQKhu7s_HPUqBCK6MQ21V/exec",
+                data:$("#contactForm").serialize(),
+                method:"post",
+                success:function (response){
+                    alert("Form submitted successfully")
+                    window.location.reload()
+                    //window.location.href="https://google.com"
+                },
+                error:function (err){
+                    alert("Something Error")
+    
+                }
+            })
+        })
+    </script>
     <%- include('../partials/userfooter')%>
