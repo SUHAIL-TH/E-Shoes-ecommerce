@@ -9,7 +9,6 @@ module.exports={
             user:"eshoes518@gmail.com",
             pass:process.env.PASS
         }
-
     }),
     OTP:`${Math.floor(1000+Math.random()*9000)}`
 
