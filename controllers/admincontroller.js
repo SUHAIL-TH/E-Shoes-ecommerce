@@ -12,7 +12,7 @@ const moment = require("moment")
 moment().format()
 //html to pdf generate required things
 const ejs = require("ejs")
-const pdf = require("html-pdf")
+// const pdf = require("html-pdf")
 const fs = require("fs")
 const path = require("path")
 const { log } = require("console")
@@ -281,39 +281,39 @@ const salesreport = async (req, res) => {
         console.log(error)
     }
 }
-const pdforder = async (req, res) => {
-    try {
-        let orders = await order.find({ status: { $ne: "canceled" } }).sort({ data: -1 })
-        const data = {
-            orders: orders
-        }
-        const filePathName = path.resolve(__dirname, '../views/admin/htmltopdf.ejs')
-        const htmlString = fs.readFileSync(filePathName).toString()
-        let options = {
-            format: 'Letter',
+// const pdforder = async (req, res) => {
+//     try {
+//         let orders = await order.find({ status: { $ne: "canceled" } }).sort({ data: -1 })
+//         const data = {
+//             orders: orders
+//         }
+//         const filePathName = path.resolve(__dirname, '../views/admin/htmltopdf.ejs')
+//         const htmlString = fs.readFileSync(filePathName).toString()
+//         let options = {
+//             format: 'Letter',
 
-        }
-        const ejsData = ejs.render(htmlString, data)
-        pdf.create(ejsData, options).toFile('orders.pdf', (err, response) => {
-            if (err) console.log(err)
-            const filePath = path.resolve(__dirname, '../orders.pdf')
-            fs.readFile(filePath, (err, file) => {
-                if (err) {
-                    console.log(err)
-                    return res.status(500).send('could not download file');
-                }
-                res.setHeader('Content-Type', 'application/pdf')
-                res.setHeader('Content-Disposition', 'attachment;filename="orders.pdf')
-                res.send(file);
-            })
+//         }
+//         const ejsData = ejs.render(htmlString, data)
+//         pdf.create(ejsData, options).toFile('orders.pdf', (err, response) => {
+//             if (err) console.log(err)
+//             const filePath = path.resolve(__dirname, '../orders.pdf')
+//             fs.readFile(filePath, (err, file) => {
+//                 if (err) {
+//                     console.log(err)
+//                     return res.status(500).send('could not download file');
+//                 }
+//                 res.setHeader('Content-Type', 'application/pdf')
+//                 res.setHeader('Content-Disposition', 'attachment;filename="orders.pdf')
+//                 res.send(file);
+//             })
 
-        })
+//         })
 
-    } catch (error) {
-        res.render("admin/500")
-        console.log(error);
-    }
-}
+//     } catch (error) {
+//         res.render("admin/500")
+//         console.log(error);
+//     }
+// }
 
 
 module.exports = {
