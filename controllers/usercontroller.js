@@ -382,7 +382,7 @@ const checkout = async (req, res, next) => {
         let Totalcart
 
         let Total = 0
-        if(cartData){
+        if (cartData) {
             if (cartData.product.length > 0) {
                 let sum = await cart.aggregate([{
                     $match: {
@@ -390,7 +390,7 @@ const checkout = async (req, res, next) => {
                     }
                 }, {
                     $unwind: "$product"
-    
+
                 }, {
                     $project: {
                         price: "$product.price", quantity: "$product.quantity"
@@ -402,12 +402,12 @@ const checkout = async (req, res, next) => {
                     }
                 }])
                 Totalcart = sum[0].total
-    
-    
+
+
             }
 
         }
-    
+
         walletamount = acname.wallet
 
         if (walletamount > Totalcart) {
@@ -663,7 +663,7 @@ module.exports = {
     checkout,
     addaddress,
     deleteaddress,
-  
+
     placeorder,
     ordersuccess,
     vieworders,
@@ -671,7 +671,7 @@ module.exports = {
     orderedproduct,
     cancelorder,
     returnorder,
- 
+
 
 
 

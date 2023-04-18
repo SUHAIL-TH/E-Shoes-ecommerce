@@ -126,7 +126,7 @@ const applycoupon = async (req, res) => {
               );
 
               if (couponData.couponamounttype == "Fixed") {
-                let discountvalue = couponData.couponamount;
+                let discountvalue = couponData.couponamount+userData.wallet;
 
                 let distotal = Math.round(amount - discountvalue);
                 return res.json({
@@ -140,7 +140,7 @@ const applycoupon = async (req, res) => {
                 let discountvalue = (amount * couponData.couponamount) / 100;
 
                 if (discountvalue <= couponData.maxredeemamount) {
-                  let distotal = Math.round(amount - discountvalue);
+                  let distotal = Math.round(amount - discountvalue+userData.wallet);
                   return res.json({
                     couponokey: true,
                     distotal,
