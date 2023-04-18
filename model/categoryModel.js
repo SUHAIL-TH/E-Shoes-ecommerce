@@ -11,7 +11,6 @@ const categorySchema=new mongoose.Schema({
     image:{
         type:String
     }
-
 })
 
 const category=mongoose.model("category",categorySchema)
