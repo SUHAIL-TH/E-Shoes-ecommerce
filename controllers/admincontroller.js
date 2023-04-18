@@ -329,7 +329,7 @@ module.exports = {
     updatestatus,
     excelorder,
     salesreport,
-    pdforder
+    // pdforder
 
 
 
