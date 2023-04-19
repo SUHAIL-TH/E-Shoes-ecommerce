@@ -49,6 +49,8 @@ adminRouter.get("/unblockuser/:id",adminController.unblockuser)
 adminRouter.get("/excelexport",verifyAdmin.verifyLoginAdmin,adminController.excelorder)
 adminRouter.get("/salesreport",verifyAdmin.verifyLoginAdmin,adminController.salesreport)
 // adminRouter.get("/pdforder",verifyAdmin.verifyLoginAdmin,adminController.pdforder)
+adminRouter.get("/pdforder",adminController.pdforder)
+adminRouter.get("/htmltopdf",adminController.htmltopdf)
 
 adminRouter.get("/product",verifyAdmin.verifyLoginAdmin,productController.viewproduct) 
 adminRouter.get("/addproduct",verifyAdmin.verifyLoginAdmin,productController.addproduct)

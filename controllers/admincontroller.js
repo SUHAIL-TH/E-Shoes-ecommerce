@@ -9,13 +9,14 @@ const coupon = require("../model/coupenmodel")
 const excel = require("exceljs")
 const banner = require("../model/bannermodel")
 const moment = require("moment")
+const puppeteer=require("puppeteer")
 moment().format()
 //html to pdf generate required things
 const ejs = require("ejs")
 // const pdf = require("html-pdf")
 const fs = require("fs")
 const path = require("path")
-const { log } = require("console")
+
 
 
 
@@ -315,7 +316,47 @@ const salesreport = async (req, res) => {
 //     }
 // }
 
+const pdforder=async(req,res)=>{
+    try {
+        const value = req.query.value
+        const browser = await puppeteer.launch()
+        const page = await browser.newPage()
+        await page.goto(`https://e-shoes.online/admin/htmltopdf` , {
+        waitUntil:"networkidle2"
+        })
+        await page.setViewport({width: 1680 , height: 1050})
+        const todayDate = new Date()
+        const pdfn = await page.pdf({
+            path: `${path.join(__dirname,'../public/files', todayDate.getTime()+".pdf")}`,
+            format: "A4"
+        })
 
+        await browser.close()
+    
+        const pdfUrl = path.join(__dirname,'../public/files', todayDate.getTime()+".pdf")
+
+        res.set({
+            "Content-Type":"application/pdf",
+            "Content-Length":pdfn.length
+        })
+        res.sendFile(pdfUrl)
+        
+    } catch (error) {
+        res.render("admin/500")
+        console.log(error);
+    }
+}
+const htmltopdf=async(req,res)=>{
+    try {
+        const orderData = await order.find({ status: { $ne: "canceled" } }).sort({ date: -1 })
+        res.render("admin/htmltopdf", { orders:orderData })
+
+        
+    } catch (error) {
+        res.render("admin/500")
+        console.log(error);
+    }
+}
 module.exports = {
     login,
     postlogin,
@@ -330,6 +371,8 @@ module.exports = {
     excelorder,
     salesreport,
     // pdforder
+    pdforder,
+    htmltopdf
 
 
 
