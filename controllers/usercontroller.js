@@ -428,7 +428,7 @@ const checkout = async (req, res, next) => {
 
 
 
-        res.render("user/checkout", { acname, categoryData, Total, walletamount, Totalcart, })
+        res.render("user/checkout", { acname, categoryData, Total, walletamount, Totalcart, cartData})
 
     } catch (error) {
         res.render("user/500")
