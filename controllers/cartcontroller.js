@@ -13,7 +13,7 @@ const getcart = async (req, res) => {
     let cartData = await cart
       .findOne({ user: acname._id })
       .populate("product.productId");
-    console.log(cartData);
+    // console.log(cartData);
 
     // console.log(cartData  );
     if (cartData) {
@@ -130,8 +130,12 @@ const changeproductquantity = async (req, res, next) => {
     let userid = req.body.user;
     console.log(proId);
 
-    // let stockavailable=await product.findById(proId)
-    // if(stockavailable.stock>quantity){
+    let stockavailable=await product.findById(proId)
+    console.log(stockavailable);
+    console.log(quantity)
+    if(stockavailable.stock>=quantity){
+      
+    }
     if ((count == -1) & (quantity == 1)) {
       await cart.updateOne(
         { _id: cartId, "product.productId": proId },
